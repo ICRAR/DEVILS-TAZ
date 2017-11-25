@@ -1,0 +1,55 @@
+#!/bin/tcsh
+
+# Setup directories for a new run
+
+set progname = $0
+
+# Check for usage
+if ($#argv != 2 || $1 == "-help") then
+    echo " "
+    echo Usage: ${progname:t} runName date
+    echo " "
+    echo Setup directories for a new night.
+    echo " "
+    echo runName = name of run in format run#_year_month: i.e. run1_2017_12
+    echo date = ndate of night in format year_month_day: i.e. 2017_12_18
+    echo " "
+    echo Options include:
+    echo "\t--help\t\tprint this message"
+    echo " "
+    exit
+endif
+
+mkdir ~/data
+mkdir ~/data/logs
+mkdir ~/data/reduced
+mkdir ~/data/reduced/allSpec
+mkdir ~/data/reduced/stackedSpec/AutoZplots
+mkdir ~/data/reduced/newSpec
+mkdir ~/data/reduced/$1
+mkdir ~/data/reduced/$1/$2
+mkdir ~/data/reduced/$1/$2/ccd1
+mkdir ~/data/reduced/$1/$2/ccd2
+mkdir ~/data/calibrators
+mkdir ~/data/catalogues
+mkdir ~/data/biases
+mkdir ~/data/biases/$1
+mkdir ~/data/biases/$1/junk
+mkdir ~/data/darks
+mkdir ~/data/darks/$1
+mkdir ~/data/darks/$1/junk
+mkdir ~/data/observing
+mkdir ~/data/observing/$1
+mkdir ~/data/observing/$1/$2
+mkdir ~/data/observing/$1/$2/DOCats
+mkdir ~/data/rawdata/
+mkdir ~/data/rawdata/$1
+mkdir ~/data/rawdata/$1/$2
+mkdir ~/data/rawdata/$1/$2/junk
+mkdir ~/data/idxFiles
+echo "Directory structure in place: "$1/$2
+
+mkdir /configs/devils/$1/
+mkdir /configs/devils/$1/$2
+echo "Configs directory ready for .sds files"
+

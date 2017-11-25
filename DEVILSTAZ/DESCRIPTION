@@ -1,0 +1,10 @@
+Package: DEVILSTAZ
+Type: Package
+Title: Functions for analysing, displaying and editing spectra
+Version: 1.0
+Date: 2017-11-23
+Author: Luke Davies 
+Maintainer: Luke Davies <luke.j.davies@uwa.edu.au>
+Description: DEVILS data reduction and analyis pipeline
+License: GPL-3
+Depends: R (>= 3.00), astro, Tiler, celestial, magicaxis, whatsup, Cairo, FITSio

@@ -1,0 +1,211 @@
+#!/bin/tcsh
+
+# Reduce DEVILS data
+
+set progname = $0
+
+# Check for usage
+if ($#argv != 2 || $1 == "--help") then
+    echo " "
+    echo Usage: ${progname:t} runName date 
+    echo " "
+    echo Manually reduce DEVILS data.
+    echo " " 
+    echo runName = name of run in format run#_year_month: i.e. run1_2017_12
+    echo date = ndate of night in format year_month_day: i.e. 2017_12_18
+    echo " "
+    echo Options include:
+    echo "\t--help\t\tprint this message"
+    echo " "
+    exit
+endif
+
+# Edit this at the start of a run to reflect 2dfdr version
+set tdfdr_dir = ~/2dfdr
+
+
+set biasdir = ~/data/biases/$1
+set darkdir = ~/data/darks/$1
+
+
+# There should be no editing below here
+
+
+echo "============================================================"
+echo "DEVILS data manual 2dfDR Reduction"
+echo "============================================================"
+echo "Running reduction for night -" $1'/'$2
+echo "Using bias directory -" $biasdir
+echo "Using darks directory -" $darkdir
+
+   echo " "
+
+
+   
+echo "Enter AAT raw datafile name stub (e.g. 18dec):"
+set stub=$<
+
+   echo " "
+
+echo "Enter date in AAT format (e.g. 171218):"
+set date=$<
+
+   echo " "
+
+echo "Next you must enter fibre configuration number for this night (e.g. 1,2,3,....)" 
+echo "**  Make Sure you do not overwrite and exisiting configurations **:"
+echo "Currently exisiting reduced files on this night are:"
+ls ~/data/reduced/$1'/'$2/*config*
+echo "Enter fibre configuration number:" 
+
+set config=$<
+set configname = $2'_config_'$config'_reduced'
+
+   echo " "
+
+echo "List AAT raw datafile name numbers to go into file (incl. flat and arc):"
+echo "Example: 01 02 03 04 05 (all on one line)"
+set file_no=($<)
+
+   echo " "
+   
+echo "**** You have selected ******"
+echo "Date stamp  : "$2
+echo "AAT stub    : "$stub
+echo "Configuration name   : "$configname
+@ i = 1
+while ($i <= $#file_no)
+    echo "File "$i"      : "$file_no[$i]
+    @ i++
+end
+
+echo "Continue (y/n)?"
+set ans=$<
+if ( ${ans} != "y") then
+	echo "Aborting"
+	exit
+endif
+
+echo " "
+echo "Proceeding..."
+echo " "
+
+
+mkdir ~/data/reduced/$1/$2/ccd1/config_$config
+mkdir ~/data/reduced/$1/$2/ccd2/config_$config
+
+#
+# Creating directory structures for GAMA field
+#
+#fsetup $date $field_name
+
+#
+# Copying frames from AAT directory
+#
+set AATDATA = ~/MockAATArchive/
+rsync -a $AATDATA$date/ccd_1/*.fits ~/data/rawdata/$1/$2
+rsync -a $AATDATA$date/ccd_2/*.fits ~/data/rawdata/$1/$2
+@ i = 1
+while ($i <= $#file_no)
+    cp ~/data/rawdata/$1/$2/${stub}100${file_no[$i]}.fits ~/data/reduced/$1/$2/ccd1/config_$config
+    cp ~/data/rawdata/$1/$2/${stub}200${file_no[$i]}.fits ~/data/reduced/$1/$2/ccd2/config_$config
+    @ i++
+end
+echo " "
+echo "Raw data copied data to reduction directory."
+echo " "
+#
+# Fixing headers of blue files
+#
+cd ~/data/reduced/$1/$2/ccd1/config_$config
+hedit GRATLPMM 582.0 *.fits
+echo "Fixed headers of blue files."
+
+#
+# Copying combined bias frame to ccd1 directory
+#
+cp ${biasdir}/*blue_BIAScombined.fits ~/data/reduced/$1/$2/ccd1/config_$config/BIAScombined.fits
+echo "Copied combined bias frame from "$biasdir "into ccd1 directory."
+
+
+#
+# Copying combined dark frame to ccd1 directory
+#
+cp ${darkdir}/*blue_DARKcombined.fits  ~/data/reduced/$1/$2/ccd1/config_$config/DARKcombined.fits
+echo "Copied combined dark frame from "$darkdir" into ccd1 directory."
+
+#
+# Setting up 2dfdr 
+#
+setenv DRCONTROL_DIR $tdfdr_dir
+
+#**** CHECK WHAT THIS DOES: ###
+#source $DRCONTROL_DIR/2dfdr_setup
+
+#
+# Running drcontrol using blue setup
+#
+#cleanup
+echo "When DRCONTROL window opens hit START AUTO REDUCTION."
+echo "Exit DRCONTROL when reduction is finished."
+
+
+cd  ~/data/reduced/$1/$2/ccd1/config_$config
+sleep 280; xmessage -bg red -geom 500x80+500+500 "Check drcontrol!" &
+drcontrol $DRCONTROL_DIR/gama_blue.idx
+cp ${stub}1_combined.fits ../{$configname}_blue.fits
+
+#
+# Running drcontrol using red setup
+#
+cleanup
+echo "When DRCONTROL window opens hit START AUTO REDUCTION."
+echo "Exit DRCONTROL when reduction is finished."
+
+cd  ~/data/reduced/$1/$2/ccd2/config_$config
+sleep 280; xmessage -bg red -geom 500x80+500+500 "Check drcontrol!" &
+drcontrol $DRCONTROL_DIR/gama_red.idx
+cp ${stub}2_combined.fits ../{$configname}_red.fits
+
+#
+# Splicing red and blue spectra.
+#
+
+echo " "
+echo "Ignore warning message!"
+echo " "
+
+echo "When DRCONTROL window opens go to the COMMANDS menu," 
+echo "select Splice Red & Blue, enter "{$configname}"red.fits and "{$configname}"blue.fits"
+echo "in the pop-up window and leave the output as the default"
+echo "spliced.fits"
+echo " "
+
+cd ~/data/reduced/$1/$2/
+
+cleanup
+drcontrol $DRCONTROL_DIR/gama_blue.idx
+
+
+#
+# Run Hannah's python script to PCA skysubtract and Defringe
+#
+#cd ~/pca/sky_y3/
+#
+#python skypcav2.1.py ~/data/reduced/${date}/${field_name} spliced
+#echo "\nPerformed PCA sky subtraction.\n"
+
+cd ~/data/reduced/$1/$2/
+mv spliced.fits {$configname}.fits
+
+
+#
+# Copy file to redshift directory
+#
+#cp S${field_name}.fits ~/data/redshifts/${date}/${field_name}/
+
+
+echo "======================================"
+echo "End of sequence"
+echo "======================================"
+
