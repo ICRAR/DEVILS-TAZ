@@ -1,18 +1,25 @@
-makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year=2017, semester='B', run=1){
+makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year=2017, semester='B', run=1, logName=logName, verbose=verbose){
 
-
+     if (verbose>1){cat('    - Loading Guide, sky and std files from data/calibrators/', '\n')}
+    write(paste('    - Loading Guide, sky and std files from data/calibrators/',sep=''), file=logName, append=T)
+    
     GuideFile<-'data/calibrators/GuideStars/DATAguide.tab'
     SkyFile<-'data/calibrators/SkyFibres/DATAsky.tab'
     StdFile<-'data/calibrators/StdStars/DATAstspec.tab'
+
+    
 
     dir<-paste('data/observing/',dateFor,'/DOCats/',sep='')
     system(paste('mkdir ',dir,sep=''))
     system(paste('mkdir ',dir,'Tiling',sep=''))
     system(paste('mkdir ',dir,'Tiling/TileFiles',sep=''))
 
+    if (verbose>1){cat('    - Making DOcat directory as:',dir, '\n')}
+    write(paste('    - Making DOcat directory as:',dir,sep=''), file=logName, append=T)
+
+    
     date<-strsplit(dateFor, '/')[[1]][2]
     time<-Sys.time()
-
 
     D10_RA<-c(149.38,150.7)
     D10_DEC<-c(1.65,2.79)
@@ -46,6 +53,8 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     InfoTab<-data.frame(Region,RAmin,RArange,DECmin,DECrange,Skirt,Year, Sem, Run, Loc, Denpri, MainSclass,LoPclass,ByDen)
 
 
+     if (verbose>1){cat('    - Making DOcat README as:',paste(dir,date,"_README.txt", sep=''), '\n')}
+    write(paste('    - Making DOcat README as:',dir,date,"_README.txt",sep=''), file=logName, append=T)
 
     fileConn<-file(paste(dir,date,"_README.txt", sep=''))
     writeLines(paste('Date & Time: ',time,sep=''), fileConn)
@@ -56,6 +65,10 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     write(paste('Input GuideStar Table: ', GuideFile, sep=''), file=paste(dir,date,"_README.txt",sep=''), append=T)
     write(paste('Input Standards Table: ', StdFile, sep=''), file=paste(dir,date,"_README.txt",sep=''), append=T)
     write(paste('Input Sky Fibre Table: ', SkyFile, sep=''), file=paste(dir,date,"_README.txt",sep=''), append=T)
+
+
+    if (verbose>1){cat('    - Making SurveyInfo file as:',paste(dir, "SurveyInfo.txt", sep=''), '\n')}
+    write(paste('    - Making SurveyInfo file as:', dir, "SurveyInfo.txt",sep=''), file=logName, append=T)
 
     fileConn<-file(paste(dir,"SurveyInfo.txt", sep=''))
     writeLines(paste('# Date: ',time,sep=''), fileConn)
@@ -78,6 +91,13 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     StdNames<-names(DStdCat)
     DStdCat<-data.frame(DStdCat[,1], format(DStdCat[,2], digits=12, nsmall=12), format(DStdCat[,3], digits=12, nsmall=12), format(DStdCat[,4], digits=12, nsmall=12), DStdCat[,5])
     names(DStdCat)<-StdNames
+
+    if (verbose>1){cat('    - Writing DSkyCat as:',paste(dir,'DSkyCat_',date,".tab", sep=''), '\n')}
+    write(paste('    - Writing DSkyCat as:', dir,'DSkyCat_',date,".tab", sep=''), file=logName, append=T)
+    if (verbose>1){cat('    - Writing DGuideCat as:',paste(dir,'DGuideCat_',date,".tab", sep=''), '\n')}
+    write(paste('    - Writing DGuideCat as:', dir,'DGuideCat_',date,".tab", sep=''), file=logName, append=T)
+    if (verbose>1){cat('    - Writing DStdCat as:',paste(dir,'DStdCat_',date,".tab", sep=''), '\n')}
+    write(paste('    - Writing DStdCat as:', dir,'DStdCat_',date,".tab", sep=''), file=logName, append=T)
 
     write.table(DSkyCat, file=paste(dir,'DSkyCat_',date,".tab", sep=''), row.names=F, quote=FALSE, sep = "\t")
     write.table(DGuideCat, file=paste(dir,'DGuideCat_',date,".tab", sep=''), row.names=F, quote=FALSE, sep = "\t")
@@ -116,6 +136,9 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     tab<-data.frame(DMCat[,'CATAID'], format(DMCat[,'RA'], digits=12, nsmall=12), format(DMCat[,'DEC'], digits=12, nsmall=12),  format(DMCat[,'YMAG'], digits=12, nsmall=12), SURVEY_CLASS, DMCat[,'PRIORITY'],DMCat[,'FIELD'])
     names(tab)<-c('CATAID','RA','DEC','MAG','SURVEY_CLASS','PRIORITY_CLASS','POSITION')
 
+
+    if (verbose>1){cat('    - Writing Target cat as:',paste(dir,'DObjCat_',date,".tab", sep=''), '\n')}
+    write(paste('    - Writing Target cat as:', dir,'DObjCat_',date,".tab", sep=''), file=logName, append=T)
     
     suppressWarnings(write.table(tab, file=paste(dir,'DObjCat_',date,'.tab', sep=''), append=F, col.names=T, row.names=F, quote=FALSE, sep = "\t"))
 
@@ -128,7 +151,7 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     write(paste('# Objects in DOcat (PRIORITY>0)  =',dim(DMCat)[1], sep=''), file=paste(dir,date,"_README.txt",sep=''), append=T)
           
     
-    system(paste('cp ',dir,"SurveyInfo.txt ", dir,"Tiling/SurveyInfo.txt",sep=''))
+    system(paste('cp ', dir,'SurveyInfo.txt ', dir,'Tiling/',sep=''))
     return(dir)
 
 }

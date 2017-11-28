@@ -2,6 +2,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
 
 
     version<-0.1
+    cat('\n')
     
     if (verbose==0){
         cat('** Running TAZ version',version, 'verbose set to 0 - you will recieve no messages **' , '\n')
@@ -15,7 +16,19 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         cat('Ready to reduce DEVILS data.....', '\n')
         cat('\n')
         }
- 
+
+    check<-list.files(path=paste(.libPaths(), '/DEVILSTAZ/data/calibrators/filters',sep=''), pattern='*.tab')
+    if (length(check)==0){
+
+        cat('*** WARNING calibration files not unpacked in DEVILSTAZ Data Directory ***', '\n')
+        cat('   - Unpacking now.....', '\n')
+
+        LibPaths<-.libPaths()
+        system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep='')) 
+        system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar --directory ', LibPaths, '/DEVILSTAZ/data/' ,sep=''))
+
+    }
+    
 
     setwd(workingDir)
 
@@ -45,9 +58,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         write('Finding unreduced raw datasets....', file=logName, append=T)
     
         toReduce<-findNewData(logName=logName, verbose=verbose)
-
-        if (verbose>0){cat(paste('      ', length(toReduce), ' new unreduced nights found ', sep=''), '\n')}
-
+       
         if (verbose>0){cat('Reducing new datasets....', '\n')}
         write('Reducing new datasets....', file=logName, append=T)
         
@@ -118,9 +129,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
 
  
         if (verbose>0){cat('Stacking 1D spectra....', '\n')}
-        write('*** doExtract=F so no extraction undertaken.', file=logName, append=T)
-
-        ##### GOT TO HERE WITH LOGS/COMMENTS
+        write('Stacking 1D spectra....', file=logName, append=T)      
 
         newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=T)
         write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
@@ -129,6 +138,9 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
 
     if (doStack==F & doAutoZ==T){
 
+        if (verbose>0){cat('*** doStack=F so no stacking undertaken.', '\n')}
+        write('*** doStack=F so no stacking undertaken.', file=logName, append=T)
+
         newStacks<-toAutoZStacks
  
     }
@@ -136,20 +148,30 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
     
     if (doAutoZ==T){
         if (verbose>0){cat('Running AutoZ for new spectra....', '\n')}
+        write('Running AutoZ for new spectra....', file=logName, append=T)
+        
         runAutoZ(specs=newStacks, logName=logName, verbose=verbose)
     }
 
     if (doUpdateMaster==T){
 
         if (verbose>0){cat('Updating Master Catalogues....', '\n')}
+        write('Updating Master Catalogues....', file=logName, append=T)
 
         previousMASTERS<-list.files(path='data/catalogues/MASTERcats/',pattern='*.rda')
+        
         MASTERDates<-date2jd(year=as.numeric(substr(previousMASTERS,14,15) ), mon=as.numeric(substr(previousMASTERS,11,12)), mday=as.numeric(substr(previousMASTERS,6,9)), hour=12)
         lastMASTER<-paste('data/catalogues/MASTERcats/',previousMASTERS[which(MASTERDates==max(MASTERDates))],sep='')
 
-        newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/')
+        if (verbose>0){cat('    - Using previous MASTER catalogue as:',lastMASTER, '\n')}
+        write(paste('    - Using previous MASTER catalogue as:',lastMASTER,sep=''), file=logName, append=T)
+        
+        newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', logName=logName, verbose=verbose)
 
 
+        if (verbose>0){cat('Finding next observing night....', '\n')}
+        write('Finding next observing night....', file=logName, append=T)
+        
         runs<-list.files(path='data/observing/',pattern='run*')
         nights<-c()
         runName<-c()
@@ -181,11 +203,18 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
 
         run<-as.numeric(substr(runFor, 4,4))
 
-        DODir<-makeDOCats(MASTERCat=newMaster, UserName=user,dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run)
+        if (verbose>0){cat('Making DO cats....', '\n')}
+        write('Making DO cats....', file=logName, append=T)
+
+        DODir<-makeDOCats(MASTERCat=newMaster, UserName=user,dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
 
     }
 
     if (doUpdateMaster==F & doTiler==T){
+
+        if (verbose>0){cat('*** doUpdateMaster=F so no updating undertaken.', '\n')}
+        write('*** doUpdateMaster=F so no updating undertaken.', file=logName, append=T)
+        
         DODir<-DODir
         }
     
@@ -193,16 +222,31 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
     if (doTiler==T){
 
         if (verbose>0){cat('Running Tiler....', '\n')}
+        write('Running Tiler....', file=logName, append=T)
         
         DOcat<-paste(DODir, list.files(path=DODir, pattern='DObj*'),sep='')
         DATAguide<-paste(DODir,list.files(path=DODir, pattern='DGui*'),sep='')
         DATAstspec<-paste(DODir,list.files(path=DODir, pattern='DStd*'),sep='')
-        DATAsky<-paste(DODir,list.files(path=DODir, pattern='DSky*'),sep='')
+        DATAsky<-paste(DODir, list.files(path=DODir, pattern='DSky*'),sep='')
 
         
-        runTiler(workigDir=paste(DODir,'Tiling',sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate)
+        if (verbose>1){cat(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),'\n')}
+        write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
+        
+        
+        runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose)
     }
 
-    cat('** You have reached the end **' , '\n')
+    if (verbose==0){cat('** You have reached the end **' , '\n')}
+    if (verbose>0){
+
+        cat('TAZ sucessfully finished running.', '\n')
+        cat('\n')
+        cat('****************************************************', '\n')
+        cat('********* Ending TAZ version',version,'*************', '\n')
+        cat('****************************************************', '\n')
+        cat('\n')
+        
+    } 
 
 }

@@ -135,6 +135,21 @@ cp ${darkdir}/*blue_DARKcombined.fits  ~/data/reduced/$1/$2/ccd1/config_$config/
 echo "Copied combined dark frame from "$darkdir" into ccd1 directory."
 
 #
+# Copying combined bias frame to ccd2 directory
+#
+cp ${biasdir}/*red_BIAScombined.fits ~/data/reduced/$1/$2/ccd2/config_$config/BIAScombined.fits
+echo "Copied combined bias frame from "$biasdir "into ccd1 directory."
+
+
+#
+# Copying combined dark frame to ccd2 directory
+#
+cp ${darkdir}/*red_DARKcombined.fits  ~/data/reduced/$1/$2/ccd2/config_$config/DARKcombined.fits
+echo "Copied combined dark frame from "$darkdir" into ccd1 directory."
+
+
+
+#
 # Setting up 2dfdr 
 #
 setenv DRCONTROL_DIR $tdfdr_dir

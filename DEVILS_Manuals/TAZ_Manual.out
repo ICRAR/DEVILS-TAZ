@@ -7,6 +7,15 @@
 \BOOKMARK [1][-]{section.2}{Setting Up the DEVILS Directory Structure}{}% 7
 \BOOKMARK [1][-]{section.3}{Adding Observations}{}% 8
 \BOOKMARK [1][-]{section.4}{Running TAZ}{}% 9
-\BOOKMARK [1][-]{section.5}{TAZ Outputs}{}% 10
-\BOOKMARK [1][-]{section.6}{EXAMPLE 1: Manually running 2dfDR using the GUI and extracting spectra, stacking and running AutoZ.}{}% 11
-\BOOKMARK [1][-]{section.7}{EXAMPLE 2: Generating new tiling files from an existing catalogue.}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{EXAMPLE 1: Manually running 2dfDR using the GUI and extracting spectra, stacking and running AutoZ.}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{EXAMPLE 2: Generating new tiling files from an existing catalogue.}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{TAZ Outputs}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Raw Data Meta Information:}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.2}{Spliced reduced data for each night/configuration:}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.3}{Blue arm reduced data for each night/configuration:}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.4}{Red arm reduced data for each night/configuration:}{section.5}% 16
+\BOOKMARK [2][-]{subsection.5.5}{Meta Information for all reduced configurations:}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.6}{Flux calibration meta information for each reduced configuration:}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.7}{Individual extracted spectra from corresponding reduced configuration/night:}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.8}{Individual spectra meta information for each configuration/night:}{section.5}% 20
+\BOOKMARK [1][-]{section.6}{TAZ data flow and components}{}% 21

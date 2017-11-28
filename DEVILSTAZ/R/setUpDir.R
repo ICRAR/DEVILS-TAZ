@@ -47,8 +47,8 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     
     LibPaths<-.libPaths()
     
-    system(paste('cp ', LibPaths, '/TAZ/data/calibrators.tar data/',sep='')) 
-    system(paste('cp ', LibPaths, '/TAZ/data/idxFiles.tar data/',sep=''))
+    system(paste('cp ', LibPaths, '/DEVILSTAZ/data/calibrators.tar data/',sep='')) 
+    system(paste('cp ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar data/',sep=''))
 
     setwd(paste(workingDir, '/data',sep=''))
     system(paste('tar -xvf calibrators.tar',sep='')) 
@@ -83,6 +83,10 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     dev.off()
     CairoPNG('data/observing/DO3_yrPlan2018.png', width=1000, height=600)
     tmp<-yearup(RA="03:34:36.0", Dec="-28:06:00.0", Target='user', Date=c(2018,1,1),Loc='AAT', UTCdiff=10)
+    plotyearup(tmp)
+    dev.off()
+    CairoPNG('data/observing/DO3_yrPlan2019.png', width=1000, height=600)
+    tmp<-yearup(RA="03:34:36.0", Dec="-28:06:00.0", Target='user', Date=c(2019,1,1),Loc='AAT', UTCdiff=10)
     plotyearup(tmp)
     dev.off()
     CairoPNG('data/observing/D10_yrPlan2019.png', width=1000, height=600)
@@ -162,6 +166,9 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             system(paste('mkdir data/rawdata/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/junk', sep=''))
             system(paste('mkdir data/reduced/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''))
             system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''))
+            system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DOCats', sep=''))
+            
+            system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DOCats/TileFiles', sep=''))
             
             if (verbose>0){
                 cat('                    - Making log file....', '\n')

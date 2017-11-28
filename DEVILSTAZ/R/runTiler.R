@@ -1,12 +1,13 @@
-runTiler<-function(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64', workigDir=workigDir, DOcat=DOcat, DATAguide=DOcat, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0){
-
+runTiler<-function(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64', workigDir=workigDir, DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, logName=logName, verbose=verbose){
     
     DOcat=read.table(DOcat,header=T)
     DATAguide=read.table(DATAguide,header=T) 
     DATAstspec=read.table(DATAstspec,header=T)
     DATAsky=read.table(DATAsky,header=T)
 
-
+    if (verbose>1){cat('        - Setting up plate sequence....', '\n')}
+    write('        - Setting up plate sequence....', file=logName, append=T)
+    
     plate_D02A<-c()
     if (N_D02A==1) {plate_D02A<-D02A_startPlate}
     if (N_D02A>1) {
@@ -47,10 +48,18 @@ runTiler<-function(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_6
         }
     }
 
+    if (verbose>1){cat('        - Running Tiling....', '\n')}
+    write('        - Running Tiling....', file=logName, append=T)
+
+    #oldWD<-getwd()
+    #setwd(workigDir)
+    
     if (N_D02A>0){Tiler(tileplus=N_D02A, position='D02A', plate=plate_D02A, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02A), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
     if (N_D02B>0){Tiler(tileplus=N_D02B, position='D02B', plate=plate_D02B, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02B), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
     if (N_D03>0){Tiler(tileplus=N_D03, position='D03', plate=plate_D03, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D03), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
     if (N_D10>0){Tiler(tileplus=N_D10, position='D10', plate=plate_D10, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D10), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
+
+    #setwd(oldWD)
 
     pathD02A<-paste(workigDir,'/D02A/',list.files(path=paste(workigDir,'/D02A',sep=''), pattern='Targ*'), sep='')
     pathD02B<-paste(workigDir,'/D02B/',list.files(path=paste(workigDir,'/D02B',sep=''), pattern='Targ*'), sep='')
@@ -68,6 +77,9 @@ runTiler<-function(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_6
 
     }
 
+    if (verbose>1){cat('        - Tiling Complete', '\n')}
+    write('        - Tiling Complete', file=logName, append=T)
+
     dateF<-strsplit(workigDir, '/')[[1]][4]
     dateF2<-paste(c(strsplit(workigDir, '/')[[1]][1:4], dateF), sep='', collapse='/')
 
@@ -77,7 +89,7 @@ runTiler<-function(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_6
     if (N_D10>0){system(paste('cp ',pathD10,'/D10* ', workigDir,'/TileFiles/',sep=''))}
 
   
-
+ 
     
 
 }

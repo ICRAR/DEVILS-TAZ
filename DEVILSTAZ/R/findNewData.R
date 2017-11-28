@@ -23,7 +23,7 @@ findNewData<-function(logName=logName, verbose=verbose){
     if (length(toReduce)>0){
 
         if (verbose>1){
-            cat(paste('     - ',length(toReduce), ' new date to reduce', sep=''), '\n')            
+            cat(paste('     - ',length(toReduce), ' new dates to reduce', sep=''), '\n')            
         }
 
         write('Running findNewData.....', file=logName, append=T)

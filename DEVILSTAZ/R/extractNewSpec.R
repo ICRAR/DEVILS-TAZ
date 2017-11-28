@@ -219,7 +219,7 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     if (verbose>0){cat('    - Saving meta information of spectra to ',paste(strsplit(file, '.fits')[[1]][1],'_meta.Rdata',sep=''), '\n')}
     write(paste('    - Saving spectrum to ', strsplit(file, '.fits')[[1]][1],'_meta.Rdata',sep=''), file=logName, append=T)
 
-    meta<-data.frame(ID=ID_M,RA=RA_M, DEC=DEC_M, X=X_M, Y=Y_M,XERR=XERR_M,YERR=YERR_M,THETA=THETA_M, TYPE=TYPE_M,PIVOT=PIVOT_M,MAG=PIVOT_M, FIBRE=FIBRE_M, FILE=FILE_M, EXP=EXP_M)
+    meta<-data.frame(ID=ID_M,RA=RA_M, DEC=DEC_M, X=X_M, Y=Y_M,XERR=XERR_M,YERR=YERR_M,THETA=THETA_M, TYPE=TYPE_M,MAG=MAG_M, FIBRE=FIBRE_M, FILE=FILE_M, EXP=EXP_M)
     save(meta, file=paste(strsplit(file, '.fits')[[1]][1],'_meta.Rdata', sep=''))
 
     out<-data.frame(newSpec=newSpec,newID=newID)

@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-import('FITSio', 'astro', 'Tiler', 'magicaxis', 'whatsup', 'Cairo')
+import('FITSio', 'astro', 'Tiler', 'magicaxis', 'whatsup', 'Cairo', 'fftw')

@@ -1,16 +1,28 @@
-UpdateMASTERCat<-function(cat=cat, specDir=specDir){
+UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=verbose){
 
     load(cat)
     
     specs<-list.files(path=specDir,pattern='*.Rdata')
+
+    if (verbose>1){cat('    - Spectra found in directory:',length(specs), '\n')}
+    write(paste('    - Spectra found in directory:',length(specs) ,sep=''), file=logName, append=T)
+
+    
+    if (verbose>1){cat('    - Updating redshifts....', '\n')}
+    write(paste('    - Updating redshifts....',sep=''), file=logName, append=T)
     
     for (i in 1:length(specs)){
+
+        if (verbose>1){cat('        - ',i,' of ', length(specs), '\n')}
+        write(paste('        - ',i,' of ', length(specs),sep=''), file=logName, append=T)
 
         load(paste(specDir,specs[i], sep=''))
 
         ID<-as.numeric(substr(spec$ID, 2,nchar(spec$ID)))
 
         match<-which(DMCat$CATAID==ID)
+
+        #### REMOVE BEFORE REAL RUNS!!!! ####
         match<-round(runif(1,1,length(DMCat$CATAID)))
 
         if (length(match)>0){
@@ -33,12 +45,18 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir){
     
     DMCat$PRIORITY[which(DMCat$DEVILS_prob>0.96)]<-1
     DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-7
+
+    if (verbose>1){
+        cat(length(which(DMCat$DEVILS_prob>0.96)), '    - Sources with successful redshfits', '\n')
+        cat(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)), '    - Sources with unsuccessful redshfits being prioritised', '\n')
+        cat('    - Saving new MASTERcat as:', paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''), '\n')
+    }
+    write(paste(length(which(DMCat$DEVILS_prob>0.96)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
+    write(paste(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)), '    - Sources with unsuccessful redshfits being prioritised',sep=''), file=logName, append=T)
+    write(paste('    - Saving new MASTERcat as: data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''),file=logName, append=T)
     
-    cat(length(which(DMCat$DEVILS_prob>0.96)), ' - Sources with successful redshfits', '\n')
-    cat(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)), ' - Sources with unsuccessful redshfits being prioritised', '\n')
-        
-        save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
-        
+    save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
+    
     return(paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
 
 

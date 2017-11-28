@@ -2,9 +2,13 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T){
 
     for (i in 1:length(specs)){
 
+        if (verbose>1){cat('    - Running AutoZ for spectrum: ',specs[i],  '\n')}
+        write(paste('    - Running AutoZ for spectrum: ',specs[i],sep=''), file=logName, append=T)
+
         load(specs[i])
         
         spec2<-spec
+        spec2$flux<-spec$fluxSub
         spec2$error<-spec$sn
         spec2$longitude =149.0661
         spec2$latitude = -31.27704
@@ -17,10 +21,18 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T){
         spec$z2<-autoz_out$results[4]
         spec$cc2<-autoz_out$results[5]
         spec$Temp<-autoz_out$results[3]
+
+        if (verbose>1){cat('        - AutoZ found redshift of ',spec$z,  '\n')}
+        write(paste('        - AutoZ found redshift of ',spec$z, sep=''), file=logName, append=T)
+        if (verbose>1){cat('        ...with probability of ',spec$prob,  '\n')}
+        write(paste('        ...with probability of : ',spec$prob,sep=''), file=logName, append=T)
  
         save(spec,file=specs[i])
 
         if (makePlots==T){
+
+            if (verbose>1){cat('        - Plotting AutoZ outputs as: ',paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''),  '\n')}
+            write(paste('        - Plotting AutoZ outputs as: data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf', sep=''), file=logName, append=T)
             
             pdf(paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''), width=20, height=12)
 

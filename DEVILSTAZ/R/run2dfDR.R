@@ -3,8 +3,8 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
     
     write('', file=logName, append=T)
-    if (verbose>0){cat('   **** Running run2dfDR.....', '\n')}
-    write('   Running run2dfDR.....', file=logName, append=T)
+    if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
+    write(' Running run2dfDR.....', file=logName, append=T)
 
 
     newReduce<-c()
@@ -13,33 +13,29 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
     for (i in 1:length(toReduce)){
 
         if (verbose>1){cat(paste('   - Reducing date: ',toReduce[i], sep=''), '\n')}
+        write(paste(' - Reducing date: ',toReduce[i], sep=''), file=logName, append=T)
 
         dateReduc<-paste(strsplit(toReduce[i],'/')[[1]][3],'/',strsplit(toReduce[i],'/')[[1]][4],sep='')
         dateReduc2<-strsplit(toReduce[i],'/')[[1]][4]
-        write(paste(' - Reducing date: ',toReduce[i], sep=''), file=logName, append=T)
+        
         calib<-makeCalib(toReduce=toReduce[i], logName=logName, verbose=verbose)
 
-        if (verbose>1){cat(paste('      - Getting meta data for files in:',toReduce[i], sep=''), '\n')}
-        write(paste('    - Getting meta data for files in:',toReduce[i], sep=''), file=logName, append=T)
-
-        saveFile<-paste(toReduce[i],'/', strsplit(toReduce[i],"/")[[1]][3],'_metaData.Rdata', sep='')
+        saveFile<-paste(toReduce[i],'/', strsplit(toReduce[i],"/")[[1]][4],'_metaData.Rdata', sep='')
         metaData<-getFileInfo(dir=toReduce[i],saveFile=saveFile, logName=logName, verbose=verbose)
         configList<-unique(metaData$config)
 
-        if (verbose>1){cat(paste('      - Saving metadata as ',saveFile, sep=''), '\n')}
-        write(paste('    - Saving metadata as ',saveFile, sep=''), file=logName, append=T)
 
         system(paste('mkdir data/reduced/',dateReduc,'/ccd1',sep=''))
         system(paste('mkdir data/reduced/',dateReduc,'/ccd2',sep=''))
 
-        if (verbose>1){cat(paste('    - ',length(configList), ' configurations found in ',toReduce[i], sep=''), '\n')}
-        write(paste('    - ',length(configList), ' configurations found in ',toReduce[i], sep=''), file=logName, append=T)
+        if (verbose>1){cat(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), '\n')}
+        write(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), file=logName, append=T)
 
         
         for (j in 1:length(configList)){
 
-            if (verbose>1){cat(paste('         - Reducing configuration :', configList[j], sep=''), '\n')}
-            write(paste('         - Reducing configuration :', configList[j], sep=''), file=logName, append=T)
+            if (verbose>1){cat(paste('         - Reducing configuration: ', configList[j], sep=''), '\n')}
+            write(paste('         - Reducing configuration: ', configList[j], sep=''), file=logName, append=T)
             
             flat_ccd1<-metaData$fileName[which(metaData$config==configList[j] & metaData$type=='FLAT' & metaData$ccd=='blue')]
             arc_ccd1<-metaData$fileName[which(metaData$config==configList[j] & metaData$type=='ARC' & metaData$ccd=='blue')]
@@ -58,16 +54,21 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
 
                 if (verbose>1){cat('             ** For blue ccd using: ', idx, '\n')}
                 write(paste('             ** For blue ccd using: ', idx,sep=''), file=logName, append=T)
-                
 
-                if (verbose>1){cat('             - Making blue ccd tramline map', '\n')}
-                write('             - Making blue ccd tramline map', file=logName, append=T)
-
-                
                 
                 inFile<-paste(toReduce[i], '/',flat_ccd1,sep='')
 
                 tlmFile<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_tlm.fits', sep='')
+
+
+                if (verbose>1){
+                    cat('             - Reducing TLM file for blue ccd with line:', paste('aaorunTLM(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), '\n')
+                }
+
+                write(paste('             - Reducing TLM file for blue ccd with line: aaorunTLM(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), file=logName, append=T)
+
+
+                
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
                     aaorunTLM(file=paste(toReduce[i], '/',flat_ccd1,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, outname=tlmFile)
@@ -78,10 +79,16 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
                     
                 }
    
-                if (verbose>1){cat('             - Reducing ARC file for blue ccd', '\n')}
-                write('             - Reducing ARC file for blue ccd', file=logName, append=T)
-                
+    
                 arcFile<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_arc.fits', sep='')
+
+                       
+                if (verbose>1){
+                    cat('             - Reducing ARC file for blue ccd with line:', paste('aaorunARC(file=',toReduce[i], '/',flat_ccd1,' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), '\n')
+                }
+
+                write(paste('             - Reducing ARC file for blue ccd with line: aaorunARC(file=',toReduce[i], '/',flat_ccd1,' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), file=logName, append=T)
+                
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_arc.fits',sep='')))==0){
                     
@@ -95,11 +102,16 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(arc_ccd1),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd1/', sep=''))
                 }
 
-                if (verbose>1){cat('             - Reducing flat field file for blue ccd', '\n')}
-                write('             - Reducing flat field file for blue ccd', file=logName, append=T)
-            
-                
+      
                 flatFile<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_flat.fits', sep='')
+
+                if (verbose>1){
+                    cat('             - Reducing Flat file for blue ccd with line:', paste('aaorunFLAT(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,',doBias=T, biasFile=',calib$biasFileBlue,', arcFile=',arcFile,')', sep=''), '\n')
+                }
+
+                write(paste('             - Reducing Flat file for blue ccd with line: aaorunFLAT(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,',doBias=T, biasFile=',calib$biasFileBlue,', arcFile=',arcFile,')', sep=''), file=logName, append=T)
+
+                
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_flat.fits',sep='')))==0){
                     
@@ -117,8 +129,8 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
 
                                         # reduce target files ccd1
 
-                if (verbose>1){cat('             - Reducing target data for blue ccd', '\n')}
-                write('             - Reducing target data for blue ccd', file=logName, append=T)
+                if (verbose>1){cat('             - Reducing target data for blue ccd....', '\n')}
+                write('             - Reducing target data for blue ccd....', file=logName, append=T)
             
                 for (k in 1:length(targets_ccd1)){
 
@@ -138,8 +150,8 @@ run2dfDR<-function(toReduce=toReduce, logName=logName, verbose=verbose){
 
                 }
 
-                if (verbose>1){cat('             - Combining target files', '\n')}
-                write('             - Combining target files', file=logName, append=T)
+                if (verbose>1){cat('             - Combining target files....', '\n')}
+                write('             - Combining target files....', file=logName, append=T)
 
 
                 combineList<-paste('data/reduced/',dateReduc,'/ccd1/',list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')

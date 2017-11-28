@@ -1,0 +1,41 @@
+=================================================
+DEVILS Run: **FILL IN** Date: **FILL IN** Nightly Log
+=================================================
+ 
+ 
+Observers: **FILL IN**
+Support Astronomer: **FILL IN**
+Night Assistant: **FILL IN**
+ 
+Conditions at start: 	**FILL IN**
+Conditions at end: 	**FILL IN**
+Useful fraction:	**FILL IN**
+Twilight: 		**FILL IN**
+Seeing: 		**FILL IN**
+ 
+ 
+Fibres: 393 on Plate 0, 395 on Plate 1
+Central Wavelength: 	6000A
+Central Blue: 		4801A
+Blaze Blue:		4801A
+Central Red:		7250A
+Blaze Red:		7250A
+Gratings: 		580V, 385R
+ARC lamps:		Standard (FeAr_1, FeAr_2, CuAr_1, CuAr_2, CuHe_1, CuNe_1)
+FLAT lamp:		Quartz_20_2, 75W
+ 
+ 
+*** EXAMPLES PLEASE AMMEND ***
+Field    Configuration                         Plate    Start    End    Frames    Targets    Comment
+D10	D10_Y2017_SB_R1tile002-149.98-2.25P1  0        18:28    20:43  3x2400s   xxx        xxx    
+ 
+ 
+*** EXAMPLES PLEASE AMMEND ***
+FileName       Configuration                         Type    Comment 
+18dec10001-30  NA                                    bias            
+18dec10031     D10_Y2017_SB_R1tile002-149.98-2.25P1  flat    JUNK    
+18dec10032     D10_Y2017_SB_R1tile002-149.98-2.25P1  flat    Good    
+18dec10033     D10_Y2017_SB_R1tile002-149.98-2.25P1  arc             
+18dec10034     D10_Y2017_SB_R1tile002-149.98-2.25P1  target  1800sec 
+18dec10035     D10_Y2017_SB_R1tile002-149.98-2.25P1  target  1800sec 
+18dec10036     D10_Y2017_SB_R1tile002-149.98-2.25P1  target  1800sec 

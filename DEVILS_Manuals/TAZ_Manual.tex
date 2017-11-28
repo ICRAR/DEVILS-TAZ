@@ -7,7 +7,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{enumitem}
 \usepackage{sidecap}
-\usepackage[top=10mm, bottom=10mm, left=10mm, right=10mm]{geometry}
+\usepackage[top=15mm, bottom=15mm, left=15mm, right=15mm]{geometry}
 \usepackage{multicol}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{wrapfig}
@@ -24,8 +24,16 @@
 \begin{document}
 \title{DEVILS - Tool for Analysis and Redshifting (TAZ) }
 
+
+\begin{figure}
 \begin{center}
-\Large {\textcolor{black}{\textbf{DEVILS - Tool for Analysis and Redshifting (TAZ) Version 0.1}}}
+\includegraphics[scale=0.8]{devils-logo_big.png}
+\end{center}
+\end{figure}
+
+\begin{center}
+\Huge {\textcolor{PineGreen}{\textbf{Tool for Analysis and Redshifting (TAZ)}}}
+\Huge {\textcolor{PineGreen}{\textbf{ Version 0.1}}}
 \end{center}
 \normalsize
 
@@ -209,9 +217,9 @@ Here I will just give a high level overview of running the TAZ software. More de
 
 To run TAZ you will need to run the command similar too: \\
 
-\hspace{10mm} \texttt{$>$ TAZ\_v0.1(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
+\hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=1, N\_D10=1, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
-D03\_startPlate=0, D10\_startPlate=0, doSetUp=F doReduce=T, doExtract=T,  \$ \\
+D03\_startPlate=0, D10\_startPlate=0,  doReduce=T, doExtract=T,  \$ \\
 toExtractFiles=toExtractFiles, doStack=T, toStackIDs=toStackIDs, doAutoZ=T, \$ \\
 toAutoZStacks=toAutoZStacks, doUpdateMaster=T, doTiler=T, \$ \\
 DODir=`$\sim$/DEVILS/TAZ/data/observing/run1\_2017\_12/2017\_12\_18/DOCats/')} \\
@@ -223,7 +231,6 @@ $\bullet$ \texttt{workingDir}=The directory location where your previously gener
 $\bullet$ \texttt{verbose}=How much information to give you about TAZ,  verbose=0,1,2.\\
 $\bullet$ \texttt{N\_D?} = Number of new fibre configurations to generate in each field. Use for next night's tiling\\
 $\bullet$ \texttt{D?\_startPlate} = Starting plate number for each configuration (either 0 or 1)\\
-$\bullet$ \texttt{doSetUp} - TRUE/FALSE. Run the directory setup script. You will not need to do this if you followed the above.\\
 $\bullet$ \texttt{doReduce} - TRUE/FALSE. Do you want to reduce new data? TAZ will look for new data as files where there is data in the \textbf{raw/} directory for a particular night, but nothing in the corresponding \textbf{reduced/} directory. For the advanced user, you can force this by running \texttt{run2dfDR(toReduce=toReduce)} where \texttt{toReduce} is a list of raw directories you want to reduce. \\
 $\bullet$ \texttt{doExtract} - TRUE/FALSE. Do you want to extract 1D spectra from the files you have reduced? If you have set \texttt{doReduce=F} and \texttt{doExtract=T} you will need to provide a list of reduced files to extract..... \\
 $\bullet$ \texttt{toExtractFiles} - A string vector list of reduced files for which you wish to extract 1D spectra. Set if \texttt{doReduce=F} and \texttt{doExtract=T}. These need to be the full directory path in the DEVILS data structure. $i.e.$ data/reduced/run2\_2018\_01/2018\_1\_9/2018\_1\_9\_config\_1\_reduced.fits. \\
@@ -237,19 +244,15 @@ $\bullet$ \texttt{DODir} - If you have set \texttt{doUpdateMaster=F} and \texttt
 
 For the most common cases you would wish to run something like: \\
 
-\hspace{10mm} \texttt{$>$ TAZ\_v0.1(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
+\hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=4, N\_D10=4, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
-D03\_startPlate=0, D10\_startPlate=0, doSetUp=F doReduce=T, doExtract=T,  \$ \\
+D03\_startPlate=0, D10\_startPlate=0,  doReduce=T, doExtract=T,  \$ \\
 doStack=T,  doAutoZ=T, doUpdateMaster=T, doTiler=T )\$ }\\
 
 This will run the code from end to end, finding the new data to reduce, reducing it using 2dfDR, extracting new 1D spectra, stacking new spectra with exisiting spectra, running Auto-z, updating the master catalogue, running the tiling using \textsc{configure}, and producing the new tiling files. 
 
-\section{TAZ Outputs}
 
-TAZ will have generated a large number of output files in different parts of the 
-
-
-\section{EXAMPLE 1: Manually running 2dfDR using the GUI and extracting spectra, stacking and running AutoZ.}
+\subsection{EXAMPLE 1: Manually running 2dfDR using the GUI and extracting spectra, stacking and running AutoZ.}
 
 This will be similar to how the observers at the telescope will use this software, so please see the DEVILS\_Observing\_Manual.pdf for more details. However,  I will briefly describe this process here. 
 
@@ -263,7 +266,7 @@ There must be a reduced file for the full spliced data, the blue arm and the red
 
 You must then most these files to the correct part of the directory structure:
 
-- Full spliced: \textbf{data/reduced/*runName*/*year*\_*month*\_*day*/} ($e.g.$ \textbf{data/reduced/run1\_2017\_12/2017\_12\_18/}) \\
+- Full spliced: \textbf{data/reduced/*runName*/*year*\_*month*\_*day*/} ($e.g.$ \textbf{data/reduced/run1\_2017\_12/ 2017\_12\_18/}) \\
 - Blue CCD: \textbf{data/reduced/*runName*/*year*\_*month*\_*day*/ccd1/} \\
 - Red CCD: \textbf{data/reduced/*runName*/*year*\_*month*\_*day*/ccd2/}\\
  
@@ -272,31 +275,153 @@ You must then most these files to the correct part of the directory structure:
  
  \hspace{10mm} \texttt{$>$ ReducList<-c('data/reduced/run2\_2018\_01/2017\_12\_18\_config\_4\_reduced.fits')}\\
  
- \hspace{10mm} \texttt{$>$ TAZ\_v0.1(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
+ \hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=4, N\_D10=4, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
-D03\_startPlate=0, D10\_startPlate=0, doSetUp=F doReduce=F, doExtract=T,  \$ \\
+D03\_startPlate=0, D10\_startPlate=0,  doReduce=F, doExtract=T,  \$ \\
 toExtractFiles=ReducList, doStack=T,  doAutoZ=T, doUpdateMaster=T, doTiler=T ) }\\
 
 You only need to give  \texttt{toExtractFiles} the full spliced frame location and it will find the blue and red arms. In this example, only one file is being extracted. However, you can give \texttt{toExtractFiles} a list of files and it will extract all of them. If you only want to extract the spectra and run AutoZ (not update the catalogues/run the tiling), then run: \\
 
- \hspace{10mm} \texttt{$>$ TAZ\_v0.1(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
+ \hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=4, N\_D10=4, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
-D03\_startPlate=0, D10\_startPlate=0, doSetUp=F doReduce=F, doExtract=T,   \$ \\
+D03\_startPlate=0, D10\_startPlate=0,  doReduce=F, doExtract=T,   \$ \\
 toExtractFiles=ReducList, doStack=T,  doAutoZ=T, doUpdateMaster=F, doTiler=F ) }\\  
  
 
-\section{EXAMPLE 2: Generating new tiling files from an existing catalogue.}
+\subsection{EXAMPLE 2: Generating new tiling files from an existing catalogue.}
 
 Another thing you may commonly wish to do is generate new tiling files without running any of the reduction/analysis. To do this, you simply need to point TAZ to a specific DOCat directory in the \textbf{data/observing/} part of the data structure. For example:\\
 
  \hspace{10mm} \texttt{$>$ DODir<-c(`data/observing/run1\_2017\_12/2017\_12\_18/DOCats/')}\\
 
- \hspace{10mm} \texttt{$>$ TAZ\_v0.1(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
+ \hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=4, N\_D10=4, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
-D03\_startPlate=0, D10\_startPlate=0, doSetUp=F doReduce=F, doExtract=F,   \$ \\
+D03\_startPlate=0, D10\_startPlate=0,  doReduce=F, doExtract=F,   \$ \\
  doStack=F,  doAutoZ=F, doUpdateMaster=F, doTiler=T, DODir=DODir) }\\  
 
-This will generate four new configurations for D03 and four for D10 and put them in the data/observing/run1\_2017\_12/2017\_12\_18/DOCats/Tiling/TileFiles/ directory. 
+This will generate four new configurations for D03 and four for D10 and put them in the data/observing/run1\_2017 \_12/2017\_12\_18/DOCats/Tiling/TileFiles/ directory. 
+
+
+\section{TAZ Outputs}
+
+TAZ will have generated a large number of output files in different parts of the directory structure. Below is a list of key data products produced by TAZ such that you can easily find things in the data structure: 
+
+\subsection{Raw Data Meta Information:}
+
+\textbf{/data/raw/*runNum*/*date*/*date*\_metaData.Rdata} 
+
+R data file containing meta data from FITS header of all raw files in the current directory. To view this data, move to the directory in which is is contained, open and R session and type: \\
+
+\hspace{10mm}  \texttt{$>$ load(`*date*\_metaData.Rdata')}\\
+
+\hspace{10mm}  \texttt{$>$ metaData}\\
+  
+ 
+ This will display the filename, ccd, field, RA/DEC centre, exposure time in seconds, the type of data, fibre configuration, date and grating for each file.  
+
+ 
+\subsection{Spliced reduced data for each night/configuration:} 
+ 
+ \textbf{/data/reduced/*runName*/*date*/*date*\_config\_?\_reduced.fits} 
+ 
+ FITS file with the fully reduced and spliced data for a particular fibre configuration.
+
+  
+\subsection{Blue arm reduced data for each night/configuration:} 
+   
+   \textbf{/data/reduced/*runName*/*date*/ccd1/*date*\_config\_?\_reduced\_blue.fits} 
+   
+   FITS file with the fully reduced blue data for a particular fibre configuration.
+ 
+  
+\subsection{Red arm reduced data for each night/configuration:} 
+  
+  \textbf{/data/reduced/*runName*/*date*/ccd2/*date*\_config\_?\_reduced\_blue.fits} 
+  
+  FITS file with the fully reduced red data for a particular fibre configuration.
+ 
+
+\subsection{Meta Information for all reduced configurations:} 
+ 
+ \textbf{/data/reduced/*runName*/*date*/*date*\_metaData.Rdata} 
+ 
+ Meta information for all reduced data frames. To view this data, move to the directory in which is is contained, open and R session and type:\\
+ 
+
+\hspace{10mm}  \texttt{$>$ load(`*date*\_metaData.Rdata')}\\
+
+\hspace{10mm}  \texttt{$>$ metaData}\\
+
+ This will display the filename, ccd, field, RA/DEC centre, exposure time in seconds, the type of data, fibre configuration, date and grating for each file.  
+  
+ 
+ \subsection{Flux calibration meta information for each reduced configuration:} 
+  
+  \textbf{/data/reduced/*runName*/*date*/ccd2/*date*\_config\_?\_reduced\_zeroPoints.Rdata} 
+  
+  R data file with flux calibration information for each reduced frame. To view this data, move to the directory in which is is contained, open and R session and type:\\
+ 
+
+\hspace{10mm}  \texttt{$>$ load(`*date*\_config\_?\_reduced\_zeroPoints.Rdata')}\\
+
+\hspace{10mm}  \texttt{$>$ zeroPoints}\\
+
+This will display:\\
+
+ZP - Magnitude zero point of the frame calculated from standard stars     \\
+ZPMAD - Median average deviation of ZP    \\
+ZPRMS - RMS of ZP   \\
+ZPNUM - Number of standards used to calculate ZP\\
+FLUXSC - The flux scaling to convert counts to ergs/sec/cm$^2$/Ang/\\
+ZP\_red... - Same values for red and blue arm data individually.  \\
+
+
+ \subsection{Individual extracted spectra from corresponding reduced configuration/night:}
+ 
+   \textbf{/data/reduced/*runName*/*date*/ccd2/*date*\_config\_?\_reduced\_spec/}
+   
+  Directory containing all individually reduced spectra from the corresponding  configuration. This directory will also contain 1D plots if requested in TAZ. Each spectrum is stored as an R data structure. To view this data, move to the directory in which is is contained, open and R session and type (for example):\\
+  
+\hspace{10mm}  \texttt{$>$ load(`2017\_12\_18\_G2271755.Rdata')}\\
+
+\hspace{10mm}  \texttt{$>$ spec}\\  
+
+This structure contains various data and meta information for this observation, such a flux, wavelength, sky. It also retains the individual blue and red arms of the spectrum prior to splicing. Note that these are not flux calibrated, but contain the flux calibration information to convert pixels to ergs/sec/cm$^2$/A (fluxSc). To view the spectrum simply type:\\
+
+ \hspace{10mm}  \texttt{$>$ magplot(spec\$wave, spec\$flux, type='l')}\\  
+
+
+
+ \subsection{Individual spectra meta information for each configuration/night:} 
+ 
+  \textbf{/data/reduced/*runName*/*date*/ccd2/*date*\_config\_?\_reduced\_meta.Rdata} 
+  
+  R data file containing the meta information for each spectrum row in the corresponding reduced file. To view this data, move to the directory in which is is contained, open and R session and type:\\
+ 
+
+\hspace{10mm}  \texttt{$>$ load(`*date*\_config\_?\_reduced\_meta.Rdata')}\\
+
+\hspace{10mm}  \texttt{$>$ meta}\\
+
+This will display:\\
+
+ID - Source ID from input catalogue    \\
+RA - Fibre RA \\
+DEC - Fibre DEC \\
+X - Fibre X \\
+Y - Fibre Y \\
+XERR - Fibre X error \\
+YERR- Fibre Y error\\
+THETA - Fibre angle \\
+TYPE - Type of source (Target, sky, standard, guide)\\
+MAG - Magnitude of source from input cat\\
+FIBRE - Fibre Number\\
+ 
+ 
+ 
+ 
+ \section{TAZ data flow and components}
+  
 
 \end{document}
 

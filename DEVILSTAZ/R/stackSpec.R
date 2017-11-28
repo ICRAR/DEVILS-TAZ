@@ -4,8 +4,14 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
     
     for (i in 1:length(ids)){
 
+        if (verbose>1){cat('    - Stacking spectrum: ', ids[i], '\n')}
+        write(paste('    - Stacking spectrum: ', ids[i],sep=''), file=logName, append=T)
+
         listSpec<-list.files(path='data/reduced/allSpec/', pattern=paste('*',ids[i],'.Rdata',sep=''))
 
+
+        if (verbose>1){cat('       - Found ', length(listSpec), ' matching spectra', '\n')}
+        write(paste('       - Found ', length(ids[i]), ' matching spectra',sep=''), file=logName, append=T)
         
         
         for (j in 1:length(listSpec)){
@@ -13,6 +19,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
             load(paste('data/reduced/allSpec/',listSpec[j],sep=''))
 
             if (j==1){
+
+                if (verbose>1){cat('           - Loading spectrum... ', j,  '\n')}
+                write(paste('           - Loading spectrum...', j, sep=''), file=logName, append=T)
 
                 ID<-spec$ID
                 RA<-spec$RA
@@ -23,6 +32,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 wave<-spec$wave
                 waveBlue<-spec$waveBlue   
                 waveRed<-spec$waveRed
+
+                if (verbose>1){cat('           - Calculating helocentric velcoity correction for spec...',j, '\n')}
+                write(paste('           - Calculating helocentric velcoity correction for spec...',j ,sep=''), file=logName, append=T)
 
                 vcorr<-Heliocentric(RA, DEC, epoch = 2000.0, tai = UTMJD, longitude =149.0661, latitude = -31.27704, altitude = 1164)
                 wave<-wave+(wave*(vcorr/2.99792458e5))
@@ -39,6 +51,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 skyBlue<-spec$skyBlue
                 skyRed<-spec$skyRed
                 EXP<-spec$EXP
+
+                if (verbose>1){cat('           - Extracting continuum of spec...',j, '\n')}
+                write(paste('           - Extracting continuum of spec...',j, sep=''), file=logName, append=T)
                 
                 fit1 <- lm(flux~ poly(wave, 10, raw=TRUE))
                 fluxSub<- flux-predict(fit1, data.frame(x=wave))
@@ -75,9 +90,15 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
 
             if (j>1){
 
+                if (verbose>1){cat('           - Loading spectrum... ', j,  '\n')}
+                write(paste('           - Loading spectrum...', j, sep=''), file=logName, append=T)
+
                 wave_N<-spec$wave
                 waveBlue_N<-spec$waveBlue   
                 waveRed_N<-spec$waveRed
+
+                  if (verbose>1){cat('           - Calculating helocentric velcoity correction for spec...',j, '\n')}
+                write(paste('           - Calculating helocentric velcoity correction for spec...',j ,sep=''), file=logName, append=T)
 
                 vcorr<-Heliocentric(RA, DEC, epoch = 2000.0, tai = UTMJD, longitude =149.0661, latitude = -31.27704, altitude = 1164)
                 wave_N<-wave_N+(wave_N*(vcorr/2.99792458e5))
@@ -101,6 +122,11 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 snIntBlue<-approx(waveBlue_N, snBlue_N, waveBlue)$y
                 snIntRed<-approx(waveRed_N, snRed_N, waveRed)$y
 
+
+                if (verbose>1){cat('           - Extracting continuum of spec...',j, '\n')}
+                write(paste('           - Extracting continuum of spec...',j, sep=''), file=logName, append=T)
+                
+
                 fit1 <- lm(fluxInt ~ poly(wave, 6, raw=TRUE))
                 fluxSub_N<- fluxInt-predict(fit1, data.frame(x=wave))
                 for (kk in 1:2) {
@@ -122,7 +148,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                     fit1 <- lm(fluxSubRed_N~ poly(waveRed, 6, raw=TRUE))
                     fluxSubRed_N <- fluxSubRed_N-predict(fit1, data.frame(x=waveRed))
                 }
-                
+
+                if (verbose>1){cat('           - Calculating weighting of spec...',j, '\n')}
+                write(paste('           - Calculating weighting of spec...',j, sep=''), file=logName, append=T)
 
                 weight<-sn/snInt
                 weightBlue<-snBlue/snIntBlue
@@ -131,6 +159,10 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 sc<-sc+weight
                 scBlue<-scBlue+weightBlue
                 scRed<-scRed+weightRed
+
+
+                if (verbose>1){cat('           - Adding to stack. Spec...',j, '\n')}
+                write(paste('           - Adding to stack. Spec...',j, sep=''), file=logName, append=T)
 
                
                 flux<-(flux+(fluxInt*weight))
@@ -153,6 +185,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
 
         }
 
+        if (verbose>1){cat('       - Scaling final stack ', '\n')}
+        write(paste('       - Scaling final stack', sep=''), file=logName, append=T)
+
         flux<-flux/sc
       
         fluxBlue<-fluxBlue/scBlue
@@ -167,6 +202,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         snRed<-snRed/(scRed*sqrt(length(listSpec)))
 
         NStack<-length(listSpec)
+
+        if (verbose>1){cat('   - Writing stack as: ',paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), '\n')}
+        write(paste('   - Writing stack as: data/reduced/stackedSpec/',ID,'.Rdata', sep=''), file=logName, append=T)
         
 
         spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), fluxSc=fluxSc,fluxScBlue=fluxScBlue,fluxScRed=fluxScRed)
@@ -177,6 +215,9 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         specStack<-spec
         
         if (makePlot==T){
+
+            if (verbose>1){cat('   - Plotting stack as: ',paste('data/reduced/stackedSpec/plots/',ID,'.pdf',sep=''), '\n')}
+            write(paste('   - Plotting stack as: data/reduced/stackedSpec/plots/',ID,'.pdf', sep=''), file=logName, append=T)
 
             peak<-max(spec$flux[which(spec$wave>6000)], na.rm=T)
             pdf(paste('data/reduced/stackedSpec/plots/',ID,'.pdf',sep=''), width=12,height=5*(NStack)+2)

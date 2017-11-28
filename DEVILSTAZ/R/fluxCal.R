@@ -84,7 +84,7 @@ fluxCal<-function(file=file, stdStars=stdStars, logName=logName, verbose=verbose
         RA<-tab$col[which(tab$colNames=='RA')][[1]]*(180/pi)
         DEC<-tab$col[which(tab$colNames=='DEC')][[1]]*(180/pi)
 
-        dist<-sqrt((std_RA-RA)^2+(std_DEC-DEC)^2)
+        dist<-sqrt((std_RA-RA[stdNum[i]])^2+(std_DEC-DEC[stdNum[i]])^2)
         matchStd<-which(dist==min(dist))
         
         fluxSpec<-im$imDat[,stdNum[i]]  

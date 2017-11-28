@@ -11,7 +11,7 @@ if ($#argv != 2 || $1 == "-help") then
     echo " "
     echo Setup directories for a new night.
     echo " "
-    echo runName = name of run in format run#_year_month: i.e. run1_2017_12
+    echo runName = name of run in format run\#_year_month: i.e. run1_2017_12
     echo date = ndate of night in format year_month_day: i.e. 2017_12_18
     echo " "
     echo Options include:
@@ -48,6 +48,9 @@ mkdir ~/data/rawdata/$1/$2
 mkdir ~/data/rawdata/$1/$2/junk
 mkdir ~/data/idxFiles
 echo "Directory structure in place: "$1/$2
+
+cp ~/data/observing/TEMPLATE_obs_log.txt mkdir ~/data/observing/$1/$2/$2_DEVILS_obs_log.txt 
+echo "Log file setup as: " ~/data/observing/$1/$2/$2_DEVILS_obs_log.txt 
 
 mkdir /configs/devils/$1/
 mkdir /configs/devils/$1/$2
