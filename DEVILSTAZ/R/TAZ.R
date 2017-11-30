@@ -1,5 +1,6 @@
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose=2, N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, doReduce=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',zeroPoint=T){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose=2, N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, doCalibQC=F, doReduce=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',zeroPoint=T, cores=cores){
 
+    registerDoParallel(cores=cores)
 
     version<-0.1
     cat('\n')
@@ -62,7 +63,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         if (verbose>0){cat('Reducing new datasets....', '\n')}
         write('Reducing new datasets....', file=logName, append=T)
         
-        newReduce<-run2dfDR(toReduce=toReduce,logName=logName, verbose=verbose)
+        newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=cores)
 
         stdStars<-read.csv('data/calibrators/stdstars/stdStarCat.csv')
 
@@ -96,6 +97,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         newSpec<-c()
         newIds<-c()
 
+        
         for (i in 1:length(newReduce)){
 
             if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
@@ -150,7 +152,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         if (verbose>0){cat('Running AutoZ for new spectra....', '\n')}
         write('Running AutoZ for new spectra....', file=logName, append=T)
         
-        runAutoZ(specs=newStacks, logName=logName, verbose=verbose)
+        runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
     }
 
     if (doUpdateMaster==T){
@@ -206,7 +208,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         if (verbose>0){cat('Making DO cats....', '\n')}
         write('Making DO cats....', file=logName, append=T)
 
-        DODir<-makeDOCats(MASTERCat=newMaster, UserName=user,dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
+        DODir<-makeDOCats(MASTERCat=newMaster, UserName=user, dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
 
     }
 
@@ -234,7 +236,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
         
         
-        runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose)
+        runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores)
     }
 
     if (verbose==0){cat('** You have reached the end **' , '\n')}

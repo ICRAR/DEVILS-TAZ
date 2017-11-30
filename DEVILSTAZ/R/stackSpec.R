@@ -1,5 +1,17 @@
 stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
 
+    if (ids[1]=='all'){
+        ids<-c()
+        
+        listSpec<-list.files(path='data/reduced/allSpec/', pattern=paste('*.Rdata',sep=''))
+        for (j in 1:length(listSpec)){
+            tmp<-strsplit(listSpec[j], '_')[[1]][4]
+            tmp<-strsplit(tmp, '.Rdata')[[1]][1]
+            ids<-c(ids, tmp)
+
+        }
+    }
+    
     newStacks<-c()
     
     for (i in 1:length(ids)){
@@ -61,14 +73,14 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                     fit1 <- lm(fluxSub ~ poly(wave, 10, raw=TRUE))
                     fluxSub <- fluxSub-predict(fit1, data.frame(x=wave))
                 }
-   
+                
                 fit1 <- lm(fluxBlue~ poly(waveBlue, 10, raw=TRUE))
                 fluxSubBlue<- fluxBlue-predict(fit1, data.frame(x=waveBlue))
                 for (kk in 1:4) {
                     fit1 <- lm(fluxSubBlue ~ poly(waveBlue, 10, raw=TRUE))
                     fluxSubBlue <- fluxSubBlue-predict(fit1, data.frame(x=waveBlue))
                 }
-              
+                
 
                 fit1 <- lm(fluxRed~ poly(waveRed, 10, raw=TRUE))
                 fluxSubRed<- fluxRed-predict(fit1, data.frame(x=waveRed))
@@ -76,7 +88,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                     fit1 <- lm(fluxSubRed ~ poly(waveRed, 10, raw=TRUE))
                     fluxSubRed <- fluxSubRed-predict(fit1, data.frame(x=waveRed))
                 }
-        
+                
                 sc<-1
                 scBlue<-1
                 scRed<-1
@@ -84,7 +96,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 fluxScBlue=spec$fluxScBlue
                 fluxScRed=spec$fluxScRed
 
-             
+                
                 
             }
 
@@ -97,7 +109,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 waveBlue_N<-spec$waveBlue   
                 waveRed_N<-spec$waveRed
 
-                  if (verbose>1){cat('           - Calculating helocentric velcoity correction for spec...',j, '\n')}
+                if (verbose>1){cat('           - Calculating helocentric velcoity correction for spec...',j, '\n')}
                 write(paste('           - Calculating helocentric velcoity correction for spec...',j ,sep=''), file=logName, append=T)
 
                 vcorr<-Heliocentric(RA, DEC, epoch = 2000.0, tai = UTMJD, longitude =149.0661, latitude = -31.27704, altitude = 1164)
@@ -144,7 +156,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 
                 fit1 <- lm(fluxRed ~ poly(waveRed, 6, raw=TRUE))
                 fluxSubRed_N<- fluxIntRed-predict(fit1, data.frame(x=waveRed))
-                 for (kk in 1:2) {
+                for (kk in 1:2) {
                     fit1 <- lm(fluxSubRed_N~ poly(waveRed, 6, raw=TRUE))
                     fluxSubRed_N <- fluxSubRed_N-predict(fit1, data.frame(x=waveRed))
                 }
@@ -164,7 +176,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
                 if (verbose>1){cat('           - Adding to stack. Spec...',j, '\n')}
                 write(paste('           - Adding to stack. Spec...',j, sep=''), file=logName, append=T)
 
-               
+                
                 flux<-(flux+(fluxInt*weight))
                 fluxBlue<-(fluxBlue+(fluxIntBlue*weightBlue))
                 fluxRed<-(fluxRed+(fluxIntRed*weightRed))
@@ -189,7 +201,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         write(paste('       - Scaling final stack', sep=''), file=logName, append=T)
 
         flux<-flux/sc
-      
+        
         fluxBlue<-fluxBlue/scBlue
         fluxRed<-fluxRed/scRed
 
@@ -210,7 +222,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), fluxSc=fluxSc,fluxScBlue=fluxScBlue,fluxScRed=fluxScRed)
 
         save(spec, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''))
-        newStacks<-c(newStacks, paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''))
+        newStacks<-c(newStacks, as.character(paste('data/reduced/stackedSpec/',ID,'.Rdata',sep='')))
 
         specStack<-spec
         
@@ -225,7 +237,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
             par(mfrow = c(NStack+2, 1))
             par(mar=c(3.1,3.1,1.1,1.1))
             layout(matrix(seq(1,NStack+2,1), NStack+2, 1, byrow = TRUE))
-          
+            
             for (j in 1:length(listSpec)){
 
                 load(paste('data/reduced/allSpec/',listSpec[j],sep=''))
@@ -236,8 +248,8 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
             
 
             magplot(specStack$wave, hanning.smooth(specStack$flux, degree=9), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=c(3600,9000), ylim=c(peak*-2,peak*2.0), main='Stacked')
-            #lines(specStack$waveBlue, specStack$fluxBlue, col='blue')
-            #lines(specStack$waveRed, specStack$fluxRed, col='red')
+                                        #lines(specStack$waveBlue, specStack$fluxBlue, col='blue')
+                                        #lines(specStack$waveRed, specStack$fluxRed, col='red')
             tmpSn<-(specStack$sn/max(specStack$sn, na.rm=T))*0.4*peak
             tmpSky<-(specStack$sky/max(specStack$sky, na.rm=T))*0.4*peak
             lines(specStack$wave, tmpSn, col='indianred2')
@@ -245,8 +257,8 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
             legend('bottomright', legend=c(paste('ID=',spec$ID,sep=''), paste('z=',specStack$z,sep=''), paste('mag=',specStack$MAG,sep=''), paste('Nstack=',NStack,sep='')), bg='white')
 
             magplot(specStack$wave, hanning.smooth(specStack$fluxSub, degree=9), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=c(3600,9000), ylim=c(peak*-2,peak*2.0), main='Stacked - cont Subracted')
-            #lines(specStack$waveBlue, hanning.smooth(specStack$fluxSubBlue, degree=9), col='blue')
-            #lines(specStack$waveRed, hanning.smooth(specStack$fluxSubRed, degree=9), col='red')
+                                        #lines(specStack$waveBlue, hanning.smooth(specStack$fluxSubBlue, degree=9), col='blue')
+                                        #lines(specStack$waveRed, hanning.smooth(specStack$fluxSubRed, degree=9), col='red')
             tmpSn<-(specStack$sn/max(specStack$sn, na.rm=T))*0.4*peak
             tmpSky<-(specStack$sky/max(specStack$sky, na.rm=T))*0.4*peak
             lines(specStack$wave, tmpSn, col='indianred2')
@@ -255,7 +267,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
             
             dev.off()
 
-            }
+        }
         
     }
 

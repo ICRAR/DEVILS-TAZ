@@ -1,8 +1,10 @@
-makeCalib<-function(toReduce=toReduce, logName=logName, verbose=verbose){
+makeCalib<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose){
 
     if (verbose>0){cat('     - Running makeCalib.....', '\n')}
 
     write('     - Running makeCalib.....', file=logName, append=T)
+
+    
                        
     for (i in 1:length(toReduce)){
 
@@ -130,5 +132,8 @@ makeCalib<-function(toReduce=toReduce, logName=logName, verbose=verbose){
         
 
     }
+
+    if (doCalibQC==T){checkCal(biasDir=biasDir, darksDir=darkDir, verbose=verbose)}
+        
     return(calib)
 }

@@ -44,7 +44,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
 
     
     DMCat$PRIORITY[which(DMCat$DEVILS_prob>0.96)]<-1
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-7
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-8
 
     if (verbose>1){
         cat(length(which(DMCat$DEVILS_prob>0.96)), '    - Sources with successful redshfits', '\n')

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.23)  27 NOV 2017 16:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.23)  30 NOV 2017 15:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -443,7 +443,7 @@ LaTeX Info: Redefining \nameref on input line 24.
 \openout3 = `TAZ_Manual.out'.
 
 
-<devils-logo_big.png, id=4, 582.978pt x 188.1429pt>
+<devils-logo_big.png, id=96, 582.978pt x 188.1429pt>
 File: devils-logo_big.png Graphic file (type png)
  <use devils-logo_big.png>
 Package pdftex.def Info: devils-logo_big.png used on input line 30.
@@ -625,39 +625,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 200--201
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--214
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--219
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 225--226
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=T, doExtract=F,
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.226 
+       [4]
+Overfull \hbox (2.40596pt too wide) in paragraph at lines 227--228
+\OT1/cmr/m/n/12 The most im-por-tant thing to check is that you have re-duced f
+iles in the \OT1/cmr/bx/n/12 /data/reduced/run1[]2017[]12/ 
+ []
+
+
+Overfull \hbox (25.86357pt too wide) in paragraph at lines 234--235
+\OT1/cmr/m/n/12 pre-vi-ous made in the \OT1/cmr/bx/n/12 /data/reduced/run1[]201
+7[]12/2017[]12[]18/ \OT1/cmr/m/n/12 and \OT1/cmr/bx/n/12 /data/reduced/run1[]20
+17[]12/ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 234--235
 
  []
 
 
-Overfull \hbox (0.98308pt too wide) in paragraph at lines 220--226
-\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=1, N[]D10=1, D02A[]startPlate=0, D0
-2B[]startPlate=0, $ 
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 236--237
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=T, doExtract=T,
  []
 
 
-Overfull \hbox (11.06302pt too wide) in paragraph at lines 220--226
-\OT1/pcr/m/n/12 toExtractFiles=toExtractFiles, doStack=T, toStackIDs=toStackIDs
-, doAutoZ=T,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 220--226
+Underfull \hbox (badness 10000) in paragraph at lines 236--237
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+Underfull \hbox (badness 10000) in paragraph at lines 238--239
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--243
+
+ []
+
+
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 244--245
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=T,
+ []
+
+
+Overfull \hbox (39.863pt too wide) in paragraph at lines 244--245
+\OT1/pcr/m/n/12 toExtractFiles=toExtractFiles, doStack=F, doAutoZ=F, cores=2, d
+oUpdateMaster=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 244--245
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 252--253
 
  []
 
@@ -665,38 +715,84 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.228 
-       [4]
-Overfull \hbox (25.70592pt too wide) in paragraph at lines 229--244
+l.254   \hspace{10mm}
+                      \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbos...
+[5]
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 254--255
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Overfull \hbox (61.463pt too wide) in paragraph at lines 254--255
+\OT1/pcr/m/n/12 doStack=T, toStackIDs=toStackIDs, doAutoZ=F, cores=2, doUpdateM
+aster=F, doTiler=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--255
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
+
+ []
+
+
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 259--260
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Overfull \hbox (25.46301pt too wide) in paragraph at lines 259--260
+\OT1/pcr/m/n/12 doStack=T, toStackIDs='all', doAutoZ=F, cores=2, doUpdateMaster
+=F, doTiler=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+
+ []
+
+
+Overfull \hbox (0.98308pt too wide) in paragraph at lines 296--302
+\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=1, N[]D10=1, D02A[]startPlate=0, D0
+2B[]startPlate=0, $ 
+ []
+
+
+Overfull \hbox (11.06302pt too wide) in paragraph at lines 296--302
+\OT1/pcr/m/n/12 toExtractFiles=toExtractFiles, doStack=T, toStackIDs=toStackIDs
+, doAutoZ=T,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--302
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 303--304
+
+ []
+
+
+Overfull \hbox (25.70592pt too wide) in paragraph at lines 305--320
 \OT1/cmr/bx/n/12 duced/ \OT1/cmr/m/n/12 di-rec-tory. For the ad-vanced user, yo
 u can force this by run-ning \OT1/pcr/m/n/12 run2dfDR(toReduce=toReduce)
  []
 
 
-Overfull \hbox (49.8987pt too wide) in paragraph at lines 229--244
+Overfull \hbox (49.8987pt too wide) in paragraph at lines 305--320
 \OT1/cmr/m/n/12 need to be the full di-rec-tory path in the DEV-ILS data struc-
 ture. $\OML/cmm/m/it/12 i:e:$ \OT1/cmr/m/n/12 data/reduced/stackedSpec/D1002181
 1.Rdata. 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--244
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 245--246
-
- []
-
-
-Overfull \hbox (0.98308pt too wide) in paragraph at lines 247--251
-\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
-2B[]startPlate=0, $ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 247--251
+Underfull \hbox (badness 10000) in paragraph at lines 305--320
 
  []
 
@@ -704,165 +800,102 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.259 O
-       nce the data has been reduced using 2dFDR (see DEVILS\_Observing\_Man...
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 261--262
+l.320 
+       [6]
+Underfull \hbox (badness 10000) in paragraph at lines 321--322
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--266
+Overfull \hbox (0.98308pt too wide) in paragraph at lines 323--327
+\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
+2B[]startPlate=0, $ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 323--327
 
  []
 
 
-Overfull \hbox (41.84949pt too wide) in paragraph at lines 269--272
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--342
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.342 
+       [7]
+Overfull \hbox (41.84949pt too wide) in paragraph at lines 345--348
 []\OT1/cmr/m/n/12 - Full spliced: \OT1/cmr/bx/n/12 data/reduced/*runName*/*year
 *[]*month*[]*day*/ \OT1/cmr/m/n/12 ($\OML/cmm/m/it/12 e:g:$ \OT1/cmr/bx/n/12 da
 ta/reduced/run1[]2017[]12/
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 269--272
+Underfull \hbox (badness 10000) in paragraph at lines 345--348
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--274
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
 
  []
 
 
-Overfull \hbox (31.10571pt too wide) in paragraph at lines 276--277
+Overfull \hbox (31.10571pt too wide) in paragraph at lines 352--353
 []  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 ReducList<-c('data/reduced/run2[]2018[
 ]01/2017[]12[]18[]config[]4[]reduced.fits') 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--277
+Underfull \hbox (badness 10000) in paragraph at lines 352--353
 
  []
 
 
-Overfull \hbox (0.98308pt too wide) in paragraph at lines 278--282
+Overfull \hbox (0.98308pt too wide) in paragraph at lines 354--358
 \OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
 2B[]startPlate=0, $ 
  []
 
 
-Overfull \hbox (11.06302pt too wide) in paragraph at lines 278--282
+Overfull \hbox (11.06302pt too wide) in paragraph at lines 354--358
 \OT1/pcr/m/n/12 toExtractFiles=ReducList, doStack=T, doAutoZ=T, doUpdateMaster=
 T, doTiler=T
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--282
+Underfull \hbox (badness 10000) in paragraph at lines 354--358
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
+Underfull \hbox (badness 10000) in paragraph at lines 359--360
 
  []
 
 
-Overfull \hbox (0.98308pt too wide) in paragraph at lines 285--289
+Overfull \hbox (0.98308pt too wide) in paragraph at lines 361--365
 \OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
 2B[]startPlate=0, $ 
  []
 
 
-Overfull \hbox (11.06302pt too wide) in paragraph at lines 285--289
+Overfull \hbox (11.06302pt too wide) in paragraph at lines 361--365
 \OT1/pcr/m/n/12 toExtractFiles=ReducList, doStack=T, doAutoZ=T, doUpdateMaster=
 F, doTiler=F
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 285--289
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
-
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.294 
-       [6]
-Underfull \hbox (badness 10000) in paragraph at lines 295--296
-
- []
-
-
-Overfull \hbox (0.98308pt too wide) in paragraph at lines 297--301
-\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
-2B[]startPlate=0, $ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 297--301
-
- []
-
-
-Overfull \hbox (44.70119pt too wide) in paragraph at lines 302--303
-[]\OT1/cmr/m/n/12 This will gen-er-ate four new con-fig-u-ra-tions for D03 and 
-four for D10 and put them in the data/observing/run1[]2017
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 313--314
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 315--316
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 317--318
-
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.348  M
-        eta information for all reduced data frames. To view this data, move...
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 351--352
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 353--354
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 362--363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 365--366
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 367--368
+Underfull \hbox (badness 10000) in paragraph at lines 361--365
 
  []
 
@@ -872,77 +905,159 @@ Underfull \hbox (badness 10000) in paragraph at lines 369--370
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 371--377
+Underfull \hbox (badness 10000) in paragraph at lines 371--372
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 383--384
+Overfull \hbox (0.98308pt too wide) in paragraph at lines 373--377
+\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=4, N[]D10=4, D02A[]startPlate=0, D0
+2B[]startPlate=0, $ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--377
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--386
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 387--388
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 389--390
-
+Overfull \hbox (44.70119pt too wide) in paragraph at lines 378--379
+[]\OT1/cmr/m/n/12 This will gen-er-ate four new con-fig-u-ra-tions for D03 and 
+four for D10 and put them in the data/observing/run1[]2017
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.391  \hspace{10mm}
-                      \texttt{$>$ magplot(spec\$wave, spec\$flux, type='l')}\\
-[8]
+l.381 \section
+              {TAZ Outputs} [8]
+Underfull \hbox (badness 10000) in paragraph at lines 389--390
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 391--392
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 399--400
+Underfull \hbox (badness 10000) in paragraph at lines 393--394
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 402--403
+Underfull \hbox (badness 10000) in paragraph at lines 424--425
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 404--405
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
+Underfull \hbox (badness 10000) in paragraph at lines 429--430
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 408--419
-
- []
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 426.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.426 \end{document}
-                     [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 426.
+l.438   R
+          data file with flux calibration information for each reduced frame...
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 438--439
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 441--442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 443--444
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 447--453
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 461--462
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 463--464
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 465--466
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 478--479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.482 T
+       his will display:\\ [10]
+Underfull \hbox (badness 10000) in paragraph at lines 482--483
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 484--495
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 502.
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.502 \end{document}
+                     [11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 502.
  (./TAZ_Manual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 426.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 426.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 502.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 502.
 
 
 Package rerunfilecheck Warning: File `TAZ_Manual.out' has changed.
@@ -950,30 +1065,54 @@ Package rerunfilecheck Warning: File `TAZ_Manual.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `TAZ_Manual.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  C5C020AFBED0C7228934EBF74841FBAF;1791.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 426.
+(rerunfilecheck)             Before: 350D6F3279DEE5902443DA27C63FE8F6;1955
+(rerunfilecheck)             After:  75C818A003B9352E77AE9B51E49701A1;2520.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 502.
  ) 
 Here is how much of TeX's memory you used:
- 6882 strings out of 493014
- 102361 string characters out of 6133351
- 206831 words of memory out of 5000000
- 10316 multiletter control sequences out of 15000+600000
+ 6923 strings out of 493014
+ 102944 string characters out of 6133351
+ 207935 words of memory out of 5000000
+ 10340 multiletter control sequences out of 15000+600000
  9316 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,7n,35p,635b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
-2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on TAZ_Manual.pdf (9 pages, 173442 bytes).
+ 29i,7n,35p,826b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{subsection.5.8} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.7} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.6} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.5} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.4} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.3} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.5.1} has been referenced but does not ex
+ist, replaced by a fixed one
+
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on TAZ_Manual.pdf (11 pages, 181533 bytes).
 PDF statistics:
- 103 PDF objects out of 1000 (max. 8388607)
- 82 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 204 PDF objects out of 1000 (max. 8388607)
+ 180 compressed objects within 2 object streams
+ 40 named destinations out of 1000 (max. 500000)
+ 190 words of extra memory for PDF output out of 10000 (max. 10000000)
 

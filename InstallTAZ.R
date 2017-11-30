@@ -6,6 +6,9 @@ install.packages('rgl',type='source')
 install.packages('plotrix',type='source')
 install.packages('fields',type='source')
 install.packages('xtable',type='source')
+install.packages('doParallel',type='source')
+install.packages('gridExtra',type='source')
+
 
 install_github('asgr/celestial')
 install_github('asgr/magicaxis')

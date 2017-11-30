@@ -21,11 +21,11 @@ if ($#argv != 2 || $1 == "--help") then
 endif
 
 # Edit this at the start of a run to reflect 2dfdr version
-set tdfdr_dir = ~/2dfdr
+set tdfdr_dir = ~/data/calibrators/idxFiles
 
 
-set biasdir = ~/data/biases/$1
-set darkdir = ~/data/darks/$1
+set biasdir = ~/data/reduced_AAT/$1/biases/
+set darkdir = ~/data/reduced_AAT/$1/darks/
 
 
 # There should be no editing below here
@@ -55,7 +55,7 @@ set date=$<
 echo "Next you must enter fibre configuration number for this night (e.g. 1,2,3,....)" 
 echo "**  Make Sure you do not overwrite and exisiting configurations **:"
 echo "Currently exisiting reduced files on this night are:"
-ls ~/data/reduced/$1'/'$2/*config*
+ls ~/data/reduced_AAT/$1/$2/*config*
 echo "Enter fibre configuration number:" 
 
 set config=$<
@@ -91,8 +91,8 @@ echo "Proceeding..."
 echo " "
 
 
-mkdir ~/data/reduced/$1/$2/ccd1/config_$config
-mkdir ~/data/reduced/$1/$2/ccd2/config_$config
+mkdir ~/data/reduced_AAT/$1/$2/ccd1/config_$config
+mkdir ~/data/reduced_AAT/$1/$2/ccd2/config_$config
 
 #
 # Creating directory structures for GAMA field
@@ -107,8 +107,8 @@ rsync -a $AATDATA$date/ccd_1/*.fits ~/data/rawdata/$1/$2
 rsync -a $AATDATA$date/ccd_2/*.fits ~/data/rawdata/$1/$2
 @ i = 1
 while ($i <= $#file_no)
-    cp ~/data/rawdata/$1/$2/${stub}100${file_no[$i]}.fits ~/data/reduced/$1/$2/ccd1/config_$config
-    cp ~/data/rawdata/$1/$2/${stub}200${file_no[$i]}.fits ~/data/reduced/$1/$2/ccd2/config_$config
+    cp ~/data/rawdata/$1/$2/${stub}100${file_no[$i]}.fits ~/data/reduced_AAT/$1/$2/ccd1/config_$config
+    cp ~/data/rawdata/$1/$2/${stub}200${file_no[$i]}.fits ~/data/reduced_AAT/$1/$2/ccd2/config_$config
     @ i++
 end
 echo " "
@@ -117,34 +117,21 @@ echo " "
 #
 # Fixing headers of blue files
 #
-cd ~/data/reduced/$1/$2/ccd1/config_$config
+cd ~/data/reduced_AAT/$1/$2/ccd1/config_$config
 hedit GRATLPMM 582.0 *.fits
 echo "Fixed headers of blue files."
 
 #
 # Copying combined bias frame to ccd1 directory
 #
-cp ${biasdir}/*blue_BIAScombined.fits ~/data/reduced/$1/$2/ccd1/config_$config/BIAScombined.fits
+cp ${biasdir}/BIAScombined.fits ~/data/reduced_AAT/$1/$2/ccd1/config_$config/BIAScombined.fits
 echo "Copied combined bias frame from "$biasdir "into ccd1 directory."
 
 
 #
 # Copying combined dark frame to ccd1 directory
 #
-cp ${darkdir}/*blue_DARKcombined.fits  ~/data/reduced/$1/$2/ccd1/config_$config/DARKcombined.fits
-echo "Copied combined dark frame from "$darkdir" into ccd1 directory."
-
-#
-# Copying combined bias frame to ccd2 directory
-#
-cp ${biasdir}/*red_BIAScombined.fits ~/data/reduced/$1/$2/ccd2/config_$config/BIAScombined.fits
-echo "Copied combined bias frame from "$biasdir "into ccd1 directory."
-
-
-#
-# Copying combined dark frame to ccd2 directory
-#
-cp ${darkdir}/*red_DARKcombined.fits  ~/data/reduced/$1/$2/ccd2/config_$config/DARKcombined.fits
+cp ${darkdir}/DARKcombined.fits  ~/data/reduced_AAT/$1/$2/ccd1/config_$config/DARKcombined.fits
 echo "Copied combined dark frame from "$darkdir" into ccd1 directory."
 
 
@@ -165,7 +152,7 @@ echo "When DRCONTROL window opens hit START AUTO REDUCTION."
 echo "Exit DRCONTROL when reduction is finished."
 
 
-cd  ~/data/reduced/$1/$2/ccd1/config_$config
+cd  ~/data/reduced_AAT/$1/$2/ccd1/config_$config
 sleep 280; xmessage -bg red -geom 500x80+500+500 "Check drcontrol!" &
 drcontrol $DRCONTROL_DIR/gama_blue.idx
 cp ${stub}1_combined.fits ../{$configname}_blue.fits
@@ -177,7 +164,7 @@ cleanup
 echo "When DRCONTROL window opens hit START AUTO REDUCTION."
 echo "Exit DRCONTROL when reduction is finished."
 
-cd  ~/data/reduced/$1/$2/ccd2/config_$config
+cd  ~/data/reduced_AAT/$1/$2/ccd2/config_$config
 sleep 280; xmessage -bg red -geom 500x80+500+500 "Check drcontrol!" &
 drcontrol $DRCONTROL_DIR/gama_red.idx
 cp ${stub}2_combined.fits ../{$configname}_red.fits
@@ -196,7 +183,7 @@ echo "in the pop-up window and leave the output as the default"
 echo "spliced.fits"
 echo " "
 
-cd ~/data/reduced/$1/$2/
+cd ~/data/reduced_AAT/$1/$2/
 
 cleanup
 drcontrol $DRCONTROL_DIR/gama_blue.idx
@@ -210,7 +197,7 @@ drcontrol $DRCONTROL_DIR/gama_blue.idx
 #python skypcav2.1.py ~/data/reduced/${date}/${field_name} spliced
 #echo "\nPerformed PCA sky subtraction.\n"
 
-cd ~/data/reduced/$1/$2/
+cd ~/data/reduced_AAT/$1/$2/
 mv spliced.fits {$configname}.fits
 
 

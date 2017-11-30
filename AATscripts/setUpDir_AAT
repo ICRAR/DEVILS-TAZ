@@ -30,6 +30,12 @@ mkdir ~/data/reduced/$1
 mkdir ~/data/reduced/$1/$2
 mkdir ~/data/reduced/$1/$2/ccd1
 mkdir ~/data/reduced/$1/$2/ccd2
+mkdir ~/data/reduced_AAT/$1
+mkdir ~/data/reduced_AAT/$1/biases
+mkdir ~/data/reduced_AAT/$1/darks
+mkdir ~/data/reduced_AAT/$1/$2
+mkdir ~/data/reduced_AAT/$1/$2/ccd1
+mkdir ~/data/reduced_AAT/$1/$2/ccd2
 mkdir ~/data/calibrators
 mkdir ~/data/catalogues
 mkdir ~/data/biases

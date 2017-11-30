@@ -103,17 +103,17 @@ then run:\\
 
 This will install all of the required packages required to run \textsc{TAZ}. As a quick test type:\\
 
-\hspace{10mm}  \texttt{$>$ ?TAZ}\\
+\hspace{10mm}  \texttt{$>$ installed.packages()}\\
 
-and you should get some helpful advice.
+and you should see DEVILSTAZ on this list.
 
 \section{Setting Up the DEVILS Directory Structure}
 
-The first stage in running \textsc{TAZ} is to set up the the DEVILS directory structure. To do this, run the \textsc{setUpDir} function. This function will create the directory structure including all of the calibrations, IDX files (parameters for 2dfDR), and observability plots/logs for each night you are observing.  To run this structure, you will need to input the run and night range for which you wish to generate the data structure. First open an R session. Then you will need to load the \textsc{TAZ} pacakge (this should be all you need to load whenever you start R):
+The first stage in running \textsc{TAZ} is to set up the the DEVILS directory structure. To do this, run the \textsc{setUpDir()} function. This function will create the directory structure including all of the calibrations, IDX files (parameters for 2dfDR), and observability plots/logs for each night you are observing.  To run this structure, you will need to input the run and night range for which you wish to generate the data structure for. First open an R session. Then you will need to load the \textsc{DEVILSTAZ} package (this should be all you need to load whenever you start R):
 
-\hspace{10mm}  \texttt{$>$ library(`TAZ')}\\
+\hspace{10mm}  \texttt{$>$ library(`DEVILSTAZ')}\\
 
-The \textsc{setUpDir}  function is then run as:\\
+The \textsc{setUpDir()}  function is then run as:\\
 
 \hspace{10mm}  \texttt{$>$ setUpDir(workingDir=`.', runs=c(`run1\_2017\_12',`run2\_2018\_01'), \$}
 
@@ -126,7 +126,7 @@ where, \\
  \texttt{dateStart}=First night of each run in year\_month\_day format\\
  \texttt{dateEnd}=Last night of each run in year\_month\_day format\\
 
-Try running this code and explore the directory structure. You should have:\\
+Try running this code and explore the directory structure. You can generate this structure for any dates you like. You should something like have:\\
 
 \hspace{5mm} \textbf{data/} 
 \vspace{1mm}
@@ -199,23 +199,99 @@ Try running this code and explore the directory structure. You should have:\\
 
 \hspace{20mm} \textbf{2017\_12\_18/, ....} \\
 
-You will populate the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} part of this structure with the data taken at the AAT, and TAZ will generate reduced data and analysis products in the other parts of the structure. 
+You will populate the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} part of this structure with the data taken at the AAT, and TAZ will generate reduced data and analysis products in the other parts of the structure.  
 
 
 \section{Adding Observations}
 
 When observing you will add raw data files to this directory structure. Firstly, at the start of each run, bias and dark frames will be taken. These need to be added to the \textbf{biases/*runName*} and \textbf{darks/*runName*} directories. Note that TAZ will aim to generate a master bias and master dark for all files in this directory, so if there are files that you do not wish to be used in making the master darks/biases please keep them in the  \textbf{biases/*runName*/junk/} or \textbf{darks/*runName*/junk/} sub folders.
 
-Next you will need to place the raw target data under in the relevant directory. This should be easily done as the date in in the file name produced by the AAT. Data for each night observed should be copped to the relevant \textbf{raw/*runName*/*date*}. Once again, TAZ will reduce/analyse all data in this directory. So if there are files you do not wish to be included, add then to the \textbf{raw/*runName*/*date*/junk} folder. You do not need to separate ARC, FLAT and TARGET files in this directory. TAZ will identify and match the correct files based on the configuration used in the FITS header.    
+Next you will need to place the raw target data under in the relevant directory. This should be easily done as the date in in the file name produced by the AAT. Data for each night observed should be copped to the relevant \textbf{raw/*runName*/*date*}. Once again, TAZ will reduce/analyse all data in this directory. So if there are files you do not wish to be included, add then to the \textbf{raw/*runName*/*date*/junk} folder. You do not need to separate ARC, FLAT and TARGET files in this directory. TAZ will identify and match the correct files based on the configuration used in the FITS header.  
+
+For now, there is is an example small dataset you can get from here \url{https://www.dropbox.com/s/yutdugiwpi4jo3x/TAZRawExample.zip?dl=0}. Once you have this copy the biases, darks and raw data files to your \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders under the correct run/date.  
 
 \section{Running TAZ}
 
 Here I will just give a high level overview of running the TAZ software. More detailed descriptions of the individual functions can be accessed via the R help function by simply opening an R terminal and typing: \\
 
-
 \hspace{10mm}  \texttt{$>$ ?*FUNCTION\_NAME*}\\
 
-To run TAZ you will need to run the command similar too: \\
+In most cases this code will by run end to end with one line. However, here i split it into various sections to explain what the code is doing and to allow the user to run each component separately. 
+
+\subsection{Running the 2dfDR reduction}
+
+First, lets try and run TAZ on our test dataset to just perform the data reduction. To do this, make sure you are in the directory above the \textbf{/data} directory you just generated, and run:
+
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}
+
+This should run TAZ over you current directory, reduce the data using 2dfDR. When the code finished, you should find that some of the \textbf{/data/reduced/} sub-folders are populated. Check that this is the case. The most important thing to check is that you have reduced files in the \textbf{/data/reduced/run1\_2017\_12/ \\ 2017\_12\_18/} folder.  If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  
+
+
+
+
+\subsection{Running the 2dfDR reduction and 1D extraction}
+
+Next we can try and run both a reduction and extract 1D spectra from each of our reduced frames. As TAZ looks for directories that have already been reduced, you will need to delete the products you have previous made in the \textbf{/data/reduced/run1\_2017\_12/2017\_12\_18/} and \textbf{/data/reduced/run1\_2017\_12/ \\ 2017\_12\_19/} directories, before rerunning this code. To do thew reduction and extraction simply set doExtract=T and run:\\
+
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=T, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
+
+This should run TAZ over you current directory, reduce the data using 2dfDR AND extract 1D spectra. The most important thing to check is that you have individual reduced spectra in the .Rdata format in the \textbf{/data/reduced/allSpec} directory. If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  \\
+
+As you may not want to re-run the reduction, you can tell TAZ to skip this part. However, you then have to tell it which files to extract 1D spectra from. This is achived by setting  doReduce=F and then adding the variable: toExtractFiles=*a string list of files to extract*. In our example, this would be:\\
+
+ \hspace{10mm} \texttt{$>$ toExtractFiles<-c(`data/reduced/run1\_2017\_12/2017\_12\_18/ \\ 2017\_12\_18\_config\_1\_reduced.fits', `data/reduced/run1\_2017\_12/2017\_12\_19/ \\ 2017\_12\_19\_config\_1\_reduced.fits')}\\
+ 
+  \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=T, toExtractFiles=toExtractFiles, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
+
+ This will skip the reduction phase and extract 1D spectra from the reduced files provided.
+ 
+ \subsection{Stacking extracted spectra}
+ 
+ As DEVILS will observe the same spectra over multiple observations, these will need to be stacked to increase single to noise. TAZ can perform this stacking from previously extracted spectra. As TAZ writes all spectra to the \textbf{/data/reduced/allSpec/} directory, the staking procedure simply searches for all instances of a particular ID in this directory and inverse variance weights the spliced spectrum, individual arms and continuum extracted spectra. As we do not wish to extract the spectra again, set \texttt{doExtract=F} and \texttt{doStack=T}. Once again, in order to run this, you must tell TAZ which IDs to stack. This can either be done by providing a vector list of ID (note our example data is from GAMA and all objects are appended with a 'G", in DEVILS this will be 'D'):
+ 
+   \hspace{10mm} \texttt{$>$ toStackIDs<-c(`G006014', 'G006158')}\\
+ 
+  \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=T,  toStackIDs=toStackIDs, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\ 
+  
+  A second option is to tell TAZ to try and stack all IDs in the current \textbf{/allSpec} folder. To do this, simply set the \texttt{toStackIDs} value to 'all': \\
+  
+
+  \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=T,  toStackIDs='all', doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\   
+
+Run this code now. TAZ should populate the \textbf{/data/reduced/stackedSpec/} folder of your directory structure. 
+
+
+ \subsection{Running AutoZ on Stacked Spectra}
+
+
+ \subsection{Updating Master Catalogues with new Redshifts and producing new observing catalogues}
+
+
+ \subsection{Producing new fibre configuration files}
+ 
+ 
+ \subsection{Putting it all together}
+
+
+\section{TAZ inputs list}
+
+\section{TAZ Outputs list}
+
+
+
+
+
+
+
+
+
+
+
+
+\textbf{BELOW HERE IS GARBAGE FROM THE OLD VERSION}
+
+
+
 
 \hspace{10mm} \texttt{$>$ TAZ(user=`ldavies',workingDir=`$\sim$/DEVILS/TAZ/',verbose=2, \$ \\
 N\_D02A=0,N\_D02B=0, N\_D03=1, N\_D10=1, D02A\_startPlate=0, D02B\_startPlate=0, \$ \\ 
