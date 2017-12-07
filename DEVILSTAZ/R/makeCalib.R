@@ -1,4 +1,25 @@
-makeCalib<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose){
+#' Make AAT master calibration files
+#'
+#' @description Reduce and combine all bias and dark frames associated with a givne directory. 
+#' Function finds the run identifier in the DEVILS data structure that matches the current 
+#' night to be reduced. Then identifies the corresponding bais and dark files. In no MASTER 
+#' bias and/or dark is present, the function reduces all bias and dark frames and combines
+#' to form a master bias and dark.  
+
+#' @param spec An R stucture containing spec$wave = vector of spectrum wavelengths
+#' and spec$flux = vector of spectrum fluxes.     
+#' @param filter A filter with which to convolve with. A 2d matrix with column
+#' 1 as the filter wevelength (in the same units as spec$wave) and column
+#' 2 the filter response. Could be prodcued by \code{getfilt}.
+#' @param toReduce directory path of raw data that needs to be reduced by TAZ in the DEVILS
+#' data structure 
+#' @param doCalibQC TRUE/FALSE, run checkCal.R over the found calibration directory.
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @examples 
+#' makeCalib(toReduce='data/raw/run1_2017_12/2017_12_18/', doCalibQC=TRUE,logName='tempLog.txt', verbose=1)
+#' @export
+makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose=verbose){
 
     if (verbose>0){cat('     - Running makeCalib.....', '\n')}
 

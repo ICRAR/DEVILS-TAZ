@@ -1,3 +1,15 @@
+#' Produce QC diagnositic plots for dark and bias frames
+#'
+#' @description Function convolves a given spectrum with a filter band pass and returns either
+#' convolved spectrum or a total sum within the filter. Note that for the example to
+#' work you must have unpacked the TAZ data files using:
+#' 
+#' @param biasDir directory containing bias frames
+#' @param darksDir directory containing dark frames 
+#' @param verbose 0 or 1, let me know whats going on. 0=no, 1=yes
+#' @examples 
+#' checkCal(biasDir='data/biases/run1_2017_12/', darksDir='data/biases/run1_2017_12/', verbose=1)
+#' @export
 checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
 
     if (verbose>0){

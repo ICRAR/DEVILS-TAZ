@@ -1,5 +1,19 @@
-hanning.smooth <-
-function(arr1,degree=3) {
+#' Hanning Smooth a Vector
+#'
+#' @description Function to Hanning smooth a vector and return smoothed 
+#' vector of the same size
+#' 
+#' @param arr1 vector to smooth
+#' @param degree degree of smoothing
+#' 
+#' @return smoothed vector
+#' @examples 
+#' load(paste(.libPaths(),'/DEVILSTAZ/data/ExampleSpec.Rdata',sep=''))
+#' SmoothSpec<-hanning.smooth(spec$flux, degree=17)
+#' plot(spec$wave, spec$flux, type='l', xlab='Wavelength, ang', ylab='Counts')
+#' lines(spec$wave,SmoothSpec, col='red')
+#' @export
+hanning.smooth <- function(arr1,degree=3) {
 #Perform Hanning smoothing on 2D data
 
   #Determine degree {{{

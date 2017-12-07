@@ -1,54 +1,25 @@
-#+
-# NAME:
-#   heliocentric
-#
-# PURPOSE:
-#   Compute correction term to add to velocities to convert to heliocentric.
-#
-# CALLING SEQUENCE:
-#   vcorr = heliocentric( ra, dec, [ epoch, jd=, tai=, $
-                                         #    longitude=, latitude=, altitude= ] )
-#
-# INPUTS:
-#   ra             - Right ascension [degrees]
-#   dec            - Declination [degrees]
-#   epoch          - Epoch of observation for RA, DEC# default to 2000.
-#
-# OPTIONAL KEYWORDS:
-#   jd             - Decimal Julian date.  Note this should probably be
-#                    type DOUBLE.
-#   tai            - Number of seconds since Nov 17 1858# either JD or TAI
-#                    must be specified.  Note this should probably either
-#                    be type DOUBLE or LONG64.
-#   longitude      - Longitude of observatory#
-#                    default to (360-105.820417) deg for APO
-#   latitute       - Latitude of observatory# default to 32.780361 deg for APO
-#   altitude       - Altitude of observatory in meters#
-#                    default to 2788 m for APO
-#
-# OUTPUTS:
-#   vcorr          - Velocity correction term, in km/s, to add to measured
-#                    radial velocity to convert it to the heliocentric frame.
-#
-# OPTIONAL OUTPUTS:
-#
-# COMMENTS:
-#
-# EXAMPLES:
-#
-# BUGS:
-#
-# PROCEDURES CALLED:
-#   baryvel
-#   ct2lst
-#
-# REVISION HISTORY:
-#   09-May-2000  Written by S. Burles & D. Schlegel
-#   2010ish      Sign changed in return statement by I. Baldry.
-#   Mar 2015     Translated to R by Leon Drygala?
-#-
-#------------------------------------------------------------------------------
-
+#' Calculate helocentric correction.
+#'
+#' @description Function compute correction term to add to velocities to 
+#' convert to heliocentric reference frame. Either jd or tai must be supplied. 
+#' 
+#' @param ra Right ascension in degrees
+#' @param dec Declination in degrees
+#' @param epoch Epoch of observation for RA, DEC. Default is J2000.
+#' @param jd Julian date
+#' @param tai Number of seconds since Nov 17 1858
+#' @param longitude Longitude of observatory
+#' @param latitude Latitude of observatory
+#' @param altitude altitude of observatory
+#' @return Velocity correction term, in km/s, to add to measured radial velocity 
+#' to convert it to the heliocentric frame.  
+#' @author S. Burles
+#' @author D. Schlegel
+#' @author L. Davies (converted to R)
+#' @examples 
+#' #Example for D10 field observed from the AAT on 18/12/2017.
+#' vcorr<-Heliocentric(150.0, 1.55, epoch = 2000.0, tai = 58105.5, longitude =149.0661, latitude = -31.27704, altitude = 1164)
+#' @export
 Heliocentric = function(ra, dec, epoch = 2000.0, jd = FALSE, tai = FALSE, longitude = 360 - 105.820417, 
                         latitude = 32.780361, altitude = 2788){
 

@@ -14,7 +14,7 @@ install_github('asgr/celestial')
 install_github('asgr/magicaxis')
 install_github('asgr/whatsup')
 
-install_github('ICRAR/DEVILS-TAZ')
+#install_github('ICRAR/DEVILS-TAZ')
 
 
 ### This is really important to make sure the flux calibratin works!!!! ######

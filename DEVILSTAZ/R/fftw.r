@@ -1,11 +1,11 @@
-##
-## fftw.R - glue between user and fftw.c
-##
-## Authors:
-##  Sebastian Krey <skrey@statistik.tu-dortmund.de>
-##  Olaf Mersmann  <olafm@statistik.tu-dortmund.de>
-##
-
+#' Glue between user and fftw.c 
+#'
+#' @description Functions for running fast Fourier Transform Routines in C.
+#' 
+#' @author Sebastian Krey <skrey@statistik.tu-dortmund.de>
+#' @author Olaf Mersmann  <olafm@statistik.tu-dortmund.de>
+#' @export
+#' 
 planFFT <- function(n, effort=0) {
   if (length(n) == 1)
     n <- as.integer(n)

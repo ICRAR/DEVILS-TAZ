@@ -1,45 +1,52 @@
-# Process spectrum, calculate redshifts and best fit templates using
-# cross-correlation. The code is known as Autoz, used for the GAMA survey. 
-# TODO FIX THIS DESC
-# Inputs are the spectrum, error spectrum, and air wavelength scale. 
-# The templates are on a vacuum wavelength scale. Nan in the spectrum
-# is assumed to represent bad pixels. 
-#
-# Essential keywords: log_lambda_rebin is the vacuum wavelength scale to 
-# rebin to. gap is logarithmic wavelength gap. tdata_rebin is a structure 
-# containing the filtered templates. helio_velocity is the heliocentric 
-# velocity for the observation to correct for. 
-# 
-# num_peaks is the number of cross-correlation peaks to calculate, the 
-# default is four. inv_correction is the relative flux calibration.
-# ccinfo, peaks return these structures to the calling routine. 
-# highz is set if a larger cross-correlation range is needed. 
-# st_lambda, end_lambda for maximum range of initial fitting for the 
-# high-pass filtering. Pixels outside wavelength range st_lambda+os1 and 
-# end_lambda-os1 are set to zero in the high-pass filtered (HPF) spectra, 
-# os1=10 is default set in process_spectrum.pro. minval, maxval are the 
-# minimum and maximum pixel values that are assumed to be bad pixels and 
-# therefore set to zero in the HPF spectra. 
-# 
-# Written by Ivan Baldry. 
-# Translated to R by Leon Drygala.
-AutozSingleSpec = function(specRaw, lambda, logLambdaData, logVlambda, tempData, plan, verbose = TRUE,
-                           tileFile = paste(.libPaths(), '/auto.z/data/','SG23_Y7_003.fits',sep=''), specNum = 2,
-                           tempFile = paste(.libPaths(), '/auto.z/data/','filtered-templates.fits',sep=''),
-                           oversample = 5, num = 5, templateNumbers = c(2:14,16:22,40:47),
-                           useInvCorrection = TRUE, stLambda = 3726, endLambda = 8850, 
-                           minval = -1.0e4, maxval = 1.0e6, z_prior=c(-1,1000), doHelio=T){
+#' Automatic redshifting tool for 1D spectra
+#'
+#' Redshfiting tool originaly developed by Ivan Baldry in IDL (Baldry et al., 2014 MNRAS). 
+#' Repurposed in R by Luke Davies and  Leon Drygala. Takes a 1D spectrum and perfoms a 
+#' Fourier cross corellation with a template spectra set. Returns the best fit redshifts
+#' and probabilities.
+#' 
+#' @param specRaw R struture contianing information required information.
+#' Must have the following componenents: specRaw$wave=vector of spectrum wavelengths, 
+#' specRaw$flux=vector spectrum fluxes the same size as specRaw$wave, specRaw$error=vector 
+#' spectrum errors the same size as specRaw$wave, and if doHelio=T, specRaw$RA=spectrum RA,
+#' specRaw$DEC=spectrum DEC, specRaw$UTMJD = observation Jullian date, specRaw$longitude = 
+#' observatory longitude, specRaw$latitude = observatory latitude, specRaw$altitude = 
+#' observatory altitude.    
+#' 
+#' 
+#' @param tempFile Path to file containing spectral template data 
+#' @param oversample wavelength oversampling rate
+#' @param num number of crosscorrelation peaks to identify
+#' @param templateNumbers template numbers to use in fitting
+#' @param stLambda lower bound of the wavelength range to fit over 
+#' @param endLambda = upper bound of the wavelength range to fit over
+#' @param minval minmum value to reject croos correlations
+#' @param maxval maximum value to reject croos correlations
+#' @param z_prior redshift prior, two element vector with c(lo, hi)
+#' @param doHelio TRUE/FALSE perform helocentric correction. If TRUE you must 
+#' provide RA,DEC,UTMJD, longitude, latitude and altitue in the specRaw structure. 
+#' @param verbose  TRUE/FLASE - let me know what's going on.
+#' @examples 
+#' load(paste(.libPaths(),'/DEVILSTAZ/data/ExampleSpec.Rdata',sep=''))
+#' plot(spec$wave, hanning.smooth(spec$flux, degree=9), type='l', xlab='Wavelength, ang', ylab='Counts')
+#' spec$error<-spec$sn
+#' autoz_out<-AutozSingleSpec(spec, doHelio=F)
+#' plotLines(z=autoz_out$z)
+#' cat('Probability of correct redshift is: ', autoz_out$prob)
+#' @export
+AutozSingleSpec = function(specRaw, tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',oversample = 5, num = 5, templateNumbers = c(2:14,16:22,40:47), stLambda = 3726, endLambda = 8850, minval = -1.0e4, maxval = 1.0e6, z_prior=c(-1,1000), doHelio=T,verbose = TRUE){
+  
   # TODO remove timing
   TOTALTIME <- proc.time()
+  lambda<-specRaw$wave
+  useInvCorrection = TRUE
+  specNum<-1
   
   #set up new lambda scale to rebin spectrum and templates to
-  if(missing(logLambdaData)) logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample)
+  logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample)
   newLogLambda <- logLambdaData$logLambda
   
-  #load in unknown redshift spectrum if not provided
-  if(missing(specRaw))
-    specRaw <- GetSingleSpec(file = tileFile, colmn = specNum, verbose = verbose)
-  else
+  
     specRaw$lambda <- lambda
 PROCESSTIME <- proc.time()
   spec <- ProcessSpectrum(specRaw, stLambda = stLambda, endLambda = endLambda, minval = minval, maxval = maxval, 
@@ -53,7 +60,7 @@ PROCESSTIME <- proc.time()
   
   
   # Convert spectral lambda to vacuum wavelength from air wavelength input.
-  if(missing(logVlambda)) logVlambda <- log(VacuumFromAir(spec$lambda),10)  
+  logVlambda <- log(VacuumFromAir(spec$lambda),10)  
   length <- length(logVlambda)
   # Rebin filtered spectrum ensuring zero outside range.
   specRebin <- approx(x = c(3.0, logVlambda[1] - 0.001, logVlambda, logVlambda[length]+0.001, 4.5), 
@@ -62,15 +69,14 @@ PROCESSTIME <- proc.time()
   spec$lambda <- specRebin$x
   spec$flux <- specRebin$y
   
-  # load rebinned template data if missing
-  if (missing(tempData)) tempData <- RebinTempData(newLogLambda, templateNumbers=templateNumbers, 
+  # load rebinned template data 
+  tempData <- RebinTempData(newLogLambda, templateNumbers=templateNumbers, 
                                                    file = tempFile, verbose = verbose)
   
   if (doHelio==T) {helioVel <- Heliocentric(spec$RA*180/pi, spec$DEC*180/pi, 2000, jd = spec$UTMJD, longitude = spec$longitude, 
                           latitude = spec$latitude, altitude = spec$altitude)}else{helioVel<-0}
 
-  #if(missing(plan)) plan = planFFT(length(spec$flux), 0)
-  if(missing(plan)) plan = 0
+ plan = 0
 CROSSTIME <- proc.time()
   #get cross correlation info and find highest peaks in data
   ccinfo <- DoCrossCorr(spec = spec, gap = logLambdaData$gap, tempData = tempData, helioVel = helioVel, plan = plan, z_prior=z_prior)

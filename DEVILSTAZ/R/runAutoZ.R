@@ -26,7 +26,7 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, c
         spec2$longitude =149.0661
         spec2$latitude = -31.27704
         spec2$altitude = 1164
-        autoz_out<-AutozSingleSpec(spec2,spec2$wave,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F)
+        autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F)
         
         spec$z<-autoz_out$results[1]
         spec$prob<-autoz_out$prob

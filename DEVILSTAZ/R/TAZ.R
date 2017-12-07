@@ -1,5 +1,30 @@
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose=2, N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, doCalibQC=F, doReduce=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',zeroPoint=T, cores=cores){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose=2, N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, doCalibQC=F, doReduce=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',zeroPoint=T, cores=cores, configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64'){
 
+    if (doReduce==T){
+        tmp<-tryCatch(system2('which', args='aaorun', stdout=TRUE))
+        tmp<-tmp[1]
+        if (is.na(tmp)==TRUE){
+          cat('**** WARNING doReduce=TRUE AND NO AAORUN COMMAND FOUND ****', '\n')
+          cat('Please check you have 2dFDR reuction software installed from here -  https: //www.aao.gov.au/science/software/2dfdr', '\n')
+          cat('If so, please check you have the aaorun function correctly set in your path, try "which aaorun" in a terminal', '\n')
+          cat('**** ENDING TAZ ****', '\n', '\n')
+          return(NULL)
+        }
+    }
+  
+    
+    if (doTiler==T){
+      tmp<-tryCatch(system2('which', args='configure', stdout=TRUE))
+      tmp<-tmp[1]
+      if (is.na(tmp)==TRUE){
+        cat('**** WARNING doTiler=TRUE AND NO CONFIGURE COMMAND FOUND ****', '\n')
+        cat('Please check you have 2dFDR configuration software installed from here -  https://www.aao. gov.au/science/software/configure', '\n')
+        cat('If so, please check you have the configure function correctly set in your path, try "which configure" in a terminal', '\n')
+        cat('**** ENDING TAZ ****', '\n', '\n')
+        return(NULL)
+      }
+    }
+    
     registerDoParallel(cores=cores)
 
     version<-0.1
@@ -236,7 +261,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
         write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
         
         
-        runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores)
+        runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir)
     }
 
     if (verbose==0){cat('** You have reached the end **' , '\n')}

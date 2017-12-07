@@ -1,3 +1,26 @@
+#' Flux calibrate reduced data frames
+#'
+#' @description Function finds matches between standard stars on a current frame and an input
+#' standard star catalogue. Calucultes photometric zero points for the fully reduced 
+#' spliced data and each ccd individually. Also provides flux scaling between counts and
+#' ergs/sec/cm^2/ang. Writes a meta data file will all information. Note that for the example to
+#' work you must have unpacked the TAZ data files using:
+#' 
+#' @description > LibPaths<-.libPaths()
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep='')) 
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar --directory ', LibPaths, '/DEVILSTAZ/data/' ,sep=''))
+#' 
+#' 
+#' @param file reduced 2df+AAOmega frame to be calibrated.
+#' @param stdStars catalogue of standard stars contining ID, 
+#' RA, DEC, MagG, MagR, MagI, MagG_filtername, MagR_filtername, MagI_filtername (see getfilt.R help four these) 
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @return meta dataframe contianing flux calibrations
+#' @examples 
+#' stdStars<-read.csv(paste(.libPaths(), '/DEVILSTAZ/data/calibrators/stdstars/stdStarCat.csv', sep=''))
+#' fluxCal(file='object2df_red.fits', stdStars=stdStars, logName='tempLog.txt', verbose=1)
+#' @export
 fluxCal<-function(file=file, stdStars=stdStars, logName=logName, verbose=verbose){
 
     if (verbose>0){cat('   ** Running fluxCal....', '\n')}
@@ -224,12 +247,6 @@ fluxCal<-function(file=file, stdStars=stdStars, logName=logName, verbose=verbose
 
     save(zeroPoints, file=paste(strsplit(file, '.fits')[[1]][1],'_zeroPoints.Rdata', sep=''))
    
-    
-    
-    #write.fitskey(key=c("ZP","ZPMAD", "ZPRMS", "ZPNUM", "FLUXSC"), value=c(ZP,ZPMAD, ZPRMS, ZPNUM, FLUXSC), file=file,comment=c("Magnitude zero point","Zero point median average deviation", "Zero point standard deviation", "Number of sources used in zero point calculation", "Flux scale from pixels to ergs/sec/cm^2/ang"), hdu=1)
-
-    #write.fitskey(key=c("ZP","ZPMAD", "ZPRMS", "ZPNUM", "FLUXSC"), value=c(ZP_blue,ZPMAD_blue, ZPRMS_blue, ZPNUM_blue, FLUXSC_blue), file=fileBlue, comment=c("Magnitude zero point","Zero point median average deviation", "Zero point standard deviation", "Number of sources used in zero point calculation", "Flux scale from pixels to ergs/sec/cm^2/ang"), hdu=1)
-
-    #write.fitskey(key=c("ZP","ZPMAD", "ZPRMS", "ZPNUM", "FLUXSC"), value=c(ZP_red,ZPMAD_red, ZPRMS_red, ZPNUM_red, FLUXSC_red), file=fileRed, comment=c("Magnitude zero point","Zero point median average deviation", "Zero point standard deviation", "Number of sources used in zero point calculation", "Flux scale from pixels to ergs/sec/cm^2/ang"), hdu=1)
-    
+    return(zeroPoints)
+  
 }

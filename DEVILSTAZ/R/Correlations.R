@@ -1,6 +1,17 @@
-# Compute the cross correlations and save information to structure.
-# Written by Ivan Baldry.
-# Translated to R by Leon Drygala.
+#' Compute cross corelations un AutoZ
+#'
+#' @description Function to compute cross-correlation strngth between a given spectrum and
+#' a set of templates. Function is internal to AutoZ.
+#' 
+#' @param spec input spectrum containing spec$lambda and spec$flux
+#' @param gap gap in shifts probed in cross correlation
+#' @param tempDatar structure of template data 
+#' @param heloval helocentric correction value
+#' @param plan fast-forier tranform plan
+#' @param z_prior redshift priors, c(lo,hi)
+#' @examples 
+#' None applicable as internal function.... 
+#' @export
 DoCrossCorr = function(spec, gap, tempData, helioVel, plan, z_prior){
   corrSize <- 17000
   # prepare output data

@@ -1,3 +1,17 @@
+#' Get meta data information for the 2dF+AAOmega file.
+#'
+#' @description Function searches through files in a given directory and 
+#' returns a data table contining relavent meta data. Also saves meta data
+#' to a given file. 
+#' 
+#' @param dir directory contianing files for which meta data should be retreived
+#' @param saveFile filename to save meta data to
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @return meta dataframe for files in directoyr, dir.  
+#' @examples 
+#' metaData<-getFileInfo(dir='data/reduced/run1_2017_12/2017_12_18/', saveFile='2017_12_18_metaData.Rdata', logName='tempLog.txt', verbose=1)
+#' @export
 getFileInfo<-function(dir=dir, saveFile=saveFile,logName=logName, verbose=verbose){
 
     fileNames<-list.files(path=dir, pattern='*.fits')

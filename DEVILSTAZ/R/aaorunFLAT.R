@@ -1,3 +1,21 @@
+#' Reduce an AAT 2df+AAOmega flat file using 2dfDR function aaorun
+#'
+#' This function perfoms the data reduction on a 2dfDR flat file.
+#'  You must provide an idx filename and arc file name (potentially produced by aaorunARC.R). 
+#'  Optionally you can also perform a bias subtraction and dark correction if provided (this is recomended)
+#'
+#' @param file Path to the input file to be reduced
+#' @param idx Path to the idx aaorun paramter file
+#' @param doDark TRUE/FLASE, do you want to perform dark frame correction
+#' @param darkFile If doDark=TRUE, path to the input dark frame 
+#' @param doBias TRUE/FLASE, do you want to perform bais frame subtraction
+#' @param biasFile If doBias=TRUE, path to the input bias frame 
+#' @param arcFile Path to the input arc file
+#' @param waveStart The lower bound of the wavelemngth range to use in the reduction
+#' @param waveEnd The upper bound of the wavelemngth range to use in the reduction
+#' @examples 
+#' aaorunFLAT(file='flat2dF.fits', idx='gama_blue.idx', doDark=T,darkFile='DARKmaster.fits',doBias=T, biasFile='BIASmaster.fits', arcFile='arc2dF.fits')
+#' @export
 aaorunFLAT<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, biasFile=biasFile, arcFile=arcFile, waveStart='NA',waveEnd='NA'){
 
     darkNum<-1

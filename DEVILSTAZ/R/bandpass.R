@@ -1,3 +1,28 @@
+#' Calculate spectral measurements within a specific filter bandbass
+#'
+#' @description Function convolves a given spectrum with a filter band pass and returns either
+#' convolved spectrum or a total sum within the filter. Note that for the example to
+#' work you must have unpacked the TAZ data files using:
+#' 
+#' @description > LibPaths<-.libPaths()
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep='')) 
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar --directory ', LibPaths, '/DEVILSTAZ/data/' ,sep=''))
+#' 
+#' @param spec An R stucture containing spec$wave = vector of spectrum wavelengths
+#' and spec$flux = vector of spectrum fluxes.     
+#' @param filter A filter with which to convolve with. A 2d matrix with column
+#' 1 as the filter wevelength (in the same units as spec$wave) and column
+#' 2 the filter response. Could be prodcued by \code{getfilt}.
+#' @param lum TRUE/FLASE, if TRUE \code{bandpass} will return total luminosity in the filter.
+#' @author A. Robotham 
+#' @examples 
+#' load(paste(.libPaths(),'/DEVILSTAZ/data/ExampleSpec.Rdata',sep=''))
+#' plot(spec$wave, hanning.smooth(spec$flux, degree=9), type='l', xlab='Wavelength, ang', ylab='Counts')
+#' filt<-getfilt('sdss_r')
+#' lines(filt[,2],filt[,3]*max(spec$flux, na.rm=T), col='red')
+#' lum<-bandpass(spec,cbind(filt[,2],filt[,3]), lum=T)
+#' cat('Total luminosity in band = ',lum)
+#' @export
 bandpass=function(spec, filter, lum = T){
   wave<-spec$wave
   flux<-spec$flux

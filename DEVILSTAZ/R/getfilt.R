@@ -1,3 +1,34 @@
+#' Reads in filter responses for a specified filter.
+#'
+#' @description Function reads in a specified filter tansmission curve from the DEVILSTAZ data directory. Note that for this to
+#' work you must have unpacked the TAZ data files using:
+#' 
+#' @description > LibPaths<-.libPaths()
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep='')) 
+#' @description > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar --directory ', LibPaths, '/DEVILSTAZ/data/' ,sep=''))
+#' 
+#' 
+#' @param filter string of the filter to load. Options are:
+#' GALEX_FUV, GALEX_NUV, sdss_u,sdss_g,sdss_r,sdss_i,sdss_z, des_u,des_g,
+#' des_r,des_i,des_z,des_Y,VISTA_Z,VISTA_Y,VISTA_J,VISTA_H,VISTA_K, WISE_W1,
+#' WISE_W2,WISE_W3,WISE_W4,Herschel_100,Herschel_160,Herschel_250,Herschel_350,Herschel_500
+#' 
+#' @return the filter response in the form c(rowNum, wavelength(ang), transmission)
+#' @examples 
+#' NUV_filt<-getfilt('GALEX_NUV')
+#' u_filt<-getfilt('sdss_u')
+#' r_filt<-getfilt('sdss_r')
+#' Z_filt<-getfilt('VISTA_Z')
+#' J_filt<-getfilt('VISTA_J')
+#' K_filt<-getfilt('VISTA_K')
+#' 
+#' plot(r_filt[,2], r_filt[,3], type='l', col='green', xlab='Wavelength, Ang', ylab='Transmission', xlim=c(1000,25000), ylim=c(0,1))
+#' lines(NUV_filt[,2], NUV_filt[,3], col='purple')
+#' lines(u_filt[,2], u_filt[,3], col='cyan')
+#' lines(Z_filt[,2], Z_filt[,3], col='orange')
+#' lines(J_filt[,2], J_filt[,3], col='red')
+#' lines(K_filt[,2], K_filt[,3], col='brown')
+#' @export
 getfilt=function(filter){
   out=NA
   if(filter=='GALEX_FUV'){
@@ -46,22 +77,27 @@ getfilt=function(filter){
 
   
    if(filter=='VISTA_Z'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep='')) 
+      out[,3]<-out[,3]/100
    }
    if(filter=='VISTA_Y'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Y_VISTA.tab', sep=''))
+      out[,3]<-out[,3]/100
   }
 
    if(filter=='VISTA_J'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_J_VISTA.tab', sep='')) 
+      out[,3]<-out[,3]/100
   }
 
    if(filter=='VISTA_H'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_H_VISTA.tab', sep='')) 
+      out[,3]<-out[,3]/100
   }
 
    if(filter=='VISTA_K' | filter=='VISTA_Ks'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_Z_VISTA.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_K_VISTA.tab', sep=''))
+      out[,3]<-out[,3]/100
    }
    if(filter=='WISE_W1'){
       out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_W1_WISE.tab', sep=''))     
@@ -89,7 +125,7 @@ getfilt=function(filter){
       out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_S350_Herschel.tab', sep=''))     
    }
    if(filter==500 | filter=='Herschel_500'){
-      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_PS450_Herschel.tab', sep=''))     
+      out<-read.table(paste(.libPaths(),'/DEVILSTAZ/data/calibrators/filters/filt_S450_Herschel.tab', sep=''))     
   }
   
  

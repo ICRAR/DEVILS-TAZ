@@ -1,3 +1,14 @@
+#' Find unreduced raw data in TAZ data structure
+#'
+#' @description Function searches the TAZ raw data folders and identifies dates which
+#' have not currently been reduced
+#' 
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @return list of date directories that have not been reduced  
+#' @examples 
+#' toReduce<-findNewData(logName='tempLog.txt', verbose=1)
+#' @export
 findNewData<-function(logName=logName, verbose=verbose){
 
 

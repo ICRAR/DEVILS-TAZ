@@ -1,3 +1,16 @@
+#' Extract 1D spectra from a reduced FITS file 
+#'
+#' @description Function extracts 1D spectra from a reduced 2dF+AAOmega frame and
+#' writes these to the TAZ data structure. Internal function to TAZ
+#' 
+#' @param file reduced 2dF+AAOmega frame to extract spectra from
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @param makePlot make 1D plots of extracted spectra
+#' @param zeroPoint TRUE/FALSE apply pre-calcuated (from fluxCal.R) zeroPoint flux scaling    
+#' @examples 
+#'extractNewSpec(file='objected2df_red.fits', logName='tmpLog.txt', verbose=1, makePlot=F, zeroPoint=F)
+#' @export
 extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F, zeroPoint=T){
 
     
