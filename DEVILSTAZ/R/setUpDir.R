@@ -35,8 +35,10 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     system('mkdir data/darks/junk')
     system('mkdir data/observing')
     system('mkdir data/logs')
+    system('mkdir data/catalogues')
+    system('mkdir data/catalogues/MASTERcats')
     #system('mkdir data/calibrators')
-                                        #system('mkdir data/idxFiles')
+   #system('mkdir data/idxFiles')
 
     if (verbose>0){
         cat('Top level directory structure complete.', '\n')

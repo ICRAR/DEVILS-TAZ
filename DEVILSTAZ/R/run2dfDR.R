@@ -342,7 +342,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
             }
        }
 
-        newReduce<-as.vector(newReduce[,1])
+        if  (is.null(dim(newReduce))==FALSE) {newReduce<-as.vector(newReduce[,1])}
+        if  (is.null(dim(newReduce))==TRUE) {newReduce<-newReduce}
 
         metaData2<-getFileInfo(dir=paste('data/reduced/',dateReduc,'/',sep=''),saveFile=paste('data/reduced/',dateReduc,'/',dateReduc2,'_metaData.Rdata',sep=''), logName=logName, verbose=verbose)
         

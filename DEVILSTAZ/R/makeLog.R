@@ -1,3 +1,15 @@
+#' Make Template Nightly Logs for DEVILS
+#'
+#' @description Function produces template night logs for DEVILS obsering
+#' for a given run and date.
+#' 
+#' @param run the run date in the format run#_YYYY_MM
+#' @param date the date in the format YYYY_MM_DD
+#' @param fileName the output log filename
+#' 
+#' @examples 
+#' makeLog(run='run1_2017_12', date='2017_12_18',fileName='data/observing/run1_2017_12/2017_12_18/2017_12_18_DEVILS_obs_log.txt')
+#' @export
 makeLog<-function(run=run, date=date, fileName=fileName){
 
 fileConn<-file(fileName)

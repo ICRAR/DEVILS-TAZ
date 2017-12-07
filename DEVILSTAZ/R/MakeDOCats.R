@@ -1,3 +1,21 @@
+#' Makes New DEVILS Observing Catalogues (DOCats) 
+#'
+#' @description Function reads the current DEVILS Master Catlogue (DMCat), sky position catalogues,
+#' standard star catalogues, guidestar catalogues and produces now DOCats for tiling. Also produces
+#' a updated SurveyInfo.txt file required for the Tiling codes.
+
+#' @param MASTERCat current DEVILS MASTER catalogue to use
+#' @param UserName your name to add to logs
+#' @param dateFor the run and date these DOCats will be used for (e.g. 'run1_2017_12/2017_12_18')
+#' @param year the current year (for SurveyInfo.txt)
+#' @param semester the current semester (for SurveyInfo.txt)
+#' @param run the current run number (for SurveyInfo.txt)
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @return New DOCats directory path
+#' @examples 
+#' makeDOCats(MASTERCat='data/catalogues/MASTERcats/DMCat2017-12-18.rda', UserName='NewUser', dateFor='run1_2017_12/2017_12_19', year=2017, semester='B', run=1, logName='tmpLog.txt', verbose=2)
+#' @export
 makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year=2017, semester='B', run=1, logName=logName, verbose=verbose){
 
      if (verbose>1){cat('    - Loading Guide, sky and std files from data/calibrators/', '\n')}
