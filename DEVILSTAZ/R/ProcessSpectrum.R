@@ -1,6 +1,22 @@
-# Input a spectrum, and create filtered version for cross-correlation.
-# Written by Ivan Baldry. 
-# Translated to R by Leon Drygala
+#' Internal AutoZ routines for processing spectra prior to fitting
+#'
+#' @description A number of interal AutoZ routines.
+#' 
+#' @param specIn input spectrum
+#' @param stLambda min wavelength range to fit over
+#' @param endLambda max wavelength range to fit over
+#' @param os1 length to extend below stLambda
+#' @param os2 length to extend above endLambda
+#' @param minval min value to reject y values
+#' @param maxval max value to reject y values
+#' @param clipvalue value to itterative clip peaks
+#' @param baddataErrorValue value to replace bad data with
+#' @param useInvCorrection set relative flux calibration for GAMA 
+#' @param verbose TRUE/FALSE,  tell me whats going on
+#' @author I. Baldry
+#' @examples 
+#' None applicable
+#' @export
 ProcessSpectrum = function(specIn, stLambda = 3726, endLambda = 8850, os1 = 10, os2 = 60, 
                            minval = -1.0e4, maxval = 1.0e6, clipvalue = 25, baddataErrorValue = 1e10, 
                            useInvCorrection = TRUE, verbose = TRUE){

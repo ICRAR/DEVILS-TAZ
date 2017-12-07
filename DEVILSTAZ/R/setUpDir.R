@@ -1,3 +1,20 @@
+#' Set up DEVILS directory structure
+#'
+#' @description This is the highlevel main TAZ function for setting up the directory structure. 
+#' The majority of the other TAZ functions rely on this directory structure being in place.
+#' Users provide a list of runs, and start/end dates for each run and the fucntion will produce
+#' the correct directories, make logs and observability plots and unpack all required calibration 
+#' files.
+#'  
+#' @param workingDir Directory you wish to produce DEVILS dtaa structure
+#' @param runs vector of run names with the format run#_YYYY_MM (i.e. 'run1_2017_12')
+#' @param dateStart vector of start dates for each run with the format YYYY_MM_DD (i.e. 2017_12_18). Must be the same size as runs
+#' @param dateEnd vector of end dates for each run with the format YYYY_MM_DD (i.e. 2017_12_22). Must be the same size as runs
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+
+#' @examples 
+#' setUpDir(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateStart=c('2017_12_18','2018_01_09'),dateEnd=c('2017_12_26','2018_01_22'), verbose=1)
+#' @export
 setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateStart=c('2017_12_18','2018_01_09'),dateEnd=c('2017_12_26','2018_01_22'), verbose=1){
     
     setwd(workingDir)

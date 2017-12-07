@@ -1,6 +1,11 @@
-# Read in and rebin template data to new scale. 
-# Select templates to use. Wavelengths are in vacuum as per SDSS. 
-# Written in IDL by Ivan Baldry and Translated to R by Leon Drygala
+#' Internal AutoZ routines for reading in spectra and templates
+#'
+#' @description A number of interal AutoZ routines.
+#' 
+#' @author I. Baldry
+#' @examples 
+#' None applicable
+#' @export
 RebinTempData = function(logLambda, templateNumbers = c(2:14, 16:22,40:47), 
                          file = "../autozResouces/autoz-code/data/filtered-templates.fits",
                          num_templates, verbose = TRUE){

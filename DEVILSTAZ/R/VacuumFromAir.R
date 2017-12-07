@@ -1,10 +1,16 @@
-# Convert from vacuum wavelengths to air wavelengths by interpolating
-# from a lookup table.
-# Equation from SDSS web page 
-# http://www.sdss.org/dr7/products/spectra/vacwavelength.html. 
-# Reference to Morton (1991, ApJS, 77, 119). 
-# Written by Ivan Baldry.
-# Translated to R by Leon Drygala
+#' Internal AutoZ routines for converting vacuum wavelengths to air wavelengths 
+#'
+#' @description Function interpolate air wavelengths to vacuum wavelengths
+#' using a lookup table. Equation comes from the SDSS web page:
+#' http://www.sdss.org/dr7/products/spectra/vacwavelength.html. 
+#'  Reference to Morton (1991, ApJS, 77, 119). 
+#' 
+#' @param air Wavelength in air
+#' @return Wavelength in vacuum
+#' @author I. Baldry
+#' @examples 
+#' Vac<-VacuumFromAir(3727.456)
+#' @export
 VacuumFromAir = function(air){
   
   vacLookup <- 0:7999 + 3500
@@ -16,12 +22,19 @@ VacuumFromAir = function(air){
   return = vac
 }
 
-# Convert from vacuum wavelengths to air wavelengths.
-# Equation from SDSS web page 
-# http://www.sdss.org/dr7/products/spectra/vacwavelength.html. 
-# Reference to Morton (1991, ApJS, 77, 119). 
-# Written by Ivan Baldry.
-# Translated to R by Leon Drygala
+#' Internal AutoZ routines for converting air wavelengths to vacuum wavelengths 
+#'
+#' @description Function interpolate vacuum wavelengths to air wavelengths
+#' using a lookup table. Equation comes from the SDSS web page:
+#' http://www.sdss.org/dr7/products/spectra/vacwavelength.html. 
+#'  Reference to Morton (1991, ApJS, 77, 119). 
+#' 
+#' @param Vac Wavelength in vacuum
+#' @return Wavelength in air
+#' @author I. Baldry
+#' @examples 
+#' Air<-AirFromVacuum(3728.516)
+#' @export
 AirFromVacuum = function(vac){
   air <- vac / (1.0 + 2.735182E-4 + 131.4182 / vac^2 + 2.76249E8 / vac^4)
   return = air

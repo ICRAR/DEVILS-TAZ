@@ -1,4 +1,69 @@
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose=2, N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, doCalibQC=F, doReduce=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',zeroPoint=T, cores=cores, configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64'){
+#' Top level funtion for running full DEVILS Tool for Analaysis and Redshifting Pipeline.
+#'
+#' @description This is the highest level main TAZ function for running all over functions
+#' in an easily mangable mode. With the inputs provided in this function and the DEVILS directory 
+#' strucutre the full reducution and and analysis of DEVILS data can be undertaken. 
+#'  
+#' @param user The current use identification. This is added to all logs.
+#' @param workingDir The top level directory where the DEVILS data/... directory is found
+
+
+#' @param doCalibQC TRUE/FALSE, Produce bias and dark frame QC plots using checkQC.R
+#' @param doReduce TRUE/FALSE, Perform 2dFDR reduction using run2dfDR.R 
+#' @param toReduceDirs directory path to reduce in the DEVILS data structure. Must be of the form, 
+#' data/rawdata/run#_YYYY_MM/YYYY_MM_DD (i.e. data/rawdata/run1_2017_12/2017_12_18). *** NOTE: IF YOU
+#' WITH TAZ TO IDENTIFY ALL UNDREDUCED DATES SET toReduceDirs='NA'** Also, this will overwrite any data in the 
+#' corresponding reduced directory for that night, so use with care!  
+#' @param zeroPoint 
+#' @param doExtract TRUE/FALSE, Perform 1D spectral extraction using extractNewSpec.R 
+#' @param toExtractFiles If doReduce=F and doExtract=T, provide a string vector of the reduced files to 
+#' extract. These must have the full path (i.e. data/reduced/run1_2017_12/2017_12_18/2017_12_18_config_1_reduced.fits) 
+#' @param doStack TRUE/FALSE, Perform stacking of spectra with IDs using stackSpec.R 
+#' @param toStackIDs If doExtract=F and doStack=T, provide a string vector of IDs you wish to stack. Can be a list of IDs 
+#' or set to 'all' which will stack all unique IDs in the 'data/reduced/allSpec/' directory.
+#' @param doAutoZ TRUE/FALSE, Perform AutoZ redshift fitting using runAutoZ.R 
+#' @param toAutoZStacks  If doStack=F and doAutoZ=T, provide vector list of file paths to run AutoZ over. 
+#' Must either be full directory path, or can set to 'all' to run over all spectra in the 'data/reduced/stackedSpec/' directory.  
+#' @param doUpdateMaster TRUE/FALSE, Update and generate a new DMCat (with timestamp) using the redshift measurement in the 
+#' data/reduced/stackedSpec/ directory. Then make DOCats for the next observing date.
+#' @param doTiler TRUE/FALSE, Run tiling software to generate new fibre configuration files using runTiler.R
+#' @param DODir If doUpdateMaster=F and doTiler=T, provide directory path to DOCats directory you with to uses for configurations
+#' @param N_D02A Number of configurations to generate in D02A for runTiler.R
+#' @param N_D02B Number of configurations to generate in D02B for runTiler.R
+#' @param N_D03 Number of configurations to generate in D03 for runTiler.R
+#' @param N_D10 Number of configurations to generate in D10 for runTiler.R
+#' @param D02A_startPlate Start plate number of D02A configurations (0 or 1) for runTiler.R
+#' @param D02A_startPlate Start plate number of D02B configurations (0 or 1) for runTiler.R
+#' @param D03_startPlate Start plate number of D03 configurations (0 or 1) for runTiler.R
+#' @param D10_startPlate Start plate number of D10 configurations (0 or 1) for runTiler.R
+#' @param configdir Directory path to Configuration software 
+#' @param cores number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R 
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @examples 
+#' # Detailed descriptions of the this function and how to use it can be found in the TAZ manual 
+#' here: https://github.com/ICRAR/DEVILS-TAZ/blob/master/DEVILS_Manuals/TAZ_Manual.pdf . However, 
+#' below are a few quick examples:
+#' 
+#' # Basic running of simple reduction and 1D extraction of data:
+#' TAZ(user='NewUser', workingDir='.', doReduce=T, zeroPoint=T, doExtract=T, doStack=F, doAutoZ=F, cores=4, doUpdateMaster=F, doTiler=F,verbose=2)
+#' 
+#' Reduce data in a specific raw directory:
+#' TAZ(user='NewUser', workingDir='.', doReduce=T, toReduceDirs='data/rawdata/run1_2017_12/2017_12_18', zeroPoint=F, doExtract=F, doStack=F, doAutoZ=F, cores=4, doUpdateMaster=F, doTiler=F,verbose=2)
+#' 
+#' # Stacking already reduced and extracted spectra and running AutoZ:
+#' TAZ(user='NewUser', workingDir='.', doReduce=F, zeroPoint=F, doExtract=F, doStack=T, toStackIDs='all', doAutoZ=T, cores=4, doUpdateMaster=F, doTiler=F,verbose=2)
+#'   
+#' # Updateing catalogues with the new redshifts and running the tiling:
+#' TAZ(user='NewUser', workingDir='.', doReduce=F, zeroPoint=F, doExtract=F, doStack=F, doAutoZ=F, cores=4, doUpdateMaster=T, doTiler=T, verbose=2, N_D02A=1, N_D02B=1, $
+#' N_D03=2, N_D10=3,  D02A_startPlate=0, D0BA_startPlate=1, D03_startPlate=0, D10_startPlate=1, configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64') 
+#' 
+#' # Running the full TAZ pipeline from end to end with everyhting turned on:
+#' TAZ(user='NewUser', workingDir='.', doCalibQC=T, doReduce=T, zeroPoint=T, doExtract=T, doStack=T, doAutoZ=T, cores=4, doUpdateMaster=T, doTiler=T, verbose=2, N_D02A=1, N_D02B=1, $
+#' N_D03=2, N_D10=3,  D02A_startPlate=0, D0BA_startPlate=1, D03_startPlate=0, D10_startPlate=1, configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64') 
+#' 
+#' @export
+#' 
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  cores=cores, verbose=2){
 
     if (doReduce==T){
         tmp<-tryCatch(system2('which', args='aaorun', stdout=TRUE))
@@ -79,11 +144,17 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
 
     
     if (doReduce==T){
-
-        if (verbose>0){cat('Finding unreduced raw datasets....', '\n')}
-        write('Finding unreduced raw datasets....', file=logName, append=T)
-    
-        toReduce<-findNewData(logName=logName, verbose=verbose)
+      
+        if (toReduceDirs=='NA'){
+  
+          if (verbose>0){cat('Finding unreduced raw datasets....', '\n')}
+          write('Finding unreduced raw datasets....', file=logName, append=T)
+      
+          toReduce<-findNewData(logName=logName, verbose=verbose)
+        }else{
+          
+          toReduce<-toReduceDirs
+        }
        
         if (verbose>0){cat('Reducing new datasets....', '\n')}
         write('Reducing new datasets....', file=logName, append=T)
@@ -277,3 +348,4 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/', verbose
     } 
 
 }
+

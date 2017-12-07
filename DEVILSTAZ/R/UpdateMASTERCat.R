@@ -1,3 +1,19 @@
+#' Update DMcats with new redshifts and make DOCats
+#'
+#' @description This is the high-level main TAZ function for updating the DMCat with
+#' new redshifts in a directory and generating DOCats for the 
+#' next observing night.
+#'  
+#' @param cat Path to current DMCat 
+#' @param specDir Path to directory containing R list spectra with value spec$z. 
+#' Usually will be data/reduced/stackedSpec 
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+
+
+#' @examples 
+#' 
+#' @export
 UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=verbose){
 
     load(cat)

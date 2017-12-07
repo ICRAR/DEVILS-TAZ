@@ -1,3 +1,33 @@
+#' Produce fibre configuration files for a givne set of DOCats
+#'
+#' @description This is the highlevel main TAZ function for running running the Tiler software
+#' to gnerate fibre configuration files. Users must provide DOcats for targets, sky, standards and guides.
+#'  
+#' @param configdir Directory path location of Configure software
+#' @param workigDir The directory you want to do the tiling in
+#' @param DOcat A target catalogue
+#' @param DATAguide A guide star catalogue
+#' @param DATAstspec A standard star catalogue
+#' @param DATAsky A sky potions catalogue
+#' @param N_D02A Number of configurations to generate in D02A
+#' @param N_D02B Number of configurations to generate in D02B
+#' @param N_D03 Number of configurations to generate in D03
+#' @param N_D10 Number of configurations to generate in D10
+#' @param D02A_startPlate Start plate number of D02A configurations (0 or 1)
+#' @param D02A_startPlate Start plate number of D02B configurations (0 or 1)
+#' @param D03_startPlate Start plate number of D03 configurations (0 or 1)
+#' @param D10_startPlate Start plate number of D10 configurations (0 or 1)
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @param cores number of cores to use (max four in this case) 
+
+#' @examples 
+#' runTiler(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',workigDir='.', DOcat='data/observing/run1_2017_12/2017_12_19/DOCats/DObjCat_2017_12_19.tab, $
+#'  DATAguide=data/observing/run1_2017_12/2017_12_19/DOCats/DGuideCat_2017_12_19.tab,DATAstspec=data/observing/run1_2017_12/2017_12_19/DOCats/DStdCat_2017_12_19.tab, $ 
+#'  DATAsky=data/observing/run1_2017_12/2017_12_19/DOCats/DGSkyCat_2017_12_19.tab, N_D02A=1, N_D02B=1, N_D03=2, N_D10=3,  D02A_startPlate=0, D0BA_startPlate=1, D03_startPlate=0, $  
+#'  D10_startPlate=1, logName='tempLog.txt', verbose=1, cores=4)
+#'  # will make one configuration in D02A and D02B, two in D03, and 3 in D10.
+#' @export
 runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, logName=logName, verbose=verbose, cores=cores){
 
 

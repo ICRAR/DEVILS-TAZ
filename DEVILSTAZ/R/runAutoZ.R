@@ -1,3 +1,20 @@
+#' Run AutoZ over a supplied list of spectra
+#'
+#' @description This is the highlevel main TAZ function for running AutoZ over a number of 
+#' spectra, or all spectra in the 'data/reduced/stackedSpec/' directory. Function will run AutoZ
+#' and make plots in the 'data/reduced/stackedSpec/AutoZplots' directory.
+#'  
+#' @param specs vector list of file paths to run AutoZ over. Must either be full directory path, or can
+#' set to 'all' to run over all spectra in the 'data/reduced/stackedSpec/' directory.  
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @param makePlots TRUE/FLASE make plots of spectra using plotSpec.R
+#' @param cores number of cores to use
+#' @examples 
+#' runAutoZ(specs='all', logName='tempLog.txt', verbose=1, makePlots=T, cores=4)
+#' 
+#' runAutoZ(specs=c('data/reduced/stackedSpec/G007372.RData'), logName='tempLog.txt', verbose=1, makePlots=T, cores=4)
+#' @export
 runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, cores=cores){
 
 
@@ -42,81 +59,19 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, c
  
         save(spec,file=specs[i])
 
-        if (makePlots==T){
-
-            if (verbose>1){cat('        - Plotting AutoZ outputs as: ',paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''),  '\n')}
-            write(paste('        - Plotting AutoZ outputs as: data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf', sep=''), file=logName, append=T)
-            
-            pdf(paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''), width=18, height=18)
-
-            par(mfrow = c(3, 3))
-            par(mar=c(3.1,3.1,1.1,1.1))
-
-            layout(matrix(c(1,1,1,2,3,4, 5, 6,7), 3, 3, byrow = TRUE))
-
-            
-            lines<-load.lines()
-            line_x <- as.numeric(lines$wave_ang)*(1+spec$z)
-            peak_F<-max(spec$flux, na.rm=T)
-            
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=9), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=c(3600,9000), ylim=c(peak_F*-1.2,peak_F*1.2), lwd=2, main=paste(spec$ID, ' - Hanning Smoothed, degree=9',sep=''))
-            
-            plotLines(z=spec$z, xunit='ang', labPos=0.8*max(spec$flux,na.rm=T), lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-50)
-            
-            
-            legend('bottomright', legend=c(paste('ID=',spec$ID,sep=''), paste('z=',spec$z,sep=''), paste('mag=',spec$MAG,sep=''), paste('Prob=',spec$prob,sep=''), paste('TEXP=',spec$EXP,sep='')), bg='white')
-
-            degSmooth<-7
-            
-            range<-250
-            wavePoint<-3727
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='OII', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-
-            range<-500
-            wavePoint<-4950
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='OIII/H-beta', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-
-            range<-300
-            wavePoint<-6650
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='H-alpha, NII, SII', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-            
-            range<-500
-            wavePoint<-4150
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='Ca H&K, G-band', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-
-            
-            range<-250
-            wavePoint<-5175
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='Mg', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-
-            range<-250
-            wavePoint<-5895
-            peak<-1.2*max(spec$flux[which(spec$wave > ((1+spec$z)*wavePoint)-range & spec$wave < ((1+spec$z)*wavePoint)+range)],na.rm=T)
-            if (is.finite(peak)==F){peak=peak_F}
-            magplot(spec$wave, hanning.smooth(spec$flux, degree=degSmooth), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=(1+spec$z)*wavePoint+c(-range,range), ylim=c(-peak,peak), main='Na', lwd=2)
-            plotLines(z=spec$z, xunit='ang', labPos=0.3*peak, lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-20)
-           
-            
-
-            dev.off()
-
-            }
-        
+          if (makePlots==T){
+  
+              if (verbose>1){cat('        - Plotting AutoZ outputs as: ',paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''),  '\n')}
+              write(paste('        - Plotting AutoZ outputs as: data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf', sep=''), file=logName, append=T)
+              
+              pdf(paste('data/reduced/stackedSpec/AutoZplots/', spec$ID,'.pdf',sep=''), width=18, height=18)
+              
+              plotSpec(spec)
+              
+              dev.off()
+  
+              }
+          
     }
 
 }

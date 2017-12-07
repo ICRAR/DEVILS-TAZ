@@ -1,3 +1,19 @@
+#' Run 2dFDR over a target directory
+#'
+#' @description This is the highlevel main TAZ function for running 2dFDR (via aaorun) data reduction over 
+#' a target directory. Function will find and reduce calibrators, make master bias and 
+#' dark frames, produce QC plots, reduce arc, flat and object files, combine data files
+#' for each ccd arm and splice to form final spectrum.
+#'  
+#' @param toReduce directory path to reduce in the DEVILS data structure. Must be of the form, 
+#' data/rawdata/run#_YYYY_MM/YYYY_MM_DD (i.e. data/rawdata/run1_2017_12/2017_12_18).
+#' @param doCalibQC TRUE/FLASE, produce QC check plots for biases and darks
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @param cores number of cores to use
+#' @examples 
+#' run2dfDR(toReduce='data/rawdata/run1_2017_12/2017_12_18', doCalibQC=F, logName='tempLog.txt', verbose=1, cores=4)
+#' @export
 run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=cores){
 
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
@@ -31,6 +47,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         configList<-unique(metaData$config)
 
 
+        
+        
         system(paste('mkdir data/reduced/',dateReduc,'/ccd1',sep=''))
         system(paste('mkdir data/reduced/',dateReduc,'/ccd2',sep=''))
 

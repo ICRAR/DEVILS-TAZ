@@ -1,3 +1,18 @@
+#' Stack repeat obervations with 2dF
+#'
+#' @description This is the highlevel main TAZ function for stacking spectra. Function searches for 
+#' repeat observations of a given ID in the DEVILS directory structure, and inverse variance weights
+#' the full splice spectrum, each ccd arm individually, and the continuum extracted spectrum. Will also
+#' produce diagnositc output plots for each spectrum to show individual spectra and stacks.
+#'  
+#' @param ids vector list of IDs to stack. Can be a list of IDs or set to 'all' which will stack all unique IDs in
+#' the 'data/reduced/allSpec/' directory.
+#' @param logName log filename to write progress to
+#' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
+#' @param makePlot TRUE/FALSE, make diagnositc plots of each spectrum. These wil be written to data/reduced/stackedSpec/plots/
+#' @examples 
+#' stackSpec(ids='all',  logName='tempLog.txt', verbose=1,makePlots=T)
+#' @export
 stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
 
     if (ids[1]=='all'){

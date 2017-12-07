@@ -1,6 +1,16 @@
-# Define scale for rebinning in cross correlation.
-# Written By Ivan Baldry
-# Translated by Leon Drygala
+#' Internal AutoZ function for setting up log wavelength scale
+#'
+#' @description Set up log wavelength scale
+#' 
+#' @param oversample how much to oversample the spectrum given the wavelength gap 'sdssGap'
+#' @param lowValue min values of scale
+#' @param highValue max value of scale
+#' @param verbose TRUE/FALSE, tell me what's going on
+#' @return logLambda wavelength scale
+#' @author I. Baldry
+#' @examples 
+#' LamScale<-SetUpLogLambda(oversample=5, lowValue=3.3, highValue=4.0, verbose = TRUE)
+#' @export
 SetUpLogLambda = function(oversample=5, lowValue=3.3, highValue=4.0, verbose = TRUE){
   sdssGap <- 0.0001
   gap <- NULL
