@@ -39,9 +39,9 @@
 
 \section{Overview}
 
-The DEVILS observations will be undertaken with the AAT either on-site at Siding Spring or remotely from Perth/Sydney. This document describes the DEVILS database structure and how you interact with it, the observer tasks, and the data reduction and QC processes. In summary, there are two DEVILS databases, each with identical file structure; one at the AAT and one in Perth, with this structure replicated in Sydney in AAO Data Central (ADC) who will be testing new systems and federating the data transfer. The observer will place the raw data in the database at the telescope and the ADC database, this will then get copied to the database in Perth where the data reduction will be performed by the DEVILS Tool for Analysis and Redshifting (TAZ). The reducer in Perth, will produce the new configuration files into the Perth and ADC databases and these will be copied to the AAT database for the next night's observing. At the telescope the observer will perform a manual reduction of the data to check for QC and update logs. A summary of this processes is described in Figure \ref{fig:dataflow} - which will be referred to throughout this document. 
+The DEVILS observations will be undertaken with the AAT either on-site at Siding Spring or remotely from Perth/Sydney. This document describes the DEVILS database structure and how you interact with it, the observer tasks, and the nightly data reduction and QC processes. In summary, there are two DEVILS databases, each with identical file structure; one at the AAT and one in Perth, with this structure replicated in Sydney by AAO Data Central (ADC) who will be testing new systems and federating the data transfer. The observer will place the raw data in the database at the telescope and the ADC database, this will then get copied to the database in Perth where the data reduction will be performed by the DEVILS Tool for Analysis and Redshifting (TAZ). The reducer in Perth, will produce the new configuration files into the Perth and ADC databases and these will be copied to the AAT database for the next night's observing. At the telescope the observer will perform a manual reduction of the data to check for QC and update logs. A summary of this processes is described in Figure \ref{fig:dataflow} - which will be referred to throughout this document. 
 
-This document provides a detailed description of all aspects of DEVILS observing, for a concise summery of observer tasks see Section \ref{sec:summary}. \textcolor{PineGreen}{\textbf{If you have any queries or questions regarding this document, please contact Luke at luke.j.davies@uwa.edu.au}}\\
+This document provides a detailed description of all aspects of DEVILS observing, for a concise summary of observer tasks see Section \ref{sec:summary}. \textcolor{PineGreen}{\textbf{If you have any queries or questions regarding this document, please contact Luke at luke.j.davies@uwa.edu.au}}\\
 
      
 \section{The DEVILS directory structure}
@@ -145,7 +145,7 @@ Under each of the \textbf{biases}, \textbf{darks}, \textbf{raw}, \textbf{reduced
 
 Under the \textbf{raw}, \textbf{reduced}, \textbf{reduced\_AAT} and \textbf{observing} directories for each run, there are also sub directories for each observing night, with the format \textbf{YYYY\_MM\_DD} ($i.e.$ the first night of run1 on the 18th of December 2017 can be found in - \textbf{run1\_2017\_12/2017\_12\_18}). This is where the raw observing data (arcs, flats and target data will be placed).
 
-Familiarise yourself with this directory structure it is where all of the DEVILS information and data can be found. If you have used the DEVILS automatic reduction pipeline, TAZ, this is identical to the data structure produced by the \texttt{setUpDir()} function - excluding the reduced\_AAT directory which is used for observer reduction and QC. \\
+Familiarise yourself with this directory structure. It is where all of the DEVILS information and data can be found. If you have used the DEVILS automatic reduction pipeline, TAZ, this is identical to the data structure produced by the \texttt{setUpDir()} function - excluding the reduced\_AAT directory which is used for observer reduction and QC. \\
 
 \textcolor{PineGreen}{\textbf{NOTE: You will not need to access all other directories in this structure as they contain calibrators and/or are used to match the directory structure used by the TAZ (more below)}}\\
 
@@ -154,7 +154,7 @@ Familiarise yourself with this directory structure it is where all of the DEVILS
 
 \textcolor{PineGreen}{\textbf{NOTE: You should not need to do this as it should already be completed by Luke. However, here are instructions for setting up the individual run/night directory structure if it doesn't already exist.}} \\
 
-If required, to set up the directory structure in the DEVILS account, you simply have to run one shell script, \texttt{setUpDir\_AAT}. This can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). This script  takes inputs of the run name and night, and produces the correct directory structure. To setup the directories for a particular run/night, got to the top level of the DEVILS account space and run:\\
+If required, to set up the directory structure in the DEVILS account, you simply have to run one shell script, \texttt{setUpDir\_AAT}. This can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). This script  takes inputs of the run name and night, and produces the correct directory structure. To setup the directories for a particular run/night, go to the top level of the DEVILS account space and run:\\
 
 \hspace{10mm} \texttt{\% ./setUpDir\_AAT run\#\_YYYY\_MM YYYY\_MM\_DD} \\
 
@@ -189,10 +189,19 @@ The bias and dark files should then by QC checked by the observer. This can be d
 
  \texttt{$>$ checkCal(baisDir=`data/biases/run1\_2017\_12/', \\ darksDir=`data/darks/run1\_2017\_12/')} \\
  
-This will produce (in those directories) \textbf{biasQC.pdf}, \textbf{darkQC.pdf}, \textbf{biasQC\_summary.pdf}, and \textbf{darkQC\_summary.pdf} files  which will show you images of all of the biases/darks in the given directory and print a number of stats about each frame. The summary file will display a table of some key properties of each frame. Check these for any abnormalities such as outlying values, or large noise/gain. If there are bad frames, DO NOT DELETE THEM,  copy them to the \textbf{junk/} folder in the correct bias or darks directory for that run. 
+This will produce (in those directories) \textbf{biasQC.pdf}, \textbf{darkQC.pdf}, \textbf{biasQC\_summary.pdf}, and \textbf{darkQC\_summary.pdf} files  which will show you images of all of the biases/darks in the given directory and print a number of stats about each frame. The summary file will display a table of some key properties of each frame. Check these for any abnormalities such as outlying values, or large noise/gain. If there are bad frames, DO NOT DELETE THEM,  copy them to the \textbf{junk/} folder in the correct bias or darks directory for that run. \\
+
+\begin{center}
+\definecolor{light-gray}{gray}{0.97}
+\fcolorbox{PineGreen}{light-gray}{\begin{minipage}[c]{0.95\linewidth}
+\linethickness{5mm}
+\vspace{1mm}
 
 
 \textbf{\textcolor{PineGreen}{NOTE: the following sections on producing the configuration files should be produce by TAZ in Perth and provided to you by Luke at the start of each night. However, below are details of how to prepare these should you need to do it. If you are doing this, please make the decisions on which fields to be observed on the night prior to when you will be observing them, as the configuration files take some time to generate. }}
+
+\end{minipage}}
+\end{center}
 
 
 \subsubsection{Planning Fields to be Observed}
@@ -210,7 +219,7 @@ There are three different methods for running the tiling software, each increasi
 \textsf{2.1.3.1 Obtaining Tiling/Configurations using high level TAZ}
 \vspace{2mm}
 
-The easiest method for generating the tiling files is to use the high level functionality of TAZ. However, this assumes that you have TAZ installed correctly, and all of the the most up-to-date DEVILS observing cats (DOcats) in the correct directory structure. Essentially, if you have generated your structure using \texttt{setUpDir()} and your last updated DO cats are in the form: \\
+The easiest method for generating the tiling files is to use the high level functionality of TAZ. However, this assumes that you have TAZ installed correctly, and all of the the most up-to-date DEVILS observing cats (DOcats) in the correct directory structure. If you would like to install TAZ, please see the TAZ\_Manual.pdf) Essentially, if you have generated your structure using \texttt{setUpDir()} and your last updated DO cats are in the form: \\
 
 SurveyInfo.txt - A survey description file \\
 DGuideCat* - A guide star catalogue \\
@@ -221,8 +230,7 @@ DObjCat* - The most up-to-date target catalogue \\
 You can run TAZ in this mode. These files will need to be in a directory such as \textbf{/data/observing/run1\_2017\_ \\ 12/2017\_12\_20/DOCats/}. These catalogues are generated during the running of TAZ. If you do not have these files or do not know how they are formatted, ask Luke to give you the most up-to-date files. If you have these from the previous nights/runs observations you can run TAZ as: \\
 
 \texttt{ $>$ TAZ(user=`ldavies', workingDir=`.', verbose=2, N\_D02A=0, N\_D02B=0, N\_D03=4, N\_D10=4, D03\_startPlate=0, D10\_startPlate=0, doReduce=F, doExtract=F, 
-doStack=F, doAutoZ=F, doUpdateMaster=F, doTiler=T, \\
-DODir=`/data/observing/run1\_2017\_12/2017\_12\_20/DOCats/', configdir=`/Applications/configure-8.4-MacOsX\_ElCapitan\_x86\_64')} \\
+doStack=F, doAutoZ=F, doUpdateMaster=F, doTiler=T, DODir=`/data/observing/ \\ run1\_2017\_12/2017\_12\_20/DOCats/', configdir=`/Applications/ \\configure-8.4-MacOsX\_ElCapitan\_x86\_64')} \\
 
 This will read the DOCats in \textbf{/data/observing/run1\_2017\_12/2017\_12\_20/DOCats/'}, and produce fibre allocation files for 4 configurations in D03 and 4 in D10. TAZ will write all of the tiling files to a \textbf{Tiling/} subdirectory of the current DODir ($i.e.$ \textbf{/data/observing/run1\_2017\_12/ 2017\_12\_20/DOCats \\ /Tiling/} in the example above). For ease of use, the final tiling files which are generated for all fields will be copped to a  \textbf{TileFiles/} directory at this location. \texttt{configdir} is the directory path location to your current installation of the 2dF fibre configuration software, \textsc{configure}. \\
 
@@ -243,7 +251,7 @@ It is also possible to run the tiling software manually using the most up-to-dat
 
 \texttt{ $>$ Tiler(tileplus=NTiles, position=Field, plate=plateSeq, runfolder=TRUE, \\ TileCat=DOcat, runoffset=1, restrict=rep('all',NTiles), \\ updatefib=!exists('Fibres'), basedir=`.', configdir=configdir, \\ append\_letter='D') }\\
 
-\textbf{NOTE: If you generate configuration files using this method. Please copy the products produced to the correct /data/observing/run\#\_YYYY\_MM/ YYYY\_MM\_DD/DOCats/Tiling/ in the AAT database and note in the night logs what you have done! You must keep the \texttt{append\_letter=`D'} to ensure that TAZ identifies the targets as DEVILS sources during reduction.}
+\textbf{NOTE: If you generate configuration files using this method. Please copy the products produced to the correct /data/observing/run\#\_YYYY\_MM/ YYYY\_MM\_DD/DOCats/Tiling/ in the AAT database and note in the night logs what you have done! You must keep the \texttt{append\_letter=`D'} to ensure that TAZ identifies the targets as DEVILS sources during reduction.}\\
 
 
 \textsf{2.1.3.3 Running Configuration Interactively}
@@ -251,11 +259,11 @@ It is also possible to run the tiling software manually using the most up-to-dat
 
 You can also run the AAT \textsc{configure} software interactively. This may be useful if there is an issue with the configuration files provided and they will not configure on the telescope, or simply to check a current configuration (which is advised!). To run this simply type:\\
 
-\hspace{15mm} \texttt{\$ configure}\\
+\hspace{15mm} \texttt{\% configure}\\
 
 You will then be asked to select the plate (0,1) and load an input .fld file. This file will be those provided to you in the relevant \textbf{/data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/DOCats/Tiling/'} directory, or that you generated in previous steps in this section. Once loaded you can run the configuration (allocate fibres). Once this is complete make sure to save the configuration (.sds) file and .lis file and copy to the correct \textbf{Tiling/} directory for your night. Please also note what you have done in the logs. 
 
-When observing a tile multiple times try to do it alternately with plates 0 and 1. Otherwise the broken fibres may imprint some structure onto the distribution of the unobserved targets. When allocating fibres: check `Thorough' annealing, `moderate' straightening of fibres, `Enforce sky quota' and `Weight peripheral fiducial targets'. Use 25 sky fibres. Make sure you have some 3 spectroscopic standards. When the allocation is done, `check over HA range' (use 3 hours), save the .sds file, then save it off as an ascii (.lis) file by doing `File' -$>$ `List' -$>$ `Allocations'. Also, save off the unallocated objects in the same manner. 
+When observing a tile multiple times try to do it alternately with plates 0 and 1. Otherwise the broken fibres may imprint some structure onto the distribution of the unobserved targets. When allocating fibres: check `Thorough' annealing, `moderate' straightening of fibres, `Enforce sky quota' and `Weight peripheral fiducial targets'. Use 25 sky fibres. Make sure you have some 3 spectroscopic standards. When the allocation is done, `check over HA range' (use 3 hours), save the .sds file, then also save as an ascii (.lis) file by doing `File' -$>$ `List' -$>$ `Allocations'. 
 
 This interactive process is useful if you need to manually delete one particular fibre assignment if 2df will not configure. Please save all files with the naming format given below and note the name in the night logs.       
 
@@ -286,16 +294,16 @@ DOCats/Tiling/TileFiles/} directory. During the day before observing you will be
 
 \subsubsection{Passing configuration files to support astronomer}
 
-The observing is undertaken by the support astronomer (if you are a support astronomer see the DEVILS\_SupportAstronmer\_Details.pdf for more information). These need to be put in the \textbf{/configs/devils/run\#\_
-YYYY\_MM/YYYY\_MM\_DD/} directory and the support astronomer will initiate the configuration of the plates on 2dF. These files need to be in placed in the \textbf{/configs/} directory by 4pm in the afternoon (local time at the AAT) to enable the first two plates to be configured prior to the start of observations. Please tell the support astronomer which configurations you are starting with. This process is described by the purple arrow data path in Figure \ref{fig:dataflow}. 
+The observing is undertaken by the support astronomer (if you are a support astronomer see the DEVILS\_SupportAstronmer\_Details.pdf for more information). These need to be put in the \textbf{configs/devils/run\#\_
+YYYY\_MM/YYYY\_MM\_DD/} directory and the support astronomer will initiate the configuration of the plates on 2dF. These files need to be in placed in the \textbf{configs/} directory by 4pm in the afternoon (local time at the AAT) to enable the first two plates to be configured prior to the start of observations. Please tell the support astronomer which configurations you are starting with. This process is described by the purple arrow data path in Figure \ref{fig:dataflow}. 
 
 \subsubsection{Make a night plan using ObsPlan}
 
-Using the configurations passed to the support astronomer, you can now make a plan for the night using \textbf{obsplan}. Please refer to the finding charts, and observation plan files in the \textbf{/data/observing/.../....} directory for the current night to aid in this. Enter the names of the configurations you plan to observe, set the exposure times as two 1,800\,second sub-exposures per configuration, and set the changeover time as 15min. The co-ordinates will be given in the file of the configuration files (or generally just the centre of each field on the wiki). When everything in input, hit the green "Calc" button. This can then be uses to check how you are observing through the night.      
+Using the configurations passed to the support astronomer, you can now make a plan for the night using \textbf{obsplan}. Please refer to the finding charts, and observation plan files in the \textbf{$\sim$/data/observing/.../....} directory for the current night to aid in this. Enter the names of the configurations you plan to observe, set the exposure times as two 1,800\,second sub-exposures per configuration, and set the changeover time as 15min. The co-ordinates will be given in the file of the configuration files (or generally just the centre of each field on the wiki). When everything is input,hit the green `Calc' button. This can then be uses to check how you are observing through the night.      
 
 \subsubsection{Checking 2dF configures correctly and amending}
 
-Next the observer will check that 2dF configures correctly. If there are any issues ($i.e.$ specific fibres cannot be allocated), you will need to manually edit the .fld and .sds files using configure, as described in the previous section. These new files will then be passed to the support astronomer. Please note these in the night logs and save to the night's \textbf{data/observing/} directory. Please name these files as described in Section \ref{sec:config}.
+Next the observer will check that 2dF configures correctly. If there are any issues ($i.e.$ specific fibres cannot be allocated), you may need to manually edit the .fld and .sds files using configure, as described in the previous section. These new files will then be passed to the support astronomer. Please note these in the night logs and save to the night's \textbf{$\sim$/data/observing/} directory. Please name these files as described in Section \ref{sec:config}.
 
 \subsubsection{Add observing details to logs}
 
@@ -308,14 +316,14 @@ After the first full dataset for a configuration has been taken, you can perform
 
 \subsubsection{QC reduced data products}
 
-Once the data is manually reduced, please inspect the data products for any abnormalities. This will consist of checking the blue and red arm reduced imaged, and also the final spliced image. Ensure that you can see tramlines of spectra in the images and that they line up across the full wavelength range in the final spliced image. Also check that the reduced tram lines are not curved, that there are no missing chunks in the data and that the bright sky lines have been subtracted. 
+Once the data is manually reduced, please inspect the data products for any abnormalities. This will consist of checking the blue- and red-arm-reduced images, and also the final spliced image. Ensure that you can see tramlines of spectra in the images and that they line up across the full wavelength range in the final spliced image. Also check that the reduced tram lines are not curved, that there are no missing chunks in the data and that the bright sky lines have been subtracted. 
 
-Following this, you can inspect the extracted 1D spectra plots by running the TAZ function \texttt{AATExtract()} (described in Section \ref{sec:Reduc}). These should have the correct wavelength range ($\sim$3800-9000), that the counts are $<$few hundred in most cases, that there a no obvious problems in the the splicing of the two arms of the CCD, and in some cases you can see that the correct redshift solution has been found in a single observation (most will not as this process does not involve any stacking).
+Following this, you can inspect the extracted 1D spectra plots by running the TAZ function \texttt{AATExtract()} (described in Section \ref{sec:Reduc}). These should have the correct wavelength range ($\sim$3800-9000), check the counts are $<$few hundred in most cases, that there a no obvious problems in the the splicing of the two arms of the CCD, and in some cases you can see that the correct redshift solution has been found in a single observation (most will not as this process does not involve any stacking).
 
 
 \subsubsection{Pass data to Perth Database}
 
-At the end of each night, you must make sure that all biases, darks, and observation (Arcs, Flats, Targets) raw data files are place in the correct folders for the run/nights observing in both the AAT database and the ADC database. These will then be copied over the Perth and run through TAZ. Check Section 2 of this guid or the TAZ installation manual if you are unsure as to where this data should go. If you are still unclear, please contact Luke before copying data.  
+At the end of each night, you must make sure that all biases, darks, and observation (Arcs, Flats, Targets) raw data files are place in the correct folders for the run/nights observing in both the AAT database and the ADC database. These will then be copied over the Perth and run through TAZ. Check Section 2 of this guide or the TAZ installation manual if you are unsure as to where this data should go. If you are still unclear, please contact Luke before copying data.  
 
 
 \subsection{At the End of the Run}
@@ -333,7 +341,7 @@ All of the observer reduction is completed in the \textbf{/data/reduced\_AAT/} d
 
 Firstly, if you have not done so already this run,  you will need to make MASTER bias and dark frames for the blue CCD (in this quick reduction, these are not needed for the red CCD). To make the MASTERS, move to the directory that contains all of the bias frames taken this run. Note that you should have already QC'd the bias frames and moved any bad data to the \textbf{junk/} directory.  If not, do so now. Once complete, copy the raw blue CCD bias frames to the \textbf{/data/reduced\_AAT/run\#\_YYYY\_MM/bias/} directory for your run. All blue CCD data with the filename format `DDmon100??.fits' ($i.e.$ 18dec10001.fits, note the 1 in the middle highlights that this is the blue ccd). Next repeat this process for the darks, copying the blue CCD darks to \textbf{/data/reduced\_AAT/run\#\_YYYY\_MM/darks/}. Now change directory to the \textbf{/data/reduced\_AAT/run\#\_YYYY\_MM/bias/} folder and run the AAT data reduction software using: \\
 
-\texttt{\$ drcontrol} \\
+\texttt{\% drcontrol} \\
 
 Once \textbf{drcontrol} has loaded, select `ok' on the initial window. Now check that all of the raw blue CCD files are listed in the lefthand \textbf{drcontrol} window ($i.e.$ 18dec10001.fits, 18dec10002.fits,.....) and hit the `Start Auto Reduction' button. 
 
@@ -344,30 +352,33 @@ You will now see all of the dark files AND the `BIAScombind.fits' file in the le
 
 \subsection{Target Data}
 
-The reduction of the target data is performed by the shell script \texttt{run2dfDR\_AAT}, which can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). To run this simply be in the DEVILS home space and run the script as:\\
+The reduction of the target data is performed by the shell script \texttt{run2dfDR\_AAT}, which can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). To run this simply be in the DEVILS home space at the top level directory, and run the script as:\\
 
-\texttt{\$ run2dfDR\_AAT run\#\_YYYY\_MM YYYY\_MM\_DD}\\
+\texttt{\% ./run2dfDR\_AAT run\#\_YYYY\_MM YYYY\_MM\_DD}\\
 
 $i.e.$ to reduce data for the 18th of December 2017, you would run:\\    
 
-\texttt{\$ run2dfDR\_AAT run1\_2017\_12 2017\_12\_18}\\
+\texttt{\% ./run2dfDR\_AAT run1\_2017\_12 2017\_12\_18}\\
 
 The script will ask you prompts for the files you would like to reduce. It then copies the raw data from AAT archive to your reduction directory, finds the MASTER bias and dark frames you have just created and runs \textbf{drcontrol} to reduce the data. You will need to enter the following at the correct prompts:\\
 
 $\bullet$ The AAT raw data stub. This will be the start of the naming file naming convention for your night. It will have the form `DDmon' ($i.e.$ `18dec').\\
-$\bullet$ The date in the AAT format. will have the form YYMMDD ($i.e.$ 171218).\\
-$\bullet$ The configuration number. This is a number you assign to the configuration you are reducing ($i.e.$ 1,2,3,...). Keep track of these when you are performing the reduction and record them in the night logs. \\
-$\bullet$ The AAT raw data files you wish to reduce including the arc and flat. This will be the files contained in the observing sequence for each configuration. In most cases these will be for sequential numbers for arc, flat, exposure 1, exposure 2. You only need to enter the numbers.\\
 
-The script will then copy the relevant files to the correct place, and launch \textbf{drcontrol} for the blue CCD and red CCD in turn. Please follow the prompts that the script provides. This will tell you which buttons to hit on  \textbf{drcontrol} to do the reduction and splice the red and blue arms. Finally the script will output a file with the format \textbf{YYYY\_MM\_DD\_config\_\#\_reduced.fits}. You can now look that this reduced file to check for any errors. 
+$\bullet$ The date in the AAT format. will have the form YYMMDD ($i.e.$ 171218).\\
+
+$\bullet$ The configuration number. This is a number you assign to the configuration you are reducing ($i.e.$ 1,2,3,...). Keep track of these when you are performing the reduction and record them in the night logs. \\
+
+$\bullet$ The AAT raw data files you wish to reduce including the arc and flat. This will be the files contained in the observing sequence for each configuration. In most cases these will be for sequential numbers for arc, flat, exposure 1, exposure 2. You only need to enter the numbers. $i.e.$ if you arc, flat, exp1 and exp2 are files 18dec10021.fits, 18dec10022.fits, 18dec10023.fits, 18dec10024.fits (for the blue ccd) you would need to enter '21 22 23 24'. Note that these are the same for the blue and red ccd so they only need to be entered once. \\
+
+The script will then copy the relevant files to the correct place, and launch \textbf{drcontrol} for the blue CCD and red CCD in turn. Please follow the prompts that the script provides. This will tell you which buttons to hit on  \textbf{drcontrol} to do the reduction and splice the red and blue arms. Finally the script will output a file with the format \textbf{YYYY\_MM\_DD\_config\_\#\_reduced.fits} (where YYYY\_MM\_DD is the date you entered when first running the script, and \# is the configuration number you selected). You can now look that this reduced file to check for any errors. 
 
 \subsection{Extracting spectra and Visually Inspecting}
 
-In order to extract the 1D spectra from these files for inspection, you can run the TAZ function \texttt{AATExtract()}. This will be available to you on the DEVILS account, or if you have TAZ working on your computer, simply copy over the reduced file you created above. Move to the directory where you have placed the reduced spectrum, start and R session an run:\\
+In order to extract the 1D spectra from these files for inspection, you can run the TAZ function \texttt{AATExtract()}. This will be available to you on the DEVILS account, or if you have TAZ working on your computer, simply copy over the reduced file you created above. Move to the directory where you have placed the reduced spectrum, start an R session an run:\\
 
  \texttt{$>$ AATExtract(fileN=*reduced\_filename*)}\\
  
-This will extract all 1D spectra from your reduced file, run AutoZ to automagically measure the redshifts, and make 1D plots of all of the spectra. You can then QC the reduced spectra to look for any errors. Figure \ref{fig:specEx} shows an example of the 1D spectrum output from \texttt{AATExtract()} which will be used for QC.   
+This will extract all 1D spectra from your reduced file, run AutoZ to automagically measure the redshifts, and make 1D plots of all of the spectra. You can then QC the reduced spectra to look for any errors (such as counts $>>$few$\times$100s, bad splicing, fringing). Figure \ref{fig:specEx} shows an example of the 1D spectrum output from \texttt{AATExtract()} which will be used for QC.   
 
 
 \begin{figure}
@@ -399,7 +410,7 @@ You can then simply run TAZ as:\\
 
 \texttt{$>$ TAZ(user=*yourname*, workingDir='.',verbose=2, doReduce=T, doExtract=T,  \\ doStack=T, doAutoZ=T, cores=*number of cores to run*, doUpdateMaster=F, \\ doTiler=F, zeroPoint=F)} \\
 
-This will then perform the reduction and extraction and populate the directory structure. You can then look at the reduced and extracted 1D spectra in \textbf{data/reduced/run1\_2017\_12/2017\_12\_18/ \\ stackedSpec/AutoZplots/ }. As you will only be running a single nights data, all spectra will only have one spectrum in the stack. 
+This will then perform the reduction and extraction and populate the directory structure. You can then look at the reduced and extracted 1D spectra in \textbf{data/reduced/run1\_2017\_12/2017\_12\_18/ \\ stackedSpec/AutoZplots/ }. As you will only be running a single nights data, all spectra will only have one spectrum in their stack. 
 
 
 \section{Observing Tasks and Checklist}
@@ -409,17 +420,17 @@ In general (assuming nothing goes wrong!) the observer will perform the followin
 
 \begin{enumerate}
 
-\item Ensure that the support astronomer takes $\sim30$ bias frames and $\sim30$ 20 minute long exposure darks at the start of the run.
+\item Ensure that the support astronomer takes $\sim30$ bias frames and $\sim30$$\times$20 minute long exposure darks at the start of the run.
 
 \item Copy bias and dark frames to the correct directories on the AAT database and ADC database. 
 
 \item Examine bias and dark frames for QC. This can be done by running \texttt{checkCal()}. Copy and bad frames to the \textbf{junk/} folders.
 
-\item Take .sds and .fld files from the night's \textbf{data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/ \\
-DOCats/Tiling/TileFiles/} directory and copy them to the \textbf{/configs/devils/run\#\_YYYY\_MM/ \\
+\item Take .sds and .fld files from the night's \textbf{$\sim$/data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/ \\
+DOCats/Tiling/TileFiles/} directory and copy them to the \textbf{configs/devils/run\#\_YYYY\_MM/ \\
 YYYY\_MM\_DD/} and tell the support astronomer which will be configured first on plates 0 and 1.   \textbf{\textcolor{PineGreen}{This must be done by 4pm local time at the AAT}}.
 
-\item Make a night plan for configurations to observe at a given UT using the observability plots and night plan in the \textbf{data/observing/} directories. Add this to the \textbf{ObsPlan} tool with: 2x1,800sec exposures, and 15min changeover time. 
+\item Make a night plan for configurations to observe at a given UT using the observability plots and night plan in the \textbf{$\sim$/data/observing/} directories. Add this to the \textbf{ObsPlan} tool with: 2$\times$1,800sec exposures, and 15min changeover time. 
 
 \item Once the plates are configured, check the 2dF has configured correctly, and if not make adjustments to the .sds and .fld files accordingly. Then note this in the night logs and copy them to the directory given above. 
 
@@ -442,11 +453,13 @@ YYYY\_MM\_DD/} and tell the support astronomer which will be configured first on
 \section{DEVILS Data Flow}
 \label{sec:dataflow}
 
-Below is detailed the DEVILS data flow displayed in Figure \ref{fig:dataflow}. In this section all of the stages of the figure will be described in detail and allow the user to follow the data-flow through the diagram. Firstly, lets start at a point where the observations for a night have just been completed, at the bottom of the purple box in the Figure...... \\
+Below the DEVILS data flow, as displayed in Figure \ref{fig:dataflow}, is described in details. In this section all of the stages of the figure will be described to allow the user to follow the data-flow through the diagram. Firstly, lets start at a point where the observations for a night have just been completed, at the bottom of the purple box in the Figure...... \\
 
 $\bullet$ The observer takes the raw data from the \textbf{\$AATDATA/YYMMDD/} directories at the telescope and copies them to the correct files in the AAT database (blue box). This process follows the red arrows in the Figure. \\
 
-$\bullet$ During the night, the observer now performs QC checks on the data, as describe on the left hand side of the yellow box, led by the white arrow. \\
+$\bullet$ Once all of the data is in the database for a given configuration, the observer can perform the nightly reduction and QC. Ignore the right hand side of the figure for now, and more to the bottom yellow box.
+
+$\bullet$ The observer reduction and QC checks are described on the left hand side of the yellow box (led by the white arrow). This is a self contained loop, which describes the observer moving bad data to the \textbf{junk/} folders and updating logs.\\
 
 \hspace{10mm} - The observer checks the raw calibration data quality using the \texttt{checkObs()} function and moves any bad data to the relevant \textbf{junk} folder.\\
 
@@ -456,9 +469,9 @@ $\bullet$ During the night, the observer now performs QC checks on the data, as 
 
 \hspace{10mm} - The observer then extracts 1D spectra using  \texttt{AATExtract()} and performs QC checks.\\
 
-\hspace{10mm} - The observer updates all nigh logs with any relevant information.\\
+\hspace{10mm} - The observer updates all night logs with any relevant information.\\
 
-$\bullet$ At the end of each night, one poor data has been moved to the relevant \textbf{junk} folders, the raw data is synced to the ADC database (purple lines from blue to orange box) and then synched to Perth (purple lines from orange to green box). \\
+$\bullet$ At the end of each night, once poor data has been moved to the relevant \textbf{junk/} folders, the raw data is synced to the ADC database (purple lines from blue to orange box) and then synched to Perth (purple lines from orange to green box). \\
 
 $\bullet$ During the day, TAZ is run over the new raw data in the Perth Archive. \\
 
