@@ -17,21 +17,23 @@
 #' @export
 setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateStart=c('2017_12_18','2018_01_09'),dateEnd=c('2017_12_26','2018_01_22'), verbose=1){
     
+    DEVILSGreen <- make_style(rgb(0, 112/255, 82/255), bg = FALSE)
+    
     setwd(workingDir)
     workingDir<-getwd()
 
      if (verbose==0){
-        cat('** Running DEVILS directory setup (setUpDir) verbose set to 0 - you will recieve no progress messages **' , '\n')
+        cat(DEVILSGreen('** Running DEVILS directory setup (setUpDir) verbose set to 0 - you will recieve no progress messages **' , '\n'))
     }
 
     if (verbose>0){
         cat('\n')
-        cat('*****************************************************', '\n')
-        cat('********* STARTING DEVILS DIRECTORY SETUP ***********', '\n')
-        cat('*****************************************************', '\n')
+        cat(DEVILSGreen('*****************************************************'), '\n')
+        cat(DEVILSGreen('********* STARTING DEVILS DIRECTORY SETUP ***********'), '\n')
+        cat(DEVILSGreen('*****************************************************'), '\n')
         cat('\n')
         cat('\n')
-        cat(paste('Making DEVILS top level directory structure in ', workingDir,'/data', sep=''), '\n')
+        cat(DEVILSGreen(paste('Making DEVILS top level directory structure in ', workingDir,'/data', sep='')), '\n')
 
         }
 
@@ -58,13 +60,13 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
    #system('mkdir data/idxFiles')
 
     if (verbose>0){
-        cat('Top level directory structure complete.', '\n')
-        cat('Copying calibrators and IDX files.', '\n')
+        cat(DEVILSGreen('Top level directory structure complete.'), '\n')
+        cat(DEVILSGreen('Copying calibrators and IDX files.'), '\n')
         cat('', '\n')
-        cat('Unpacking.....', '\n')
+        cat(DEVILSGreen('Unpacking.....'), '\n')
     }
     
-    LibPaths<-.libPaths()
+    LibPaths<-.libPaths()[1]
     
     system(paste('cp ', LibPaths, '/DEVILSTAZ/data/calibrators.tar data/',sep='')) 
     system(paste('cp ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar data/',sep=''))
@@ -80,7 +82,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     
     if (verbose>0){
         cat('', '\n')
-        cat('    - Making year observing plans for DEVILS fields......', '\n')
+        cat(DEVILSGreen('    - Making year observing plans for DEVILS fields......'), '\n')
     }
 
     CairoPNG('data/observing/DO2_yrPlan2017.png', width=1000, height=600)
@@ -129,17 +131,17 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
 
     if (verbose>0){
         cat('', '\n')
-        cat('Making requestested runs.....', '\n')
+        cat(DEVILSGreen('Making requestested runs.....'), '\n')
     }
     
     for (i in 1:length(runs)){
 
         if (verbose>0){
-            cat(paste('    - Making data/biases/',runs[i],sep=''), '\n')
-            cat(paste('    - Making data/darks/',runs[i],sep=''), '\n')
-            cat(paste('    - Making data/rawdata/',runs[i],sep=''), '\n')
-            cat(paste('    - Making data/reduced/',runs[i],sep=''), '\n')
-            cat(paste('    - Making data/observing/',runs[i],sep=''), '\n')
+            cat(DEVILSGreen(paste('    - Making data/biases/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/darks/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/rawdata/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/reduced/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/observing/',runs[i],sep='')), '\n')
             cat(paste(' ', '\n'))
         }
         
@@ -150,7 +152,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         system(paste('mkdir data/observing/',runs[i],sep=''))
 
         if (verbose>0){
-            cat('    - Calculating dates.....', '\n')
+            cat(DEVILSGreen('    - Calculating dates.....'), '\n')
         }
         
 
@@ -171,13 +173,13 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         datesSeq<-jd2date(JDs)
 
         if (verbose>0){
-            cat('        - Making indviual date directory structure......', '\n')
+            cat(DEVILSGreen('        - Making indviual date directory structure......'), '\n')
         }
 
         for (j in 1:length(datesSeq$mday)){
 
             if (verbose>0){
-                cat(paste('                    - Making directory for: ',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''), '\n')
+                cat(DEVILSGreen(paste('                    - Making directory for: ',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep='')), '\n')
             }
             
             
@@ -190,7 +192,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DOCats/TileFiles', sep=''))
             
             if (verbose>0){
-                cat('                    - Making log file....', '\n')
+                cat(DEVILSGreen('                    - Making log file....'), '\n')
             }
 
             
@@ -198,7 +200,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             makeLog(run=runs[i], date=paste(datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''),fileName=LogFilename)
 
             if (verbose>0){
-                cat('                - Calculating observability....', '\n')
+                cat(DEVILSGreen('                - Calculating observability....'), '\n')
             }
 
             
@@ -212,7 +214,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
 
             
             if (verbose>0){
-                cat('                     - Making observation plan....', '\n')
+                cat(DEVILSGreen('                     - Making observation plan....'), '\n')
             }
 
             altD02<-darkHoursUT10
@@ -256,7 +258,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             write('# **NOTE** This only takes into account the Altitude of the field, please check the observability plots for moon location',file=obsPlanFile,append=TRUE)
 
             if (verbose>0){
-                cat('                    - Making observability plots....', '\n')
+                cat(DEVILSGreen('                    - Making observability plots....'), '\n')
             }
             
             pdf(paste('data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT00-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf',sep=''), width=18, height=12)
@@ -300,12 +302,12 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     }
 
     if (verbose==0){
-        cat('** setUpDir finished **', '\n')
+        cat(DEVILSGreen('** setUpDir finished **'), '\n')
     }
 
     if (verbose>0){
-        cat('** DEVILS set up of directory structure finished. **', '\n')
-        cat('** Please find data strucutre in ', workingDir,'/data/ **', '\n')
+        cat(DEVILSGreen('** DEVILS set up of directory structure finished. **'), '\n')
+        cat(DEVILSGreen('** Please find data strucutre in ', workingDir,'/data/ **'), '\n')
     }
 
 

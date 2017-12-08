@@ -58,14 +58,39 @@ If an \textsc{r} session starts in your terminal you are up and working fine.
 
 \subsubsection{Installing 2dfDR}
 
-The 2dfDR software is used to reduce data from the 2df+AAOmega system at the AAT. Firstly, you can find detailed information regarding the processes in 2dfDR here:  \url{https://www.aao.gov.au/get/document/2dF-AAOmega-obs-manual-69-88.pdf}. In order to install 2dfDR go here: \url{https://www.aao.gov.au/science/software/2dfdr} and download the appropriate version for your operating system and unpack the file.
+The 2dfDR software is used to reduce data from the 2df+AAOmega system at the AAT. You can find detailed information regarding the processes in 2dfDR here:  \url{https://www.aao.gov.au/get/document/2dF-AAOmega-obs-manual-69-88.pdf}.  \\
 
-You will then need to set the location of the installed 2dfDR software to your path by add the following (or similar) to your .cshrc/.bashRC/.profile file. For me this is: \\
+\textsf{1.1.2.1 Download and Installation} \\
+
+In order to install 2dfDR go here: https: //www.aao.gov.au/science/software/2dfdr and download the appropriate version for your operating system. Note, if you are using Mac OS Sierra, the El Capitan build will likely work fine. If you have issues installing 2dfDR contact AAO support. \\
+
+Once you have downloaded 2dfDR, follow the installation instructions for installation here: \url{https://www.aao.gov.au/science/software/2dfdr/quick-guide}. If you cannot access the installation instructions, the steps are briefly: \\
+
+The file will have a name something like: 2dfdr-linux-5.33.tgz. Unpack the tar file and extract the software to your chosen software directory:\\
+
+\hspace{10mm} \texttt{\% tar -xvzf 2dfdr-linux-5.33.tgz}\\
+
+To install 2dfDR, add the full directory pathname of 2dfdr\_install/bin to your PATH (ensuring that you do not have the environmental variables DRCONTROL\_DIR or DRCONTROL\_ENV already set). To do this: \\
+
+    $\bullet$ In tcsh (set in .tcshrc (or .cshrc if not found)) \\
+   \hspace{10mm} \texttt{set path = (\$path /path/to/software/2dfdr\_install/bin)}\\
+
+     $\bullet$ In bash (set in .bash\_profile) \\
+    \hspace{10mm} \texttt{export PATH=/path/to/software/2dfdr\_install/bin:\$PATH}\\
+
+     $\bullet$ In csh (set in .cshrc)\\
+    \hspace{10mm} \texttt{setenv PATH \$PATH\textbackslash:/path/to/software/2dfdr\_install/bin}\\
 
 
-\hspace{10mm} setenv PATH \$PATH\textbackslash:/Applications/2dfdr-6.46-MacOsX\_ElCapitan/bin \\
+where `2dfdr\_install' will be something like `2dfdr-6.46-MacOsX\_ElCapitan'. Note that this is specific to your system environment and may be different from above. \\
 
-If you have any problems with this, see here: \url{https://www.aao.gov.au/science/software/2dfdr/quick-guide}.\\
+Helpful hint: you will need to re-load your shell profile once you have edited it. $e.g.$, for a bash shell with .bash\_profile \\ 
+
+ \hspace{10mm} \texttt{\% source$\sim$/.bash\_profile}\\
+
+to reload. \\
+
+\textsf{1.1.2.2 Check Installation} \\
 
 For running \textsc{TAZ} we use the command line version of 2dfDR called \textsc{aaorun}. To check this is running correctly, open a terminal and type: \\
 
@@ -80,17 +105,61 @@ This should give you a nice image of Saturn and tell you that there are no raw d
 
 \subsubsection{Installing CONFIGURE}
 
-The AAT uses a piece of software called \textsc{configure} to determine fibre assignments and produce the files required to drive 2df. You can find out about what \textsc{configure} does here: \url{https://www.aao.gov.au/science/software/configure}. On this page follow the online instructions for installing configure.  \\
+The AAT uses a piece of software called \textsc{configure} to determine fibre assignments and produce the files required to drive 2df. You can find out about what \textsc{configure} does here: \url{https://www.aao.gov.au/science/software/configure}. 
 
-You will also need to add the path to \textsc{configure}:\\
+\textsf{1.1.2.1 Download and Installation} \\
 
-\hspace{10mm} setenv PATH \$PATH\textbackslash:/Applications/configure-8.4-MacOsX\_ElCapitan\_x86\_64\\
+On the AAO configue page follow the online instructions for installing configure. For this you will need to go to the AAO ftp site and find the latest version (\url{ftp://ftp.aao.gov.au/pub/2df/configure}). While you are doing this, also download the latest version of the latest version of the astrometry files here: \url{ftp://site-ftp.aao.gov.au/pub/local/2df/latest_config_files}. The Tiling software included in TAZ will actually look-for and download the latest version of these files, but it is good to have the most up-to-date version when starting.  \\
 
-and the environmental variable for \textsc{configure}'s data files:\\
+
+
+Once again, if you cannot access the installation instructions the steps are briefly: \\
+
+The file will have a name something like: configure-8.4-MacOsX\_ElCapitan\_x86\_64.tar.gz. Unpack the tar file and extract the software to your chosen software directory:\\
+
+\hspace{10mm} \texttt{\% tar -xvzf configure-8.4-MacOsX\_ElCapitan\_x86\_64.tar.gz}\\
+
+You then need to add the full directory to your PATH as will 2dfDR: \\
+
+
+    $\bullet$ In tcsh (set in .tcshrc (or .cshrc if not found)) \\
+   \hspace{10mm} \texttt{set path = (\$path /path/to/software/configure\_install)}\\
+
+     $\bullet$ In bash (set in .bash\_profile) \\
+    \hspace{10mm} \texttt{export PATH=/path/to/software/configure\_install/:\$PATH}\\
+
+     $\bullet$ In csh (set in .cshrc)\\
+    \hspace{10mm} \texttt{setenv PATH \$PATH\textbackslash:/path/to/software/configure\_install}\\
+
+where `configure\_install' will be something like `configure-8.4-MacOsX\_ElCapitan\_x86\_64'.\\
+
+You will now also have to copy the the most up-to-date version of the astrometry files you downloaded to the \textbf{data\_files} folder in the configure directory:\\
+
+ 
+\hspace{10mm} \texttt{\% cp  latest\_config\_files/*  /path/to/software/configure\_install/data\_files/}\\
+
+
+Finally you will need to set the a \texttt{CONFIG\_FILES } environmental variable for \textsc{configure}'s data files:\\
+
+    $\bullet$ In tcsh (set in .tcshrc (or .cshrc if not found)) \\
+   \hspace{10mm} \texttt{set CONFIG\_FILES = /path/to/software/configure\_install/data\_files}\\
+
+     $\bullet$ In bash (set in .bash\_profile) \\
+    \hspace{10mm} \texttt{export CONFIG\_FILES =/path/to/software/configure\_install/data\_files}\\
+
+     $\bullet$ In csh (set in .cshrc)\\
+    \hspace{10mm} \texttt{setenv CONFIG\_FILES /path/to/software/configure\_install/data\_files}\\
+
+$i.e.$ for csh this looks something like:\\ 
 
 \hspace{10mm}  setenv CONFIG\_FILES /Applications/configure-8.4-MacOsX\_ElCapitan\_x86\_64/data\_files/\\
 
-To your .cshrc, etc.  You can then check that \textsc{configure} is running correctly by opening a terminal and typing: \\
+
+Once agin remember to re-load your shell profile once you have edited it!\\
+
+\textsf{1.1.2.2 Check Installation} \\
+
+You can then check that \textsc{configure} is running correctly by opening a terminal and typing: \\
 
 \hspace{10mm} \% configure\\
 
@@ -98,7 +167,8 @@ You should get a pop-up GUI asking which instrument you are using. Don't worry a
 
 \subsection{Installing R packages}
 
-There are a number of R packages that need to be installed. To do this you should just be able to run the \textsc{InstallTAZ.R} script provided \url{https://github.com/ICRAR/DEVILS-TAZ/blob/master/InstallTAZ.R}. First move to the directory where \textsc{InstallTAZ.R} is located, open an R session in a terminal, using:\\
+
+There are a number of R packages that need to be installed. To do this you should just be able to run the \textsc{InstallTAZ.R} script provided \url{https://github.com/ICRAR/DEVILS-TAZ/blob/master/InstallTAZ.R}. First download the script, then move to the directory where InstallTAZ.R is located, open an R session in a terminal, using:\\
 
 \hspace{10mm} \% R\\
 
@@ -106,7 +176,7 @@ then run:\\
 
 \hspace{10mm}  \texttt{$>$ source(`InstallTAZ.R')}\\
 
-This will install all of the required packages required to run \textsc{TAZ}. As a quick test type:\\
+This will install all of the required packages required to run \textsc{TAZ}. You will be asked to select a `CRAN mirror' and a pop-up will appear. Just select the geographically closest location to you. Once this has finished,  ss a quick test of the installation, type:\\
 
 \hspace{10mm}  \texttt{$>$ installed.packages()}\\
 
@@ -130,7 +200,7 @@ where, \\
  \texttt{dateStart}=First night of each run in year\_month\_day format\\
  \texttt{dateEnd}=Last night of each run in year\_month\_day format\\
 
-Try running this code and explore the directory structure. You can generate this structure for any dates you like. You should something like have:\\
+Try running this code and explore the directory structure. You can generate this structure for any dates you like. You should have something like:\\
 
 \hspace{5mm} \textbf{data/} 
 \vspace{1mm}

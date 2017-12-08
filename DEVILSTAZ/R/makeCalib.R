@@ -88,8 +88,10 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
  
 
         }else{
-            write(paste('           - Master bias found, using ', biasDir,'/',biasDate,'_BIAScombined.fits',sep=''), file=logName, append=T)   
-            if (verbose>1){cat(paste('            - Master bias found, using ', biasDir,'/',biasDate,'_BIAScombined.fits',sep=''), '\n')}
+              write(paste('           - Blue master bias found, using ', biasDir,'/',biasDate,'_blue_BIAScombined.fits',sep=''), file=logName, append=T) 
+              write(paste('           - Red master bias found, using ', biasDir,'/',biasDate,'_red_BIAScombined.fits',sep=''), file=logName, append=T) 
+            if (verbose>1){cat(paste('            - Blue master bias found, using ', biasDir,'/',biasDate,'_blue_BIAScombined.fits',sep=''), '\n')}
+            if (verbose>1){cat(paste('            - Red master bias found, using ', biasDir,'/',biasDate,'_red_BIAScombined.fits',sep=''), '\n')}
         }
         
 
@@ -145,8 +147,10 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              
 
          }else{
-             write(paste('            - Master dark found, using ', darkDir,'/',darkDate,'_DARKcombined.fits',sep=''), file=logName, append=T)
-             if (verbose>1){cat(paste('            - Master dark found, using ', darkDir,'/',darkDate,'_DARKcombined.fits',sep=''), '\n')}
+           write(paste('            - Blue master dark found, using ', darkDir,'/',darkDate,'_blue_DARKcombined.fits',sep=''), file=logName, append=T)
+           write(paste('            - Red master dark found, using ', darkDir,'/',darkDate,'_red_DARKcombined.fits',sep=''), file=logName, append=T)
+           if (verbose>1){cat(paste('            - Blue master dark found, using ', darkDir,'/',darkDate,'_blue_DARKcombined.fits',sep=''), '\n')}
+           if (verbose>1){cat(paste('            - Red master dark found, using ', darkDir,'/',darkDate,'_red_DARKcombined.fits',sep=''), '\n')}
              }
 
                                        
