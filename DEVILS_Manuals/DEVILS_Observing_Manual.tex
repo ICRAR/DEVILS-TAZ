@@ -31,13 +31,15 @@
 \end{figure}
 
 \Huge {\textcolor{PineGreen}{\textbf{Database, Observing and Data Reduction}}}
+\Huge {\textcolor{PineGreen}{\textbf{ Version 0.1}}}\\
+\Large \textbf{Luke Davies (5/12/2017)}\\
 \end{center}
 \normalsize
 
 
 \section{Overview}
 
-The DEVILS observations will be undertaken with the AAT either on-site at siding spring or remotely from Perth/Sydney. This document describes the DEVILS database structure and how you interact with it, the observer tasks, and the data reduction and QC processes. In summary, there are two DEVILS databases, each with identical file structure; one at the AAT and one in Perth, with this structure replicated in Sydney in AAO Data Central (ADC) who will be testing new systems and federating the data transfer. The observer will place the raw data in the database at the telescope and the ADC database, this will then get copied to the database in Perth, where the data reduction will be performed by the DEVILS Tool for Analysis and Redshifting (TAZ). The reducer in Perth, will produce the new configuration files into the Perth and ADC databases and these will be copied to the AAT database for the next nights observing. At the telescope the observer will perform a manual reduction of the data to check for QC and update logs. A summary of this processes is described in Figure \ref{fig:dataflow} - which will be referred to throughout this document. 
+The DEVILS observations will be undertaken with the AAT either on-site at Siding Spring or remotely from Perth/Sydney. This document describes the DEVILS database structure and how you interact with it, the observer tasks, and the data reduction and QC processes. In summary, there are two DEVILS databases, each with identical file structure; one at the AAT and one in Perth, with this structure replicated in Sydney in AAO Data Central (ADC) who will be testing new systems and federating the data transfer. The observer will place the raw data in the database at the telescope and the ADC database, this will then get copied to the database in Perth where the data reduction will be performed by the DEVILS Tool for Analysis and Redshifting (TAZ). The reducer in Perth, will produce the new configuration files into the Perth and ADC databases and these will be copied to the AAT database for the next night's observing. At the telescope the observer will perform a manual reduction of the data to check for QC and update logs. A summary of this processes is described in Figure \ref{fig:dataflow} - which will be referred to throughout this document. 
 
 This document provides a detailed description of all aspects of DEVILS observing, for a concise summery of observer tasks see Section \ref{sec:summary}. \textcolor{PineGreen}{\textbf{If you have any queries or questions regarding this document, please contact Luke at luke.j.davies@uwa.edu.au}}\\
 
@@ -45,13 +47,13 @@ This document provides a detailed description of all aspects of DEVILS observing
 \section{The DEVILS directory structure}
 
 
-On the AAT system at the telescope, there is a DEVILS account. To access this, first get the password from Luke (luke.j.davies@uwa.edu.au). All of the observer reduction will be done in this workspace in the \textbf{data/reduced\_AAT/} folder. In the following, `$\sim$' will refer to the DEVILS account's home directory.\\
+There is a DEVILS account on the AAT system at the telescope. To access this, first get the password from Luke (luke.j.davies@uwa.edu.au). All of the observer reduction will be done in this workspace in the \textbf{data/reduced\_AAT/} folder. In the following, `$\sim$' will refer to the DEVILS account's home directory. In addition, \% referees to the terminal prompt ($i.e.$ if the document state \texttt{\% configure}, just type \texttt{\% configure}), $>$ will refer to a prompt in R. \\
 
 \textcolor{PineGreen}{\textbf{NOTE: Please be careful not to delete anything from this space! While we have back-ups, it will take some time to reconstruct things.}}\\
 
 The DEVILS data directories has the following structure:\\
 
-\hspace{5mm} \textbf{data/} 
+\hspace{5mm} \textbf{$\sim$/data/} 
 \vspace{1mm}
 
 \hspace{10mm} \textbf{biases/}
@@ -102,7 +104,7 @@ The DEVILS data directories has the following structure:\\
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....}
+\hspace{30mm} \textbf{2017\_12\_18/, ....}
 \vspace{1mm}
 
 \hspace{10mm} \textbf{raw/} 
@@ -111,7 +113,7 @@ The DEVILS data directories has the following structure:\\
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....} 
+\hspace{30mm} \textbf{2017\_12\_18/, ....} 
 \vspace{1mm}
 
 \hspace{10mm} \textbf{reduced/}
@@ -120,7 +122,7 @@ The DEVILS data directories has the following structure:\\
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....}
+\hspace{30mm} \textbf{2017\_12\_18/, ....}
 \vspace{1mm}
 
 \hspace{10mm} \textbf{reduced\_AAT/}
@@ -129,42 +131,42 @@ The DEVILS data directories has the following structure:\\
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....} \\
+\hspace{30mm} \textbf{2017\_12\_18/, ....} \\
 
 
 
-When observing you will add raw data to the \textbf{biases},  \textbf{darks}, and \textbf{raw} data files which will then get copied to Perth via AAO Data Central (ADC). This directory structure is displayed in Figure \ref{fig:dataflow}. Raw data is copied to the DEVILS database at the AAT (blue box), is automatically synced to the identical ADC database (orange box) and then synced to Perth (green box). TAZ is then run over the Perth database to perform data reduction and redshifting (red box). Fibre configuration files are copied back to the \textbf{data/observing/../../../Tiling/}  directories in the Perth database. These are then synced back to the ADC, and then the AAT. These are collected by the observer, checked and passed to the support astronomer (right hand side of yellow box) for observing (purple box). A more detailed description of the data-flow in Figure \ref{fig:dataflow} is givne at the end of this document.   
+When observing you will add raw data to the \textbf{biases},  \textbf{darks}, and \textbf{raw} data files which will then get copied to Perth via AAO Data Central (ADC). This directory structure is displayed in Figure \ref{fig:dataflow}. Raw data is first copied to the DEVILS database at the AAT (blue box), is then automatically synced to the identical ADC database (orange box) and then synced to Perth (green box). TAZ is then run over the Perth database to perform data reduction and redshifting (red box). Fibre configuration files are copied back to the \textbf{data/observing/../../../Tiling/}  directories in the Perth database. These are then synced back to the ADC, and then the AAT. These are collected by the observer, checked and passed to the support astronomer (right hand side of yellow box) for observing (purple box). A more detailed description of the data-flow in Figure \ref{fig:dataflow} is given at the end of this document.   
 
 \vspace{2mm}
 
-The \textbf{observing} directory, will also contain information which will help with your observing ($e.g.$ observability plots, suggested night palns) and contains text versions of the night logs. These logs should only be used if you cannot access the wiki here:  \url{https://wiki.devilsurvey.org/mw/index.php?title=Observing}. Further information about these are given below. Please record as much information as possible as it will help when recovering any data issues. 
+The \textbf{observing} directory will also contain information which will help with your observing ($e.g.$ observability plots, suggested night plans) and contains text versions of the night logs. These logs should only be used if you cannot access the wiki here:  \url{https://wiki.devilsurvey.org/mw/index.php?title=Observing}. Further information about these are given below. Please record as much information as possible as it will help when recovering any data issues. 
 
 Under each of the \textbf{biases}, \textbf{darks}, \textbf{raw}, \textbf{reduced}, \textbf{reduced\_AAT},  and \textbf{observing} directories, you will find a subdirectory for each run with the format \textbf{run1\_YYYY\_MM} ($i.e.$ for run1 in December 2017 - \textbf{run1\_2017\_12}). As biases and darks are common to each run, this is where the raw biases and darks will be placed in the \textbf{biases} and \textbf{darks} directory. It is the observers job to ensure that these are copied to the correct directory during each run. There is also a \textbf{junk} folder in these directories. If you have QC'd the data (more later) and it is bad, please copy it to this directory. 
 
 Under the \textbf{raw}, \textbf{reduced}, \textbf{reduced\_AAT} and \textbf{observing} directories for each run, there are also sub directories for each observing night, with the format \textbf{YYYY\_MM\_DD} ($i.e.$ the first night of run1 on the 18th of December 2017 can be found in - \textbf{run1\_2017\_12/2017\_12\_18}). This is where the raw observing data (arcs, flats and target data will be placed).
 
-Familiarise yourself with this directory structure is it is where all of the DEVILS information and data can be found. If you have used the DEVILS automatic reduction pipeline, TAZ, this is identical to the data structure produced by the \texttt{setUpDir()} function - excluding the reduced\_AAT directory which is used for observer reduction and QC. \\
+Familiarise yourself with this directory structure it is where all of the DEVILS information and data can be found. If you have used the DEVILS automatic reduction pipeline, TAZ, this is identical to the data structure produced by the \texttt{setUpDir()} function - excluding the reduced\_AAT directory which is used for observer reduction and QC. \\
 
-\textcolor{PineGreen}{\textbf{NOTE: all other directories in this structure you will not need to access as they contain calibrators and/or are used to match the directory structure used by the TAZ (more below)}}\\
+\textcolor{PineGreen}{\textbf{NOTE: You will not need to access all other directories in this structure as they contain calibrators and/or are used to match the directory structure used by the TAZ (more below)}}\\
 
 
 \subsection{Setting up the night directory for your observations}
 
 \textcolor{PineGreen}{\textbf{NOTE: You should not need to do this as it should already be completed by Luke. However, here are instructions for setting up the individual run/night directory structure if it doesn't already exist.}} \\
 
-If required, to set up the directory structure int eh DEVILS account, you simply have to run one shell script, \texttt{setUpDir\_AAT}. This can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). This script  takes inputs of the run name and night, and produces the correct directory structure. To setup the directories for a particular run/night, do:\\
+If required, to set up the directory structure in the DEVILS account, you simply have to run one shell script, \texttt{setUpDir\_AAT}. This can be found in the \textbf{$\sim$/Code/} directory at the AAT or on the DEVILS GitHub repository (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/AATscripts}). This script  takes inputs of the run name and night, and produces the correct directory structure. To setup the directories for a particular run/night, got to the top level of the DEVILS account space and run:\\
 
-\hspace{10mm} \texttt{\$ ./setUpDir\_AAT run\#\_YYYY\_MM YYYY\_MM\_DD} \\
+\hspace{10mm} \texttt{\% ./setUpDir\_AAT run\#\_YYYY\_MM YYYY\_MM\_DD} \\
 
 For example, to set up the directories for he first night of run1 on the 18th of December 2017, you would do: \\
 
-\hspace{10mm} \texttt{\$ ./setUpDir\_AAT run1\_2017\_12 2017\_12\_18} \\
+\hspace{10mm} \texttt{\% ./setUpDir\_AAT run1\_2017\_12 2017\_12\_18} \\
  
-This script will also create a \textbf{/configs/devils/run1\_2017\_12/2017\_12\_18/} directory for fibre allocation files to be passed to the support astronomer, this will be described later. \\ 
+This script will also create  a top level \textbf{configs/devils/run1\_2017\_12/2017\_12\_18/} directory for fibre allocation files to be passed to the support astronomer, this will be described later. \\ 
 
 The script will also create a nightly log file as: \\
 
-\textbf{/data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/YYYY\_MM\_DD\_DEVILS\_obs\_log.txt}. \\
+\textbf{$\sim$/data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/YYYY\_MM\_DD\_DEVILS\_obs\_log.txt}. \\
 
 However, if there is an issue with this, you can also find the log template here: \\
 
@@ -181,13 +183,13 @@ on the DEVILS GitHub (\url{https://github.com/ICRAR/DEVILS-TAZ/tree/master/TEMPL
 
 At the start of each run, the support astronomer will need to take $\sim30$ bias frames and $\sim30$ 20 minute long exposure darks.  These should be taken in the morning/afternoon before the start of your run. Please confirm with the support astronomer that these will be taken and allow $\sim$12h to collect all of the required frames.  
 
-Once the biases and darks have been taken, you will find them in the directory \textbf{\$AATDATA/YYMMDD/}. These then need to be copied to the directory for the correct run in the structure described above. For example, darks  for the first DEVILS run in December 2017 would be copped to \textbf{$\sim$/data/darks/run1\_2017\_12/}. This is described by the red arrows in Figure \ref{fig:dataflow} displaying the data being moved to the correct location in the AAT database. \\   
+Once the biases and darks have been taken, you will find them in the directory \textbf{\$AATDATA/YYMMDD/} - where \textbf{\$AATDATA} is a system variable at the AAT which defines where the current raw data is stored. These then need to be copied to the directory for the correct run in the structure described above. For example, darks  for the first DEVILS run in December 2017 would be copied to \textbf{$\sim$/data/darks/run1\_2017\_12/}. This is described by the red arrows in Figure \ref{fig:dataflow} displaying the data being moved to the correct location in the AAT database. \\   
 
 The bias and dark files should then by QC checked by the observer. This can be done by inspecting the raw data files, or running the TAZ function \texttt{checkCal()}. You will need to pass \texttt{checkCal()} the directory location of the biases and darks you would like to QC:\\
 
  \texttt{$>$ checkCal(baisDir=`data/biases/run1\_2017\_12/', \\ darksDir=`data/darks/run1\_2017\_12/')} \\
  
-This will produce (in these directories) \textbf{biasQC.pdf}, \textbf{darkQC.pdf}, \textbf{biasQC\_summary.pdf}, and \textbf{darkQC\_summary.pdf} files  which will show you images of all of the biases/darks in the given directory and print a number of stats about each frame. The summery file will display a table of some key properties of each frame. Check these for any abnormalities such as outlying values, or large noise/gain. If there is a bad frames, DO NOT DELETE THEM,  copy them to the \textbf{junk/} folder in the correct bias or darks directory for that run. 
+This will produce (in those directories) \textbf{biasQC.pdf}, \textbf{darkQC.pdf}, \textbf{biasQC\_summary.pdf}, and \textbf{darkQC\_summary.pdf} files  which will show you images of all of the biases/darks in the given directory and print a number of stats about each frame. The summary file will display a table of some key properties of each frame. Check these for any abnormalities such as outlying values, or large noise/gain. If there are bad frames, DO NOT DELETE THEM,  copy them to the \textbf{junk/} folder in the correct bias or darks directory for that run. 
 
 
 \textbf{\textcolor{PineGreen}{NOTE: the following sections on producing the configuration files should be produce by TAZ in Perth and provided to you by Luke at the start of each night. However, below are details of how to prepare these should you need to do it. If you are doing this, please make the decisions on which fields to be observed on the night prior to when you will be observing them, as the configuration files take some time to generate. }}
@@ -195,15 +197,15 @@ This will produce (in these directories) \textbf{biasQC.pdf}, \textbf{darkQC.pdf
 
 \subsubsection{Planning Fields to be Observed}
 
-Prior to generating the fibre allocation files, you should consider the fields that you wish to observe each night and how many configuration files will be required for each field. \textbf{The integration time for each of the DEVILS configurations will generally be 60min, split in two 1,800\,second sub-exposures}. In order to identify the best fields to observe at each hour of each night, the \textbf{/data/observing/run\# \_YYYY\_MM/YYYY\_MM\_DD/} directories contain observability plots for each field for the particular night (these can also be found on the DEVILS wiki here: \url{https://wiki.devilsurvey.org/mw/index.php?title=Observing} or will be generated using the \texttt{setUpDir()} function in TAZ if you have it installed). These plots are provided in UT, UT+8h (Perth), and UT+10/11h (AAT depending on daylight saving), we strongly suggest you find the current UT and use these plots to avoid confusion with timezones. Within the \textbf{/data/observing/run\#\_YYYY\_MM/YYYY\_MM\_DD/}  directory you will also find an observation plan file: \textbf{DEVILS-ObsPlan-YYYY\_MM\_DD.txt}. This is intended as a guide to suggest the fields that you may wish to observe during the night as it shows the highest altitude DEVILS field as a function of UT. It also provides sun set and rise times for the given night. \textbf{\textcolor{PineGreen}{NOTE:
+Prior to generating the fibre allocation files, you should consider the fields that you wish to observe each night and how many configuration files will be required for each field. \textbf{The integration time for each of the DEVILS configurations will generally be 60min, split in two 1,800\,second sub-exposures}. In order to identify the best fields to observe at each hour of each night, the \textbf{$\sim$/data/observing/run\# \_YYYY\_MM/YYYY\_MM\_DD/} directories contain observability plots for each field for the particular night (these can also be found on the DEVILS wiki here: \url{https://wiki.devilsurvey.org/mw/index.php?title=Observing} or will be generated using the \texttt{setUpDir()} function in TAZ if you have it installed). These plots are provided in UT, UT+8h (Perth), and UT+10/11h (AAT depending on daylight saving), we strongly suggest you find the current UT and use these plots to avoid confusion with timezones. Within the \textbf{$\sim$/data/observing/run\#\_YYYY\_MM/ YYYY\_MM\_DD/}  directory you will also find an observation plan file: \textbf{DEVILS-ObsPlan-YYYY \_MM\_DD.txt}. This is intended as a guide to suggest the fields that you may wish to observe during the night as it shows the highest altitude DEVILS field as a function of UT. It also provides sun set and rise times for the given night. \textbf{\textcolor{PineGreen}{NOTE:
  this is only intended as a guide and the lead observer is expected to use this to decide which fields/configurations are observed.  In practice, TAZ will provide a number of configuration files for the fields which are observable each night. It is the observers job to decide which configurations to observe and in which order.}}.
 
-If producing configuration files manually, once you have decided which fields will be observed you need to identify how many configuration files you need to generate for each field. Typically, you will need one configuration 1 per hour on each field. However to air on the side of caution it is suggested that you generate 1 per hour +1 configuration for each field you plan to observe. Once you have a plan for the observations, you can generate the configuration files. In the following example, we will assume that we are generating 4 configurations for D03, and 4 for D10.      
+If producing configuration files manually, once you have decided which fields will be observed you need to identify how many configuration files you need to generate for each field. Typically, you will need one configuration per hour on each field. However to err on the side of caution it is suggested that you generate 1 per hour +1 configuration for each field you plan to observe. Once you have a plan for the observations, you can generate the configuration files. In the following example, we will assume that we are generating 4 configurations for the D03 region, and 4 for the D10 region.      
 
 
 \subsubsection{Generating Fibre Configurations}
 
-There are three different methods for running the tiling software, each increasing in complexity and for the more experience user. \textbf{\textcolor{PineGreen}{Once again note that you should not have to run these, and they should simply be generated by Luke and passed to to you. However, the description here is if you need to manually generate these or edit a specific configuration file.}}\\
+There are three different methods for running the tiling software, each increasing in complexity and for the more experienced user. \textbf{\textcolor{PineGreen}{Once again note that you should not have to run these, and they should simply be generated by Luke and passed to to you. However, the description here is if you need to manually generate these or edit a specific configuration file.}}\\
 
 \textsf{2.1.3.1 Obtaining Tiling/Configurations using high level TAZ}
 \vspace{2mm}

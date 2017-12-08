@@ -8,24 +8,25 @@
 \BOOKMARK [1][-]{section.3}{Adding Observations}{}% 8
 \BOOKMARK [1][-]{section.4}{Running TAZ}{}% 9
 \BOOKMARK [2][-]{subsection.4.1}{Running the 2dfDR reduction}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.2}{Running the 2dfDR reduction and 1D extraction}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.3}{Stacking extracted spectra}{section.4}% 12
-\BOOKMARK [2][-]{subsection.4.4}{Running AutoZ on Stacked Spectra}{section.4}% 13
-\BOOKMARK [2][-]{subsection.4.5}{Updating Master Catalogues with new redshifts and producing new observing catalogues}{section.4}% 14
-\BOOKMARK [2][-]{subsection.4.6}{Producing new fibre configuration files}{section.4}% 15
-\BOOKMARK [2][-]{subsection.4.7}{Putting it all together}{section.4}% 16
-\BOOKMARK [1][-]{section.5}{TAZ inputs list}{}% 17
-\BOOKMARK [1][-]{section.6}{TAZ Outputs list}{}% 18
-\BOOKMARK [2][-]{subsection.6.1}{Raw Data Meta Information:}{section.6}% 19
-\BOOKMARK [2][-]{subsection.6.2}{Spliced reduced data for each night/configuration:}{section.6}% 20
-\BOOKMARK [2][-]{subsection.6.3}{Blue arm reduced data for each night/configuration:}{section.6}% 21
-\BOOKMARK [2][-]{subsection.6.4}{Red arm reduced data for each night/configuration:}{section.6}% 22
-\BOOKMARK [2][-]{subsection.6.5}{Meta Information for all reduced configurations:}{section.6}% 23
-\BOOKMARK [2][-]{subsection.6.6}{Flux calibration meta information for each reduced configuration:}{section.6}% 24
-\BOOKMARK [2][-]{subsection.6.7}{Individual extracted spectra from corresponding reduced configuration/night:}{section.6}% 25
-\BOOKMARK [2][-]{subsection.6.8}{Individual spectra meta information for each configuration/night:}{section.6}% 26
-\BOOKMARK [2][-]{subsection.6.9}{Individual stacked source spectrum files with redshifts:}{section.6}% 27
-\BOOKMARK [2][-]{subsection.6.10}{Final Spectrum/Redshifting diagnostic plots:}{section.6}% 28
-\BOOKMARK [2][-]{subsection.6.11}{DEVILS Master Catalogues \(DMCat\):}{section.6}% 29
-\BOOKMARK [2][-]{subsection.6.12}{DEVILS Observing Catalogues \(DOCat\):}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.13}{Tiling Files:}{section.6}% 31
+\BOOKMARK [2][-]{subsection.4.2}{Running the 2dfDR reduction on a specific directory}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Running the 2dfDR reduction and 1D extraction}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.4}{Stacking extracted spectra}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.5}{Running AutoZ on Stacked Spectra}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.6}{Updating Master Catalogues with new redshifts and producing new observing catalogues}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.7}{Producing new fibre configuration files}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.8}{Putting it all together}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{TAZ inputs list}{}% 18
+\BOOKMARK [1][-]{section.6}{TAZ Outputs list}{}% 19
+\BOOKMARK [2][-]{subsection.6.1}{Raw Data Meta Information:}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.2}{Spliced reduced data for each night/configuration:}{section.6}% 21
+\BOOKMARK [2][-]{subsection.6.3}{Blue arm reduced data for each night/configuration:}{section.6}% 22
+\BOOKMARK [2][-]{subsection.6.4}{Red arm reduced data for each night/configuration:}{section.6}% 23
+\BOOKMARK [2][-]{subsection.6.5}{Meta Information for all reduced configurations:}{section.6}% 24
+\BOOKMARK [2][-]{subsection.6.6}{Flux calibration meta information for each reduced configuration:}{section.6}% 25
+\BOOKMARK [2][-]{subsection.6.7}{Individual extracted spectra from corresponding reduced configuration/night:}{section.6}% 26
+\BOOKMARK [2][-]{subsection.6.8}{Individual spectra meta information for each configuration/night:}{section.6}% 27
+\BOOKMARK [2][-]{subsection.6.9}{Individual stacked source spectrum files with redshifts:}{section.6}% 28
+\BOOKMARK [2][-]{subsection.6.10}{Final Spectrum/Redshifting diagnostic plots:}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.11}{DEVILS Master Catalogues \(DMCat\):}{section.6}% 30
+\BOOKMARK [2][-]{subsection.6.12}{DEVILS Observing Catalogues \(DOCat\):}{section.6}% 31
+\BOOKMARK [2][-]{subsection.6.13}{Tiling Files:}{section.6}% 32

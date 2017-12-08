@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.23)  7 DEC 2017 07:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.1.23)  7 DEC 2017 15:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -443,51 +443,33 @@ LaTeX Info: Redefining \nameref on input line 24.
 \openout3 = `TAZ_Manual.out'.
 
 
-<devils-logo_big.png, id=128, 582.978pt x 188.1429pt>
+<devils-logo_big.png, id=4, 582.978pt x 188.1429pt>
 File: devils-logo_big.png Graphic file (type png)
-
-<use devils-logo_big.png>
+ <use devils-logo_big.png>
 Package pdftex.def Info: devils-logo_big.png used on input line 30.
 (pdftex.def)             Requested size: 466.38303pt x 150.51451pt.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 50.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 44.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 44.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 50.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 50.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 50.
-
-Underfull \hbox (badness 10000) in paragraph at lines 50--51
+Underfull \hbox (badness 10000) in paragraph at lines 52--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--54
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--62
-
- []
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 64.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
@@ -495,6 +477,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./devil
 s-logo_big.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 66.
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 66.
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
  []
@@ -505,12 +499,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--71
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
@@ -545,7 +539,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--92
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--98
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
@@ -559,18 +553,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 103--104
-
- []
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.105 T
-       his will install all of the required packages required to run \textsc...
-[2]
+l.102 
+       [2]
+Underfull \hbox (badness 10000) in paragraph at lines 103--104
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 105--106
 
  []
@@ -581,7 +574,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--108
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
 
  []
 
@@ -601,17 +594,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 119--120
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--128
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 129--130
+Underfull \hbox (badness 10000) in paragraph at lines 126--130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
 
  []
 
@@ -619,14 +617,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.166 
+l.159 
        [3]
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 215--216
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
  []
 
@@ -639,66 +632,64 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.225 \hspace{10mm}
-                    \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=...
-[4]
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 225--226
+l.219 \hspace{10mm}
+                     \texttt{$>$ ?*FUNCTION\_NAME*}\\ [4]
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--230
+
+ []
+
+
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 231--232
 []  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
 rbose=2, doReduce=T, doExtract=F,
  []
 
 
-Overfull \hbox (2.40596pt too wide) in paragraph at lines 227--228
-\OT1/cmr/m/n/12 The most im-por-tant thing to check is that you have re-duced f
-iles in the \OT1/cmr/bx/n/12 /data/reduced/run1[]2017[]12/ 
- []
-
-
-Overfull \hbox (25.86357pt too wide) in paragraph at lines 234--235
-\OT1/cmr/m/n/12 pre-vi-ous made in the \OT1/cmr/bx/n/12 /data/reduced/run1[]201
-7[]12/2017[]12[]18/ \OT1/cmr/m/n/12 and \OT1/cmr/bx/n/12 /data/reduced/run1[]20
-17[]12/ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 234--235
+Underfull \hbox (badness 10000) in paragraph at lines 231--232
 
  []
 
 
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 236--237
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=T, doExtract=T,
+Overfull \hbox (29.05836pt too wide) in paragraph at lines 237--238
+\OT1/cmr/m/n/12 This will pro-duce plots in both \OT1/cmr/bx/n/12 /data/darks/r
+un#[]YYYY[]YY/ \OT1/cmr/m/n/12 and \OT1/cmr/bx/n/12 /data/biases/run#[]YYYY[]YY
+/
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 236--237
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 238--239
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
-
+Overfull \hbox (99.40178pt too wide) in paragraph at lines 244--246
+\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', verbose
+=2, doReduce=T, toReduceDirs=toReduceDirs,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 242--243
-
+Overfull \hbox (83.06299pt too wide) in paragraph at lines 244--246
+\OT1/pcr/m/n/12 doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, d
+oTiler=F, zeroPoint=T) 
  []
 
 
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 244--245
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=T,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 244--245
+Underfull \hbox (badness 10000) in paragraph at lines 244--246
 
  []
 
@@ -706,8 +697,15 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.251 
-       [5]
+l.250 \subsection
+                 {Running the 2dfDR reduction and 1D extraction} [5]
+Overfull \hbox (35.32875pt too wide) in paragraph at lines 252--253
+\OT1/cmr/m/n/12 pre-vi-ously made in the \OT1/cmr/bx/n/12 /data/reduced/run1[]2
+017[]12/2017[]12[]18/ \OT1/cmr/m/n/12 and \OT1/cmr/bx/n/12 /data/reduced/run1[]
+2017[]12/ 
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 252--253
 
  []
@@ -715,7 +713,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 252--253
 
 Overfull \hbox (29.66565pt too wide) in paragraph at lines 254--255
 []  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=F,
+rbose=2, doReduce=T, doExtract=T,
  []
 
 
@@ -729,40 +727,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 256--257
  []
 
 
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 259--260
+Underfull \hbox (badness 10000) in paragraph at lines 258--259
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 260--261
+
+ []
+
+
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 262--263
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=T,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 268--269
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
+
+ []
+
+
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 272--273
 []  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
 rbose=2, doReduce=F, doExtract=F,
- []
-
-
-Overfull \hbox (25.46301pt too wide) in paragraph at lines 259--260
-\OT1/pcr/m/n/12 doStack=T, toStackIDs='all', doAutoZ=F, cores=2, doUpdateMaster
-=F, doTiler=F,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 259--260
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 261--262
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--265
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 266--267
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 269--271
-
  []
 
 
@@ -770,23 +768,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
  []
 
-
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.274  A
+         second option is to tell TAZ to try and stack all IDs in the curren...
+[6]
 Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--277
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 277--278
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Overfull \hbox (25.46301pt too wide) in paragraph at lines 277--278
+\OT1/pcr/m/n/12 doStack=T, toStackIDs='all', doAutoZ=F, cores=2, doUpdateMaster
+=F, doTiler=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--278
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--279
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 280--281
+Underfull \hbox (badness 10000) in paragraph at lines 281--282
 
  []
 
@@ -795,26 +811,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 283--284
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.291 
-       [6]
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--289
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 290--291
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 292--293
 
- []
-
-
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 294--295
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=F,
- []
-
-
-Overfull \hbox (25.46301pt too wide) in paragraph at lines 294--295
-\OT1/pcr/m/n/12 doStack=F, doAutoZ=T, toAutoZStacks=toAutoZStacks, cores=2, doU
-pdateMaster=F,
  []
 
 
@@ -828,28 +842,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 296--297
  []
 
 
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 299--300
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=F,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 299--300
+Underfull \hbox (badness 10000) in paragraph at lines 298--299
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--302
+Underfull \hbox (badness 10000) in paragraph at lines 300--301
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 303--304
+Underfull \hbox (badness 10000) in paragraph at lines 302--303
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--306
+Underfull \hbox (badness 10000) in paragraph at lines 304--305
 
  []
 
@@ -859,33 +867,66 @@ Underfull \hbox (badness 10000) in paragraph at lines 307--308
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 309--310
+Underfull \hbox (badness 10000) in paragraph at lines 314--315
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.316  \hspace{10mm}
+                     \texttt{$>$ toAutoZStacks<-c(`data/reduced/stackedSpec/...
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 316--317
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--312
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 318--319
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Overfull \hbox (25.46301pt too wide) in paragraph at lines 318--319
+\OT1/pcr/m/n/12 doStack=F, doAutoZ=T, toAutoZStacks=toAutoZStacks, cores=2, doU
+pdateMaster=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 318--319
 
  []
 
 
-Overfull \hbox (22.12057pt too wide) in paragraph at lines 313--314
-[]\OT1/cmr/m/n/12 TAZ will also make plots of all of the sources you have run A
-u-toZ over in the \OT1/cmr/bx/n/12 /data/reduced/stackedSpec/
- []
-
-<G006158.pdf, id=170, 1300.86pt x 1300.86pt>
-File: G006158.pdf Graphic file (type pdf)
- <use G006158.pdf>
-Package pdftex.def Info: G006158.pdf used on input line 317.
-(pdftex.def)             Requested size: 520.3348pt x 520.3348pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 326--327
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 323--324
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 325--326
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 329--330
 
  []
 
@@ -894,25 +935,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 331--332
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.332 
-       [7]pdfTeX warning (ext4): destination with the same identifier (name{pag
-e.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.332 
-       [8 <./G006158.pdf>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 333--334
 
- []
-
-
-Overfull \hbox (17.45007pt too wide) in paragraph at lines 335--336
-\OT1/cmr/m/n/12 code) and cre-ate a DEV-ILS ob-serv-ing cat-a-logues (DO-Cats) 
-di-rec-tory here \OT1/cmr/bx/n/12 data/observing/run#[]YYYY
  []
 
 
@@ -921,52 +946,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 335--336
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 337--338
+LaTeX Warning: Reference `fig:specEx' on page  undefined on input line 337.
+
+
+Overfull \hbox (22.12057pt too wide) in paragraph at lines 337--338
+[]\OT1/cmr/m/n/12 TAZ will also make plots of all of the sources you have run A
+u-toZ over in the \OT1/cmr/bx/n/12 /data/reduced/stackedSpec/
+ []
+
+<G006158.pdf, id=62, 1300.86pt x 1300.86pt>
+File: G006158.pdf Graphic file (type pdf)
+ <use G006158.pdf>
+Package pdftex.def Info: G006158.pdf used on input line 341.
+(pdftex.def)             Requested size: 520.3348pt x 520.3348pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--351
 
  []
 
 
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 339--340
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=F,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 339--340
+Underfull \hbox (badness 10000) in paragraph at lines 352--353
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--347
-
- []
-
-
-Overfull \hbox (29.66565pt too wide) in paragraph at lines 348--349
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
-rbose=2, doReduce=F, doExtract=F,
- []
-
-
-Overfull \hbox (18.26302pt too wide) in paragraph at lines 348--349
-\OT1/pcr/m/n/12 doStack=F, doAutoZ=F, doUpdateMaster=F, doTiler=T, DODir='data/
-observing/run
- []
-
-
-Overfull \hbox (19.70308pt too wide) in paragraph at lines 348--349
-\OT1/pcr/m/n/12 1[]2017[]12/2017[]12[]20/DOCats', zeroPoint=T, cores=4, N[]D02A
-=1,N[]D02B=1, N[]D03=1,
- []
-
-
-Overfull \hbox (25.46306pt too wide) in paragraph at lines 348--349
-\OT1/pcr/m/n/12 N[]D10=1, D02A[]startPlate=0, D02B[]startPlate=1, D03[]startPla
-te=0, D10[]startPlate
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
 
  []
 
@@ -980,28 +984,15 @@ een already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.358 
-       [9]
-Overfull \hbox (22.46565pt too wide) in paragraph at lines 359--360
-[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir=''.'', 
-verbose=2, doCalibQC=F, doReduce
- []
-
-
-Overfull \hbox (25.46301pt too wide) in paragraph at lines 359--360
-\OT1/pcr/m/n/12 =T, doExtract=T, doStack=T, doAutoZ=T, doUpdateMaster=T, doTile
-r=T, zeroPoint
- []
-
-
-Overfull \hbox (9.62305pt too wide) in paragraph at lines 359--360
-\OT1/pcr/m/n/12 =T, cores=4, configdir='/Applications/configure-8.4-MacOsX[]ElC
-apitan[]x86[]64'
- []
-
-
-Overfull \hbox (15.38307pt too wide) in paragraph at lines 359--360
-\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=3, N[]D10=3, D02A[]startPlate=0, D0
-2B[]startPlate=0, D03
+       [8]pdfTeX warning (ext4): destination with the same identifier (name{pag
+e.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.358 
+       [9 <./G006158.pdf>]
+Overfull \hbox (17.45007pt too wide) in paragraph at lines 359--360
+\OT1/cmr/m/n/12 code) and cre-ate a DEV-ILS ob-serv-ing cat-a-logues (DO-Cats) 
+di-rec-tory here \OT1/cmr/bx/n/12 data/observing/run#[]YYYY
  []
 
 
@@ -1010,12 +1001,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 359--360
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 365--366
+Underfull \hbox (badness 10000) in paragraph at lines 361--362
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 368--369
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 363--364
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 363--364
 
  []
 
@@ -1025,48 +1022,65 @@ Underfull \hbox (badness 10000) in paragraph at lines 370--371
  []
 
 
+Overfull \hbox (29.66565pt too wide) in paragraph at lines 372--373
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir='.', ve
+rbose=2, doReduce=F, doExtract=F,
+ []
+
+
+Overfull \hbox (18.26302pt too wide) in paragraph at lines 372--373
+\OT1/pcr/m/n/12 doStack=F, doAutoZ=F, doUpdateMaster=F, doTiler=T, DODir='data/
+observing/run
+ []
+
+
+Overfull \hbox (19.70308pt too wide) in paragraph at lines 372--373
+\OT1/pcr/m/n/12 1[]2017[]12/2017[]12[]20/DOCats', zeroPoint=T, cores=4, N[]D02A
+=1,N[]D02B=1, N[]D03=1,
+ []
+
+
+Overfull \hbox (25.46306pt too wide) in paragraph at lines 372--373
+\OT1/pcr/m/n/12 N[]D10=1, D02A[]startPlate=0, D02B[]startPlate=1, D03[]startPla
+te=0, D10[]startPlate
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 372--373
 
  []
 
 
-Overfull \hbox (25.70592pt too wide) in paragraph at lines 374--375
-\OT1/cmr/bx/n/12 duced/ \OT1/cmr/m/n/12 di-rec-tory. For the ad-vanced user, yo
-u can force this by run-ning \OT1/pcr/m/n/12 run2dfDR(toReduce=toReduce)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 374--375
+Underfull \hbox (badness 10000) in paragraph at lines 381--382
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 376--377
-
+Overfull \hbox (22.46565pt too wide) in paragraph at lines 383--384
+[]  $\OML/cmm/m/it/12 >$ \OT1/pcr/m/n/12 TAZ(user='NewUser', workingDir=''.'', 
+verbose=2, doCalibQC=F, doReduce
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 378--379
-
+Overfull \hbox (25.46301pt too wide) in paragraph at lines 383--384
+\OT1/pcr/m/n/12 =T, doExtract=T, doStack=T, doAutoZ=T, doUpdateMaster=T, doTile
+r=T, zeroPoint
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 380--381
-
+Overfull \hbox (9.62305pt too wide) in paragraph at lines 383--384
+\OT1/pcr/m/n/12 =T, cores=4, configdir='/Applications/configure-8.4-MacOsX[]ElC
+apitan[]x86[]64'
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 382--383
-
+Overfull \hbox (15.38307pt too wide) in paragraph at lines 383--384
+\OT1/pcr/m/n/12 N[]D02A=0,N[]D02B=0, N[]D03=3, N[]D10=3, D02A[]startPlate=0, D0
+2B[]startPlate=0, D03
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--385
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 386--387
+Underfull \hbox (badness 10000) in paragraph at lines 383--384
 
  []
 
@@ -1074,14 +1088,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.387 
+l.384 
        [10]
-Underfull \hbox (badness 10000) in paragraph at lines 388--389
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 390--391
+Underfull \hbox (badness 10000) in paragraph at lines 389--390
 
  []
 
@@ -1101,8 +1110,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 396--397
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 398--399
+Overfull \hbox (105.61432pt too wide) in paragraph at lines 400--401
+\OT1/cmr/m/n/12 with to re-duce in the form: data/rawdata/run#[]YYYY[]MM/YYYY[]
+MM[]DD (i.e. data/rawdata/run1[]2017[]12/2017[]12[]18).
+ []
 
+
+Overfull \hbox (147.44284pt too wide) in paragraph at lines 400--401
+\OT1/cmr/m/n/12 Note that this will over-write any re-duced data in the cor-re-
+spond-ing \OT1/cmr/bx/n/12 re-duced/ \OT1/cmr/m/n/12 di-rec-tory ($\OML/cmm/m/i
+t/12 i:e:$ \OT1/cmr/m/n/12 data/reduced/run1[]2017[]12/2017[]12[]18). 
  []
 
 
@@ -1112,6 +1129,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 400--401
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 402--403
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 404--405
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 406--407
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 412--413
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.413 
+       [11]
+Underfull \hbox (badness 10000) in paragraph at lines 414--415
 
  []
 
@@ -1131,7 +1183,42 @@ Underfull \hbox (badness 10000) in paragraph at lines 420--421
  []
 
 
-Overfull \hbox (2.11449pt too wide) in paragraph at lines 428--429
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 424--425
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 426--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--429
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 442--443
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 444--445
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
+
+ []
+
+
+Overfull \hbox (2.11449pt too wide) in paragraph at lines 454--455
 \OT1/cmr/bx/n/12 /data/reduced/run#[]YYYY[]MM/YYYY[]MM[]DD/YYYY[]MM[]DD[]config
 []?[]reduced.fits 
  []
@@ -1140,80 +1227,30 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.430  F
+l.456  F
         ITS file with the fully reduced and spliced data for a particular fi...
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 453--454
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 479--480
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 456--457
+Underfull \hbox (badness 10000) in paragraph at lines 482--483
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
+Underfull \hbox (badness 10000) in paragraph at lines 484--485
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--466
+Underfull \hbox (badness 10000) in paragraph at lines 491--492
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 467--468
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 470--471
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 472--473
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 474--475
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 476--482
-
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.482 
-       [12]
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 488--489
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--491
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 492--493
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 494--495
+Underfull \hbox (badness 10000) in paragraph at lines 493--494
 
  []
 
@@ -1233,23 +1270,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 500--501
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 502--503
+Underfull \hbox (badness 10000) in paragraph at lines 502--508
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.508 
+       [13]
+Underfull \hbox (badness 10000) in paragraph at lines 512--513
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
-
- []
-
-
-Overfull \hbox (87.06615pt too wide) in paragraph at lines 511--512
-\OT1/cmr/bx/n/12 /data/reduced/run#[]YYYY[]MM/YYYY[]MM[]DD/ccd2/YYYY[]MM[]DD[]c
-onfig[]?[]reduced[]meta.Rdata 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 513--514
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
 
  []
 
@@ -1268,13 +1304,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 520--521
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.521 
-       [13]
-Underfull \hbox (badness 10000) in paragraph at lines 522--535
+
+Underfull \hbox (badness 10000) in paragraph at lines 522--523
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 524--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 526--527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 528--529
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 530--531
+
+ []
+
+
+Overfull \hbox (87.06615pt too wide) in paragraph at lines 537--538
+\OT1/cmr/bx/n/12 /data/reduced/run#[]YYYY[]MM/YYYY[]MM[]DD/ccd2/YYYY[]MM[]DD[]c
+onfig[]?[]reduced[]meta.Rdata 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--540
 
  []
 
@@ -1293,51 +1355,93 @@ Underfull \hbox (badness 10000) in paragraph at lines 546--547
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 548--549
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 550--583
-
- []
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.583 
+l.547 
        [14]
-Underfull \hbox (badness 10000) in paragraph at lines 604--605
+Underfull \hbox (badness 10000) in paragraph at lines 548--561
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--611
+Underfull \hbox (badness 10000) in paragraph at lines 568--569
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 619.
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 572--573
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 574--575
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 576--609
+
+ []
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.619 \end{document}
-                     [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 619.
+l.609 
+       [15]
+
+LaTeX Warning: Reference `fig:specEx' on page  undefined on input line 615.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 630--631
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--637
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 645.
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.645 \end{document}
+                     [16]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 645.
  (./TAZ_Manual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 619.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 619.
-Package rerunfilecheck Info: File `TAZ_Manual.out' has not changed.
-(rerunfilecheck)             Checksum: 4F0C2844DC972D248834D49B27E1602F;2584.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 619.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 645.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 645.
+
+
+Package rerunfilecheck Warning: File `TAZ_Manual.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `TAZ_Manual.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  373F667EF72DB3D85A3446B233A53D40;2685.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 645.
  ) 
 Here is how much of TeX's memory you used:
- 6934 strings out of 493014
- 103118 string characters out of 6133351
- 207407 words of memory out of 5000000
- 10356 multiletter control sequences out of 15000+600000
+ 6903 strings out of 493014
+ 102645 string characters out of 6133351
+ 205831 words of memory out of 5000000
+ 10324 multiletter control sequences out of 15000+600000
  9316 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,7n,35p,897b,322s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1349,10 +1453,10 @@ live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texli
 ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
 2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
 016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on TAZ_Manual.pdf (15 pages, 278500 bytes).
+Output written on TAZ_Manual.pdf (16 pages, 278485 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 215 compressed objects within 3 object streams
- 34 named destinations out of 1000 (max. 500000)
- 259 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 153 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

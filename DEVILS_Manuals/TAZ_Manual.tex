@@ -41,6 +41,8 @@
 
 \section{Installation}
 
+Below is a description of how to install the TAZ data reduction and analysis software and associated packages. In the following, \% will be used for a terminal prompt and $>$ for a prompt in R. For example, where running the the first line given below in Section 1.1.1 only type \texttt{R} not \texttt{\% R}. 
+
 \subsection{External Packages}
 
 There are three main pieces of external software required to run \textsc{taz}. They are i) main coding language \textsc{r}, ii) the 2dfDR data reduction software provided by the the AAO, iii) the AAT targeting/fibre assignment software \textsc{configure}. 
@@ -179,7 +181,7 @@ Try running this code and explore the directory structure. You can generate this
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....}
+\hspace{30mm} \textbf{2017\_12\_18/, ....}
 \vspace{1mm}
 
 \hspace{10mm} \textbf{raw/} 
@@ -188,7 +190,7 @@ Try running this code and explore the directory structure. You can generate this
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....} 
+\hspace{30mm} \textbf{2017\_12\_18/, ....} 
 \vspace{1mm}
 
 \hspace{10mm} \textbf{reduced/}
@@ -197,47 +199,63 @@ Try running this code and explore the directory structure. You can generate this
 \hspace{15mm} \textbf{run1\_2017\_12/, ....} 
 \vspace{1mm}
 
-\hspace{20mm} \textbf{2017\_12\_18/, ....} \\
+\hspace{30mm} \textbf{2017\_12\_18/, ....} \\
 
 You will populate the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} part of this structure with the data taken at the AAT, and TAZ will generate reduced data and analysis products in the other parts of the structure.  
 
 
 \section{Adding Observations}
 
-When observing you will add raw data files to this directory structure. Firstly, at the start of each run, bias and dark frames will be taken. These need to be added to the \textbf{biases/*runName*} and \textbf{darks/*runName*} directories. Note that TAZ will aim to generate a master bias and master dark for all files in this directory, so if there are files that you do not wish to be used in making the master darks/biases please keep them in the  \textbf{biases/*runName*/junk/} or \textbf{darks/*runName*/junk/} sub folders.
+When observing you will add raw data files to this directory structure. Firstly, at the start of each run, bias and dark frames will be taken. These need to be added to the \textbf{biases/*runName*} and \textbf{darks/*runName*} directories, where *runName* is something like `run1\_2017\_12'. Note that TAZ will aim to generate a master bias and master dark for all files in this directory, so if there are files that you do not wish to be used in making the master darks/biases please keep them in the  \textbf{biases/*runName*/junk/} or \textbf{darks/*runName*/junk/} sub folders.
 
-Next you will need to place the raw target data under in the relevant directory. This should be easily done as the date in in the file name produced by the AAT. Data for each night observed should be copped to the relevant \textbf{raw/*runName*/YYYY\_MM\_DD}. Once again, TAZ will reduce/analyse all data in this directory. So if there are files you do not wish to be included, add then to the \textbf{raw/*runName*/YYYY\_MM\_DD/junk} folder. You do not need to separate ARC, FLAT and TARGET files in this directory. TAZ will identify and match the correct files based on the configuration used in the FITS header.  
+Next you will need to place the raw target data in the relevant directory. This should be easily done as the date is in the file name produced by the AAT. Data for each night observed should be copied to the relevant \textbf{raw/*runName*/YYYY\_MM\_DD} directory ($i.e.$ for the first observing night on the 18th of December 2017, the data should be copied to \textbf{raw/run1\_2017\_12/2017\_12\_18}). Once again, TAZ will reduce/analyse all data in this directory. So if there are files you do not wish to be included, add then to the \textbf{raw/*runName*/YYYY\_MM\_DD/junk} folder. You do not need to separate ARC, FLAT and TARGET files in this directory. TAZ will identify and match the correct files based on the configuration used in the FITS header.  
 
-For now, there is is an example small dataset you can get from here \url{https://www.dropbox.com/s/yutdugiwpi4jo3x/TAZRawExample.zip?dl=0}. Once you have this copy the biases, darks and raw data files to your \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders under the correct run/date.  
+For now, there is an example small dataset you can get from here \url{https://www.dropbox.com/s/yutdugiwpi4jo3x/TAZRawExample.zip?dl=0}. Once you have this copy the biases, darks and raw data files to your \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders under the correct run/date.  
 
 \section{Running TAZ}
 
-Here I will just give a high level overview of running the TAZ software. More detailed descriptions of the individual functions can be accessed via the R help function by simply opening an R terminal and typing: \\
+Here I will just give a high level overview of running the TAZ software. More detailed descriptions of the individual functions can be accessed via the R help functions by simply opening an R terminal and typing: \\
 
 \hspace{10mm}  \texttt{$>$ ?*FUNCTION\_NAME*}\\
 
-In most cases this code will by run end to end with one line. However, here i split it into various sections to explain what the code is doing and to allow the user to run each component separately. 
+for example, to get an overview of the main high-level \texttt{TAZ} function, type:\\
+
+\hspace{10mm}  \texttt{$>$ ?TAZ}\\
+
+In most cases this code will by run end to end with one line. However, here I split it into various sections to explain what the code is doing and to allow the user to run each component separately. Note that parts of TAZ can be run in a a parallel fashion, to use this set the \texttt{cores} key word in the TAZ command line.
 
 \subsection{Running the 2dfDR reduction}
 
-First, lets try and run TAZ on our test dataset to just perform the data reduction. To do this, make sure you are in the directory above the \textbf{/data} directory you just generated, and run:
+First, lets try and run TAZ on our test dataset to just perform the data reduction. To do this, make sure you are in the directory above the \textbf{/data} directory you just generated, and run:\\
 
-\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
 
-This should run TAZ over you current directory, reduce the data using 2dfDR. When the code finished, you should find that some of the \textbf{/data/reduced/} sub-folders are populated. Check that this is the case. The most important thing to check is that you have reduced files in the \textbf{/data/reduced/run1\_2017\_12/ \\ 2017\_12\_18/} folder.  If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  
+This should run TAZ over your current directory, reducing the data using 2dfDR. TAZ will automatically look for data that have not been reduced in your directory structure. It does this by identifying run/date folders there there is raw data, but nothing in the corresponding \textbf{reduced/.../.../} folder. You can force TAZ to reduce (or re-reduce) data from a given night or nights (see next section). However, note that this will overwrite the current reduction for that night, so use with care. 
 
-One additional option is available at this stage which will produce diagnostic plots of all bias and dark frames you are using. This is very useful for quality control and checking observations at the telescope. To do this simply add \texttt{doCalibQC=F} to the line running TAZ. This will produce plots in both \textbf{/data/darks/run\#\_YYYY\_YY/} and \textbf{/data/biases/run\#\_YYYY\_YY/} to aid in QC of the calibration files.
+When the code has finished running the command given above, you should find that some of the \textbf{data/reduced/} sub-folders are populated. Check that this is the case. The most important thing to check is that you have reduced files in the \textbf{data/reduced/run1\_2017\_12/ \\ 2017\_12\_18/} folder.  If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  
 
+One additional option is available at this stage which will produce diagnostic plots of all bias and dark frames you are using to make the MASTER bias and dark. This is very useful for quality control and checking observations at the telescope. To do this simply add \texttt{doCalibQC=F} to the line running TAZ. This will produce plots in both \textbf{/data/darks/run\#\_YYYY\_YY/} and \textbf{/data/biases/run\#\_YYYY\_YY/} to aid in QC of the calibration files.
+
+\subsection{Running the 2dfDR reduction on a specific directory}
+
+TAZ has the functionality to run a 2dfDR reduction on data from a specific night alone. To do this, simply set the \texttt{toReduceDirs} keyword in the command line. This variable will need to be passed a string vector containing the path to the nights you wish to reduce (or re-reduce). You can do this as: \\
+
+
+\hspace{10mm} \texttt{$>$ toReduceDirs<-`data/rawdata/run1\_2017\_12/2017\_12\_18'}\\
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, toReduceDirs=toReduceDirs, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
+
+Try this now and you will see that the reduced data in \textbf{data/reduced/run1\_2017\_12/2017\_12\_18} has been over written. In practice, it is suggested you only use this functionality if you know what you are doing!
+ 
 
 \subsection{Running the 2dfDR reduction and 1D extraction}
 
-Next we can try and run both a reduction and extract 1D spectra from each of our reduced frames. As TAZ looks for directories that have already been reduced, you will need to delete the products you have previous made in the \textbf{/data/reduced/run1\_2017\_12/2017\_12\_18/} and \textbf{/data/reduced/run1\_2017\_12/ \\ 2017\_12\_19/} directories, before rerunning this code. To do thew reduction and extraction simply set doExtract=T and run:\\
+Next we can try and run both a reduction and extract 1D spectra from each of our reduced frames. As TAZ looks for directories that have already been reduced, you will need to delete the products you have previously made in the \textbf{/data/reduced/run1\_2017\_12/2017\_12\_18/} and \textbf{/data/reduced/run1\_2017\_12/ \\ 2017\_12\_19/} directories, before rerunning this code. To do the reduction and extraction simply set \texttt{doExtract=T} and run:\\
 
 \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=T, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
 
-This should run TAZ over you current directory, reduce the data using 2dfDR AND extract 1D spectra. The most important thing to check is that you have individual reduced spectra in the .Rdata format in the \textbf{/data/reduced/allSpec} directory. If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  \\
+This should run TAZ over you current directory, reduce the data using 2dfDR AND extract 1D spectra. The most important thing to check is that you have individually reduced spectra in the `.Rdata' format in the \textbf{data/reduced/allSpec/} directory. If not, go back and check you followed the previous stages correctly, and if you are still experiencing problems contact Luke.  \\
 
-As you may not want to re-run the reduction, you can tell TAZ to skip this part. However, you then have to tell it which files to extract 1D spectra from. This is achieved by setting  doReduce=F and then adding the variable: toExtractFiles=*a string list of files to extract*. In our example, this would be:\\
+As you may not want to re-run the reduction, you can tell TAZ to skip this part of the pipeline. However, you then have to tell TAZ which files to extract 1D spectra from. This is achieved by setting  \texttt{doReduce=F} and then adding the variable: \texttt{toExtractFiles=*a string list of files to extract*}. In our example, this would be:\\
 
  \hspace{10mm} \texttt{$>$ toExtractFiles<-c(`data/reduced/run1\_2017\_12/2017\_12\_18/ \\ 2017\_12\_18\_config\_1\_reduced.fits', `data/reduced/run1\_2017\_12/2017\_12\_19/ \\ 2017\_12\_19\_config\_1\_reduced.fits')}\\
  
@@ -247,13 +265,13 @@ As you may not want to re-run the reduction, you can tell TAZ to skip this part.
  
  \subsection{Stacking extracted spectra}
  
- As DEVILS will observe the same spectra over multiple observations, these will need to be stacked to increase single to noise. TAZ can perform this stacking from previously extracted spectra. As TAZ writes all spectra to the \textbf{/data/reduced/allSpec/} directory, the staking procedure simply searches for all instances of a particular ID in this directory and inverse variance weights the spliced spectrum, individual CCD arms and continuum extracted spectra. As we do not wish to extract the spectra again, set \texttt{doExtract=F} and \texttt{doStack=T}. Once again, in order to run this, you must tell TAZ which IDs to stack. This can either be done by providing a vector list of ID (note our example data is from GAMA and all objects are appended with a 'G", in DEVILS this will be 'D'):
+ As DEVILS will observe the same spectra over multiple observations, these will need to be stacked to increase single to noise. TAZ can perform this stacking from previously extracted spectra (as above). As TAZ writes all reduced spectra to the \textbf{/data/reduced/allSpec/} directory, the staking procedure simply searches for all instances of a particular ID in this directory and inverse variance weights the spliced spectrum, individual CCD arms and continuum extracted spectra. As we do not wish to extract the spectra again, set \texttt{doExtract=F} and \texttt{doStack=T}. Once again, in order to run this, you must tell TAZ which IDs to stack. This can either be done by providing a vector list of IDs (note our example data is from GAMA and all objects are appended with a 'G", in DEVILS this will be 'D'):\\
  
    \hspace{10mm} \texttt{$>$ toStackIDs<-c(`G006014', 'G006158')}\\
  
   \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=T,  toStackIDs=toStackIDs, doAutoZ=F, cores=2, doUpdateMaster=F, \\ doTiler=F, zeroPoint=T)}\\ 
   
- A second option is to tell TAZ to try and stack all IDs in the current \textbf{/allSpec} folder. To do this, simply set the \texttt{toStackIDs} value to 'all': \\
+ A second option is to tell TAZ to try and stack all IDs in the current \textbf{/allSpec} folder. To do this, simply set the \texttt{toStackIDs} value to `all': \\
   
 
   \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=T,  toStackIDs='all', doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\   
@@ -261,19 +279,25 @@ As you may not want to re-run the reduction, you can tell TAZ to skip this part.
 Run this code now. TAZ should populate the \textbf{/data/reduced/stackedSpec/} folder of your directory structure with 1D spectra. You can now quickly look at one of these spectra manually to see this has worked, in R do:\\
 
 \hspace{10mm} \texttt{$>$ load(`data/reduced/stackedSpec/G006158.Rdata')} \\
+
 \hspace{10mm} \texttt{$>$ magplot(spec\$wave, spec\$flux, type='l')} \\
 
 and over-plot the blue and red arms separately:\\
 
 
-\hspace{10mm} \texttt{$>$ lines(spec$waveBlue, spec$fluxBlue, col='blue')}\\
-\hspace{10mm} \texttt{$>$ lines(spec$waveRed, spec$fluxRed, col='red')}\\
+\hspace{10mm} \texttt{$>$ lines(spec\$waveBlue, spec\$fluxBlue, col='blue')}\\
+
+\hspace{10mm} \texttt{$>$ lines(spec\$waveRed, spec\$fluxRed, col='red')}\\
 
 or plot the continuum extracted stacked spectrum:\\
 
-\hspace{10mm} \texttt{$>$ magplot(spec$wave,spec$fluxSub, type='l')}\\
+\hspace{10mm} \texttt{$>$ magplot(spec\$wave,spec\$fluxSub, type='l')}\\
 
-If you want to see all information available for this spectrum, simply type:\\
+Or better you could simply run:\\
+
+\hspace{10mm} \texttt{$>$ specPlot(spec)}\\
+
+\texttt{specPlot()} is a TAZ function that allows easily plotting of the spectral structures output by TAZ. Try this now. If you want to see all information available for this spectrum, simply type:\\
 
  \hspace{10mm} \texttt{$>$ names(spec)} \\
  
@@ -282,23 +306,23 @@ If you want to see all information available for this spectrum, simply type:\\
  
   \hspace{10mm} \texttt{$>$ spec\$EXP} \\
   
- If you look at the spec\$z parameter, it will not currently have a value. This will be updated below.
+ If you look at the spec\$z parameter, it will not currently have a value. This is because we haven't yet measured a redshift.....
  
 
  \subsection{Running AutoZ on Stacked Spectra}
  
- Next we will run AutoZ over all of our stacked spectra. This is done by setting the \texttt{doAutoZ=T} flag. As we do not wish to stack the spectra again, we will set \texttt{doStack=F}. Once again, in order to run this, you must tell TAZ which stacked spectra to run AuotZ over. This can either be done by providing a vector list of file locations.
+ Next we will run AutoZ over all of our stacked spectra. This is done by setting the \texttt{doAutoZ=T} flag. As we do not wish to stack the spectra again, we will set \texttt{doStack=F}. Once again, in order to run this, you must tell TAZ which stacked spectra to run AutoZ over. This can either be done by providing a vector list of file locations. \\
  
  \hspace{10mm} \texttt{$>$ toAutoZStacks<-c(`data/reduced/stackedSpec/G006014.Rdata',  \\ 'data/reduced/stackedSpec/G006158.Rdata')}\\
  
  \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=F,  doAutoZ=T, toAutoZStacks=toAutoZStacks, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\ 
  
-Or as above, you can tell TAZ to try and run AutoZ for all IDs in the current \textbf{/stackedSpec} folder. To do this, simply set the \texttt{toAutoZStacks} value to 'all': \\
+Or as for the stacking, you can also tell TAZ to try and run AutoZ for all IDs in the current \textbf{/stackedSpec/} folder. To do this, simply set the \texttt{toAutoZStacks} value to `all': \\
   
 
   \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=F, doExtract=F, doStack=F, doAutoZ=T,  toAutoZStacks=`all',  cores=2, doUpdateMaster=F, \\ doTiler=F, zeroPoint=T)}\\  
   
-This should run AutoZ over all spectra. Do this now. You should find that the code populates the \textbf{/data/reduced/stackedSpec/AutoZplots/} folder with figures. The code is also updating the meta information in all of the individual spectra .Rdata files in \textbf{/data/reduced/stackedSpec/}. If you now reload the spectrum above, you will find it has a redshift and a probability that that redshift is correct:\\  
+This should run AutoZ over all spectra in the \textbf{/stackedSpec/} folder. Do this now. You should find that the code populates the \textbf{/data/reduced/stackedSpec/AutoZplots/} folder with figures. These are the same ones as produced by \texttt{plotSpec()}. The code is also updating the meta information in all of the individual spectra `.Rdata' files in \textbf{/data/reduced/stackedSpec/}. If you now reload the spectrum above, you will find it has a redshift and a probability that that redshift is correct:\\  
 
 \hspace{10mm} \texttt{$>$ load(`data/reduced/stackedSpec/G006158.Rdata')} \\
 
@@ -306,7 +330,7 @@ This should run AutoZ over all spectra. Do this now. You should find that the co
 
 \hspace{10mm} \texttt{0.7750067}\\
  
- \hspace{10mm} \texttt{$>$ spec\$z} \\
+ \hspace{10mm} \texttt{$>$ spec\$prob} \\
  
  \hspace{10mm} \texttt{0.5725674}\\
 
@@ -332,7 +356,7 @@ $\bullet$ Read all of the spectra in the \textbf{/data/reduced/stackedSpec/} dir
 
 $\bullet$ Save a new DMCat to \textbf{/data/catalogues/MASTERcats/} with the current date. \\
 
-$\bullet$ Identifies the next observing date in your current directory structure (past the date you are running the code) and create a DEVILS observing catalogues (DOCats) directory here \textbf{data/observing/run\#\_YYYY \_MM/YYYY\_MM\_DD/DOCats}. Within this file all of the target, guide, sky, standards catalogues that are required for the Tiling configuration are produced.\\
+$\bullet$ Identify the next observing date in your current directory structure (past the date you are running the code) and create a DEVILS observing catalogues (DOCats) directory here \textbf{data/observing/run\#\_YYYY \_MM/YYYY\_MM\_DD/DOCats}. Within this file all of the target, guide, sky, standards catalogues that are required for the Tiling configuration are produced.\\
 
 To generate to do this simply set \texttt{doUpdateMaster=T} run:\\
 
@@ -358,11 +382,11 @@ To generate to do this simply set \texttt{doUpdateMaster=T} run:\\
  
   \hspace{10mm} \texttt{$>$  TAZ(user='NewUser', workingDir=''.'', verbose=2,  doCalibQC=F, doReduce =T, doExtract=T, doStack=T,  doAutoZ=T,  doUpdateMaster=T, doTiler=T, zeroPoint =T, cores=4, configdir='/Applications/configure-8.4-MacOsX\_ElCapitan\_x86\_64' N\_D02A=0,N\_D02B=0, N\_D03=3, N\_D10=3, D02A\_startPlate=0, D02B\_startPlate=0, D03 \_startPlate=0, D10\_startPlate=1)}\\
 
-This will run the full reduction and analysis pipeline from end to to using 4 cores. It will then produce three fibre configurations in D03 starting on plate 0 and three configurations in D10 starting on plate 1. If you want to run the pipeline from end to end on the test dataset. Make sure you delete the reduced data in each of the  \textbf{/data/reduced/run\#\_YYYY\_MM/ \\ YYYY\_MM\_DD/} directories, otherwise TAZ will not re-reduce them. 
+This will run the full reduction and analysis pipeline from end to end using 4 cores. It will then produce three fibre configurations in D03 starting on plate 0 and three configurations in D10 starting on plate 1. If you want to run the pipeline from end to end on the test dataset. Make sure you delete the reduced data in each of the  \textbf{/data/reduced/run\#\_YYYY\_MM/ \\ YYYY\_MM\_DD/} directories, otherwise TAZ will not re-reduce them. 
 
 \section{TAZ inputs list}
 
-Below is a list of TAZ inputs and what they do:\\
+Below is a list of TAZ inputs and what they do designed to be a reference guide to running TAZ. These can be accessed in \textsc{r} by using the help function ($i.e.$ \texttt{$>$ ?TAZ}):\\
 
 
 $\bullet$ \texttt{user} - A string identifier which will be added to log files to show who ran the code. \\
@@ -371,7 +395,9 @@ $\bullet$ \texttt{workingDir} - The directory location where your previously gen
 
 $\bullet$ \texttt{verbose} - How much information to give you about TAZ,  verbose=0,1,2.\\
 
-$\bullet$ \texttt{doReduce} - TRUE/FALSE. Do you want to reduce new data? TAZ will look for new data as files where there is data in the \textbf{raw/} directory for a particular night, but nothing in the corresponding \textbf{reduced/} directory. For the advanced user, you can force this by running \texttt{run2dfDR(toReduce=toReduce)} where \texttt{toReduce} is a list of raw directories you want to reduce. \\
+$\bullet$ \texttt{doReduce} - TRUE/FALSE. Do you want to reduce new data? TAZ will look for new data as files where there is data in the \textbf{raw/} directory for a particular night, but nothing in the corresponding \textbf{reduced/} directory. 
+
+$\bullet$ \texttt{toReduceDirs}  - For the advanced user, you can force this by adding the directory path of nights you with to reduce in the form: data/rawdata/run\#\_YYYY\_MM/YYYY\_MM\_DD (i.e. data/rawdata/run1\_2017\_12/2017\_12\_18). Note that this will overwrite any reduced data in the corresponding \textbf{reduced/} directory ($i.e.$ data/reduced/run1\_2017\_12/2017\_12\_18).    \\
 
 $\bullet$ \texttt{doCalibQC} - TRUE/FALSE. Produce bias/dark QC plots.\\
 
@@ -519,19 +545,19 @@ These can be displayed as, $i.e.$:\\
 
 This will display:\\
 
-ID - Source ID from input catalogue    \\
-RA - Fibre RA \\
-DEC - Fibre DEC \\
-X - Fibre X \\
-Y - Fibre Y \\
-XERR - Fibre X error \\
-YERR- Fibre Y error\\
-THETA - Fibre angle \\
-TYPE - Type of source (Target, sky, standard, guide)\\
-MAG - Magnitude of source from input cat\\
-FIBRE - Fibre Number\\
-FILE - The file name and location of the extracted spectrum \\
-EXP - The exposure time of the spectrum \\
+\texttt{ID} - Source ID from input catalogue    \\
+\texttt{RA} - Fibre RA \\
+\texttt{DEC} - Fibre DEC \\
+\texttt{X} - Fibre X \\
+\texttt{Y} - Fibre Y \\
+\texttt{XERR} - Fibre X error \\
+\texttt{YERR}- Fibre Y error\\
+\texttt{THETA} - Fibre angle \\
+\texttt{TYPE} - Type of source (Target, sky, standard, guide)\\
+\texttt{MAG} - Magnitude of source from input cat\\
+\texttt{FIBRE} - Fibre Number\\
+\texttt{FILE} - The file name and location of the extracted spectrum \\
+\texttt{EXP} - The exposure time of the spectrum \\
 
  \subsection{Individual stacked source spectrum files with redshifts:}
  
@@ -547,39 +573,39 @@ Available data products can be displayed as:\\
 
 These are: \\
 
-wave - vector of wavelength positions from spliced spectrum \\
-flux - vector of counts from spliced spectrum \\
-sn - vector of variance from spliced spectrum \\
-sky - vector of sky values from spliced spectrum \\
-ID - ID of spectrum \\
-RA - Right Ascension of spectrum, J2000 \\
-DEC - Declination of spectrum, J2000 \\ 
-MAG - Magnitude of source provided to 2dF \\
-xunit - x-axis unit (will be 'ang') \\
-yunit - y-axis unit (will be 'ang' - used internally in TAZ and for plotting in package spec.tools) \\
-z - redshift of spectrum  \\
-EXP - Total exposure time, sec \\
-NStack - Number of spectra that went into the stack\\
-waveBlue - vector of wavelength positions from blue ccd spectrum\\
-fluxBlue - vector of counts from blue ccd spectrum\\
-snBlue - vector of variance from blue ccd spectrum\\
-skyBlue - vector of sky values from blue ccd spectrum\\
-waveRed - vector of wavelength positions from Red ccd spectrum\\
-fluxRed - vector of counts from Red ccd spectrum\\
-snRed - vector of variance from Red ccd spectrum\\
-skyRed - vector of sky values from Red ccd spectrum\\
-fluxSub - continuum subtracted spliced spectrum \\
-fluxSubBlue - continuum subtracted blue ccd spectrum \\
-fluxSubRed - continuum subtracted red ccd spectrum \\
-fluxSc - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
-fluxScBlue - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
-fluxScRed  - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
-file - the file and location of the stacked spectrum\\
-prob - the redshift probability from AutoZ\\
-cc - the peak cross-correlation value from AutoZ\\
-z2 - the second best redshift from AutoZ\\
-cc2 - the second peak cross-correlation value from AutoZ\\
-temp - the template number of the best fit redshift from AutoZ \\
+\texttt{wave} - vector of wavelength positions from spliced spectrum \\
+\texttt{flux} - vector of counts from spliced spectrum \\
+\texttt{sn} - vector of variance from spliced spectrum \\
+\texttt{sky} - vector of sky values from spliced spectrum \\
+\texttt{ID} - ID of spectrum \\
+\texttt{RA} - Right Ascension of spectrum, J2000 \\
+\texttt{DEC} - Declination of spectrum, J2000 \\ 
+\texttt{MAG} - Magnitude of source provided to 2dF \\
+\texttt{xunit} - x-axis unit (will be 'ang') \\
+\texttt{yunit} - y-axis unit (will be 'ang' - used internally in TAZ and for plotting in package spec.tools) \\
+\texttt{z} - redshift of spectrum  \\
+\texttt{EXP} - Total exposure time, sec \\
+\texttt{NStack} - Number of spectra that went into the stack\\
+\texttt{waveBlue} - vector of wavelength positions from blue ccd spectrum\\
+\texttt{fluxBlue} - vector of counts from blue ccd spectrum\\
+\texttt{snBlue} - vector of variance from blue ccd spectrum\\
+\texttt{skyBlue} - vector of sky values from blue ccd spectrum\\
+\texttt{waveRed} - vector of wavelength positions from Red ccd spectrum\\
+\texttt{fluxRed} - vector of counts from Red ccd spectrum\\
+\texttt{snRed} - vector of variance from Red ccd spectrum\\
+\texttt{skyRed} - vector of sky values from Red ccd spectrum\\
+\texttt{fluxSub} - continuum subtracted spliced spectrum \\
+\texttt{fluxSubBlue} - continuum subtracted blue ccd spectrum \\
+\texttt{fluxSubRed} - continuum subtracted red ccd spectrum \\
+\texttt{fluxSc} - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
+\texttt{fluxScBlue} - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
+\texttt{fluxScRed}  - Scaling value to change counts (flux value) to ergs/sec/cm$^2$/ang\\
+\texttt{file} - the file and location of the stacked spectrum\\
+\texttt{prob} - the redshift probability from AutoZ\\
+\texttt{cc} - the peak cross-correlation value from AutoZ\\
+\texttt{z2} - the second best redshift from AutoZ\\
+\texttt{cc2} - the second peak cross-correlation value from AutoZ\\
+\texttt{temp} - the template number of the best fit redshift from AutoZ \\
 
 
   \subsection{Final Spectrum/Redshifting diagnostic plots:}

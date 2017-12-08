@@ -20,6 +20,7 @@ if ($#argv != 2 || $1 == "-help") then
     exit
 endif
 
+# making relavent directories
 mkdir ~/data
 mkdir ~/data/logs
 mkdir ~/data/reduced
@@ -55,9 +56,11 @@ mkdir ~/data/rawdata/$1/$2/junk
 mkdir ~/data/idxFiles
 echo "Directory structure in place: "$1/$2
 
+# making nightly log files
 cp ~/data/observing/TEMPLATE_obs_log.txt mkdir ~/data/observing/$1/$2/$2_DEVILS_obs_log.txt 
 echo "Log file setup as: " ~/data/observing/$1/$2/$2_DEVILS_obs_log.txt 
 
+# making config directories for configuration files.
 mkdir /configs/devils/$1/
 mkdir /configs/devils/$1/$2
 echo "Configs directory ready for .sds files"
