@@ -4,10 +4,11 @@
 \alias{bizCheck}
 \title{Check DEVILS directory sturucture and print warnings for wrong file types}
 \usage{
-bizCheck(workingDir = ".", logName = logName, verbose = verbose)
+bizCheck(workingDir = ".", stopError = T, logName = logName,
+  verbose = verbose)
 }
 \arguments{
-\item{workingDir}{Peth to top level of DEVILS directory structure}
+\item{workingDir}{Path to top level of DEVILS directory structure}
 
 \item{logName}{log filename to write progress to}
 

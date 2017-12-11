@@ -105,7 +105,7 @@ This should give you a nice image of Saturn and tell you that there are no raw d
 
 \subsubsection{Installing CONFIGURE}
 
-The AAT uses a piece of software called \textsc{configure} to determine fibre assignments and produce the files required to drive 2df. You can find out about what \textsc{configure} does here: \url{https://www.aao.gov.au/science/software/configure}. 
+The AAT uses a piece of software called \textsc{configure} to determine fibre assignments and produce the files required to drive 2df. You can find out about what \textsc{configure} does here: \url{https://www.aao.gov.au/science/software/configure}.\\ 
 
 \textsf{1.1.2.1 Download and Installation} \\
 
@@ -273,7 +273,7 @@ Try running this code and explore the directory structure. You can generate this
 
 \hspace{30mm} \textbf{2017\_12\_18/, ....} \\
 
-You will populate the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} part of this structure with the data taken at the AAT, and TAZ will generate reduced data and analysis products in the other parts of the structure.  
+You will populate the \textbf{biases/}, \textbf{darks/} and \textbf{raw/}part of this structure with the data taken at the AAT, and TAZ will generate reduced data and analysis products in the other parts of the structure.  
 
 
 \section{Adding Observations}
@@ -282,7 +282,7 @@ When observing you will add raw data files to this directory structure. Firstly,
 
 Next you will need to place the raw target data in the relevant directory. This should be easily done as the date is in the file name produced by the AAT. Data for each night observed should be copied to the relevant \textbf{raw/*runName*/YYYY\_MM\_DD} directory ($i.e.$ for the first observing night on the 18th of December 2017, the data should be copied to \textbf{raw/run1\_2017\_12/2017\_12\_18}). Once again, TAZ will reduce/analyse all data in this directory. So if there are files you do not wish to be included, add then to the \textbf{raw/*runName*/YYYY\_MM\_DD/junk} folder. You do not need to separate ARC, FLAT and TARGET files in this directory. TAZ will identify and match the correct files based on the configuration used in the FITS header.  
 
-For now, there is an example small dataset you can get from here \url{https://www.dropbox.com/s/yutdugiwpi4jo3x/TAZRawExample.zip?dl=0}. Once you have this copy the biases, darks and raw data files to your \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders under the correct run/date.  
+For now, there is an example small dataset you can get from here \url{https://www.dropbox.com/s/yutdugiwpi4jo3x/TAZRawExample.zip?dl=0}. Once you have this copy the biases, darks and raw data files to your \textbf{biases/}, \textbf{darks/}, \textbf{raw/}, and \textbf{catalogues/} folders under the correct run/date.  
 
 \section{Running TAZ}
 
@@ -296,9 +296,19 @@ for example, to get an overview of the main high-level \texttt{TAZ} function, ty
 
 In most cases this code will by run end to end with one line. However, here I split it into various sections to explain what the code is doing and to allow the user to run each component separately. Note that parts of TAZ can be run in a a parallel fashion, to use this set the \texttt{cores} key word in the TAZ command line.
 
+\subsection{Running directory checks}
+
+Firstly, TAZ has the functionality to check if the files you have placed are in the correct location. This searches the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders and gives warnings if the wrong data type is in the wrong place, or if the dates of the raw files do not match the dates in the folder name. To do this TAX has a function called \texttt{bizCheck()}. This will manually run at the start of TAZ, but you can run it now, using:\\
+
+
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', dobizCheck=T, bizStopError=F, doReduce=F,  zeroPoint=F, doExtract=F, doStack=F, doAutoZ=F, cores=4, doUpdateMaster=F, doTiler=F,verbose=2)}\\
+
+With the test dataset, this will print a lot of warnings about the data not being from the correct night (as this test dataset is from 2014 and we have put it in folders for 2017!). However, this is good and tells us the function is working correctly. TAZ will continue to run even with these warnings. If you were to set \texttt{bizStopError=T} the code would stop at these warnings and ask you to check the files in each directory.     
+
+
 \subsection{Running the 2dfDR reduction}
 
-First, lets try and run TAZ on our test dataset to just perform the data reduction. To do this, make sure you are in the directory above the \textbf{/data} directory you just generated, and run:\\
+Now lets try and run TAZ on our test dataset to just perform the data reduction. To do this, make sure you are in the directory above the \textbf{/data} directory you just generated, and run:\\
 
 \hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
 

@@ -5,12 +5,12 @@
 \title{Top level funtion for running full DEVILS Tool for Analaysis and Redshifting Pipeline.}
 \usage{
 TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
-  doCalibQC = F, doReduce = T, toReduceDirs = "NA", zeroPoint = T,
-  doExtract = T, toExtractFiles = "NA", doStack = T, toStackIDs = "NA",
-  doAutoZ = T, toAutoZStacks = "NA", doUpdateMaster = T, doTiler = T,
-  DODir = "NA", N_D02A = 1, N_D02B = 1, N_D03 = 1, N_D10 = 1,
-  D02A_startPlate = 0, D02B_startPlate = 0, D03_startPlate = 0,
-  D10_startPlate = 0,
+  dobizCheck = T, bizStopError = T, doCalibQC = F, doReduce = T,
+  toReduceDirs = "NA", zeroPoint = T, doExtract = T,
+  toExtractFiles = "NA", doStack = T, toStackIDs = "NA", doAutoZ = T,
+  toAutoZStacks = "NA", doUpdateMaster = T, doTiler = T, DODir = "NA",
+  N_D02A = 1, N_D02B = 1, N_D03 = 1, N_D10 = 1, D02A_startPlate = 0,
+  D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
   cores = cores, verbose = 2)
 }
@@ -18,6 +18,10 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
 \item{user}{The current use identification. This is added to all logs.}
 
 \item{workingDir}{The top level directory where the DEVILS data/... directory is found}
+
+\item{dobizCheck}{TRUE/FALSE, Check files are in correct part of file structure using bizCheck.R}
+
+\item{bizStopError}{TRUE/FLASE if a file is ofund in the wrong place, should the code be stopped?}
 
 \item{doCalibQC}{TRUE/FALSE, Produce bias and dark frame QC plots using checkQC.R}
 
