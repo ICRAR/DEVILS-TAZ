@@ -140,6 +140,8 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
   write(paste('# Version:',version, sep=''), file=logName, append=T)
   write(paste('# User:',user, sep=''), file=logName, append=T)
   write(paste('# Working Directory:',workingDir, sep=''), file=logName, append=T)
+  write(paste('#Runnig TAZ with line: TAZ<-function(user=',user,', workingDir=',workingDir,',  dobizCheck=',dobizCheck,', bizStopError=',bizStopError,', doCalibQC=',doCalibQC,', doReduce=',doReduce,', toReduceDirs=',toReduceDirs,', zeroPoint=',zeroPoint,', doExtract=',doExtract,', toExtractFiles=',toExtractFiles,', doStack=',doStack,', toStackIDs=',toStackIDs,', doAutoZ=',doAutoZ,', toAutoZStacks=',toAutoZStacks,', doUpdateMaster=',doUpdateMaster,', doTiler=',doTiler,', DODir=',DODir,',N_D02A=',N_D02A,',N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02B_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,',configdir=',configdir,',  cores=',cores,', verbose=',verbose,')',sep=''), file=logName, append=T)
+    
   write(' ', file=logName, append=T)
   
   

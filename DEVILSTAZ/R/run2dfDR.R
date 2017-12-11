@@ -44,8 +44,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
         saveFile<-paste(toReduce[i],'/', strsplit(toReduce[i],"/")[[1]][4],'_metaData.Rdata', sep='')
         metaData<-getFileInfo(dir=toReduce[i],saveFile=saveFile, logName=logName, verbose=verbose)
-        configList<-unique(metaData$config)
-
+        configList<-as.vector(unique(metaData$config))
+        configList<-configList[which(configList!='NONE')]
 
         
         
@@ -236,10 +236,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
 
                 if (verbose>1){
-                    cat('             - Reducing ARC file for red ccd with line:', paste('aaorunARC(file=',toReduce[i], '/',flat_ccd2,' idx=idx, doDark=T,darkFile=',calib$darkFileRed,', doBias=T,biasFile=',calib$biasFileRed,', outname=',tlmFile,')', sep=''), '\n')
+                    cat('             - Reducing ARC file for red ccd with line:', paste('aaorunARC(file=',toReduce[i], '/',flat_ccd2,' idx=idx, doDark=T,darkFile=',calib$darkFileRed,', doBias=T,biasFile=',calib$biasFileRed,', tlmFile=',tlmFile,')', sep=''), '\n')
                 }
 
-                write(paste('             - Reducing ARC file for red ccd with line: aaorunARC(file=',toReduce[i], '/',flat_ccd2,' idx=idx, doDark=T,darkFile=',calib$darkFileRed,', doBias=T,biasFile=',calib$biasFileRed,', outname=',tlmFile,')', sep=''), file=logName, append=T)
+                write(paste('             - Reducing ARC file for red ccd with line: aaorunARC(file=',toReduce[i], '/',flat_ccd2,' idx=idx, doDark=T,darkFile=',calib$darkFileRed,', doBias=T,biasFile=',calib$biasFileRed,', tlmFile=',tlmFile,')', sep=''), file=logName, append=T)
                 
                 
                 arcFile<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_arc.fits', sep='')

@@ -5,7 +5,7 @@
 \title{Top level funtion for running full DEVILS Tool for Analaysis and Redshifting Pipeline.}
 \usage{
 TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
-  dobizCheck = T, bizStopError = T, doCalibQC = F, doReduce = T,
+  dobizCheck = T, bizStopError = F, doCalibQC = F, doReduce = T,
   toReduceDirs = "NA", zeroPoint = T, doExtract = T,
   toExtractFiles = "NA", doStack = T, toStackIDs = "NA", doAutoZ = T,
   toAutoZStacks = "NA", doUpdateMaster = T, doTiler = T, DODir = "NA",
