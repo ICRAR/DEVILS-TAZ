@@ -18,9 +18,8 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
   origDir<-getwd()
   setwd(workingDir)
   runs<-list.files(path='data/rawdata', pattern='*')
+  
   for (i in 1:length(runs)){
-    
-    
     
     if (verbose>1){cat('  - Checking raw files for run:',runs[i], '\n')}
     write(paste('  - Checking raw files for run:',runs[i],sep=''), file=logName, append=T)  
@@ -30,6 +29,8 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
 
     if (verbose>1){cat('     - ',length(biases),' FITS files found in biases directory', '\n')}
     write(paste('     - ',length(biases),' FITS files found in biases directory',sep=''), file=logName, append=T)
+    
+    if (length(biases)>0) {
     
     for (j in 1:length(biases)){
      name<- paste('data/biases/',runs[i],'/', biases[j],sep='')
@@ -49,36 +50,48 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
      if (typeF!='Bias Frame'){
        
        if (verbose>1){cat('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE A BIAS ***',  '\n')}
-       if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+       if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
        write(paste('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE A BIAS ***',sep=''), file=logName, append=T)
-       write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-       if (stopError==T) {return(NULL)}
+       if (stopError==T) {
+         write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+         return(NULL)
+       }
      }
      
      if (folderYear!=year){
        if (month!=1 | folderMonth!=12){
             if (verbose>1){cat('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME YEAR AS ITS DIRECTORY ***',  '\n')}
-            if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+            if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
             write(paste('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME YEAR AS ITS DIRECTORY ***',sep=''), file=logName, append=T)
-            write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-            if (stopError==T) {return(NULL)}
+            
+            if (stopError==T) {
+              write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+              return(NULL)
+              }
          
        }
      }
      
      if (folderMonth!=month & folderMonth!=(month-1)){
        if (verbose>1){cat('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME OR FOLLOWING MONTH AS ITS DIRECTORY ***',  '\n')}
-       if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+       if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
        write(paste('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME OR PRECEEDING MONTH AS ITS DIRECTORY ***',sep=''), file=logName, append=T)
-       write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-       if (stopError==T) {return(NULL)}
+       if (stopError==T) {
+         write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+         return(NULL)
+       }
      }
      
      
      
     }
+    }
       
     darks<-list.files(path=paste('data/darks/',runs[i], sep=''), pattern='*.fits')
+    
+    
+    if (length(darks)>0) {
+      
     
     for (j in 1:length(darks)){
       name<- paste('data/darks/',runs[i],'/', darks[j],sep='')
@@ -96,37 +109,48 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
       
       if (typeF!='Dark Frame'){
         if (verbose>1){cat('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE A DARK ***',  '\n')}
-        if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+        if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
         write(paste('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE A DARK ***',sep=''), file=logName, append=T)
-        write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-        if (stopError==T) {return(NULL)}
+        if (stopError==T) {
+          write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+          return(NULL)
+        }
       }
       
       if (folderYear!=year){
         if (month!=1 | folderMonth!=12){
           if (verbose>1){cat('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME YEAR AS ITS DIRECTORY ***',  '\n')}
-          if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+          if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
           write(paste('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME YEAR AS ITS DIRECTORY ***',sep=''), file=logName, append=T)
-          write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-          if (stopError==T) {return(NULL)}
+          
+          if (stopError==T) {
+            write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+            return(NULL)
+          }
           
         }
       }
       
       if (folderMonth!=month & folderMonth!=(month-1)){
         if (verbose>1){cat('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME OR FOLLOWING MONTH AS ITS DIRECTORY ***',  '\n')}
-        if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+        if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
         write(paste('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME OR PRECEEDING MONTH AS ITS DIRECTORY ***',sep=''), file=logName, append=T)
-        write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-        if (stopError==T) {return(NULL)}
+        if (stopError==T) {
+          write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+          return(NULL)
+        }
       }
       
       
+    }
     }
       
     
     
     nights<-list.files(path=paste('data/rawdata/',runs[i], sep=''), pattern='*')
+    
+    if (length(nights)>0) {
+      
     
     for (j in 1:length(nights)){
       
@@ -134,6 +158,8 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
       write(paste('     - Checking raw files for night:',nights[j],sep=''), file=logName, append=T)  
       
       Targets<-list.files(path=paste('data/rawdata/',runs[i],'/',nights[j], sep=''), pattern='*.fits')
+      
+      if (length(Targets)>0) {
       
       for (k in 1:length(Targets)){
         
@@ -155,29 +181,34 @@ bizCheck<-function(workingDir='.', stopError=T, logName=logName, verbose=verbose
 
       if (typeF!='FLAT' & typeF!='ARC' & typeF!='RUN'){
           if (verbose>1){cat('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE AN ARC, FLAT OR RUN (TARGET) FILE ***',  '\n')}
-          if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+          if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
           write(paste('*** WARNING FRAME ',name, 'DOES NOT APPEAR TO BE AN ARC, FLAT OR RUN (TARGET) FILE ***',sep=''), file=logName, append=T)
-          write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-          if (stopError==T) {return(NULL)}
+          if (stopError==T) {
+            write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+            return(NULL)
+          }
       }
         
         dateState<-'BAD'
         if (folderYear==year & folderMonth==month & folderDay==day){dateState<-'GOOD'}
         if (dateState=='BAD'){
           if (verbose>1){cat('*** WARNING FRAME ',name, ' WAS NOT TAKEN ON THE SAME DAY AS ITS DIRECTORY ***',  '\n')}
-          if (verbose>1){cat('Exiting TAZ, please check data locations and re-run', '\n')}
+          if (verbose>1 & stopError==T){cat('Exiting TAZ, please check data locations and re-run', '\n')}
           write(paste('*** WARNING FRAME ',name, ' WAS NOT TAKEN IN THE SAME DAY AS ITS DIRECTORY ***',sep=''), file=logName, append=T)
-          write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
-          if (stopError==T) {return(NULL)}
+          if (stopError==T) {
+            write(paste('Exiting TAZ, please check data locations and re-run',sep=''), file=logName, append=T)
+            return(NULL)
+          }
         }
       
-      
+      }
       
       
       
     }
     
     
+    }
     }
   }
   a<-1

@@ -38,6 +38,8 @@
 #' @param D03_startPlate Start plate number of D03 configurations (0 or 1) for runTiler.R
 #' @param D10_startPlate Start plate number of D10 configurations (0 or 1) for runTiler.R
 #' @param configdir Directory path to Configuration software 
+#' @param addOzDES Add OzDES filer tragetes to DOCat wil high priority
+#' @param OzDESCat Path to current OzDES filler catalogue
 #' @param cores number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R 
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @examples 
@@ -64,7 +66,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  cores=cores, verbose=2){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA', cores=cores, verbose=2){
   
   if (doReduce==T){
     tmp<-tryCatch(system2('which', args='aaorun', stdout=TRUE))
@@ -335,6 +337,12 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     write('*** doUpdateMaster=F so no updating undertaken.', file=logName, append=T)
     
     DODir<-DODir
+  }
+  
+  if (addOzDES==T){
+    
+    addOzDES(OzDESCat=OzDESCat, DODir=DoDir, logName=logName, verbose=verbose)
+    
   }
   
   

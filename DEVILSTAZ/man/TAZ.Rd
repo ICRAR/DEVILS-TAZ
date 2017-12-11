@@ -12,7 +12,7 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   N_D02A = 1, N_D02B = 1, N_D03 = 1, N_D10 = 1, D02A_startPlate = 0,
   D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
-  cores = cores, verbose = 2)
+  addOzDES = FALSE, OzDESCat = "NA", cores = cores, verbose = 2)
 }
 \arguments{
 \item{user}{The current use identification. This is added to all logs.}
@@ -71,6 +71,10 @@ data/reduced/stackedSpec/ directory. Then make DOCats for the next observing dat
 \item{D10_startPlate}{Start plate number of D10 configurations (0 or 1) for runTiler.R}
 
 \item{configdir}{Directory path to Configuration software}
+
+\item{addOzDES}{Add OzDES filer tragetes to DOCat wil high priority}
+
+\item{OzDESCat}{Path to current OzDES filler catalogue}
 
 \item{cores}{number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R}
 
