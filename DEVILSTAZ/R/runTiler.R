@@ -31,9 +31,6 @@
 runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, logName=logName, verbose=verbose, cores=cores){
 
 
-    registerDoParallel(cores=cores)
-
-    
     DOcat=read.table(DOcat,header=T)
     DATAguide=read.table(DATAguide,header=T) 
     DATAstspec=read.table(DATAstspec,header=T)
@@ -85,26 +82,21 @@ runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAgu
     if (verbose>1){cat('        - Running Tiling....', '\n')}
     write('        - Running Tiling....', file=logName, append=T)
 
-    #oldWD<-getwd()
-                                        #setwd(workigDir)
+   
 
     tileplus_M<-c(N_D02A,N_D02B,N_D03,N_D10)
     position_M<-c('D02A','D02B', 'D03', 'D10')
     plate_M<-c(plate_D02A, plate_D02B, plate_D03, plate_D10)
 
     
-    a = foreach(i=1:length(tileplus_M)) %dopar%  {
+    for (i in 1:length(tileplus_M)){
         if (tileplus_M[i]>0){
-            Tiler(tileplus=tileplus_M[i], position=position_M[i], plate=plate_M[i], runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',tileplus_M[i]), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')
+    
+          Tiler(tileplus=tileplus_M[i], position=position_M[i], plate=plate_M[i], runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',tileplus_M[i]), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')
         }
     }
     
-    #if (N_D02A>0){Tiler(tileplus=N_D02A, position='D02A', plate=plate_D02A, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02A), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    #if (N_D02B>0){Tiler(tileplus=N_D02B, position='D02B', plate=plate_D02B, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02B), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    #if (N_D03>0){Tiler(tileplus=N_D03, position='D03', plate=plate_D03, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D03), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    #if (N_D10>0){Tiler(tileplus=N_D10, position='D10', plate=plate_D10, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D10), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-
-    #setwd(oldWD)
+    
 
     pathD02A<-paste(workigDir,'/D02A/',list.files(path=paste(workigDir,'/D02A',sep=''), pattern='Targ*'), sep='')
     pathD02B<-paste(workigDir,'/D02B/',list.files(path=paste(workigDir,'/D02B',sep=''), pattern='Targ*'), sep='')

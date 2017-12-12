@@ -16,9 +16,16 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DoDir, num=10, logName=logName, verb
   D03_DEC<-c(-28.5,-27.5)
   
   
+  if (verbose>1){cat('    -Reading OzDES catalogue:', OzDESCat, '\n')}
+  write(paste('   -Reading OzDES catalogue:', OzDESCat,sep=''), file=logName, append=T)
   
   OzDES<-read.csv(OzDESCat, skip=3, header=F)
+  
   DOcatName<-paste(DODir,'/', list.files(path=DODir, pattern='DObj*'),sep='')
+  
+  if (verbose>1){cat('    -Reading DOCat catalogue:', DOcatName, '\n')}
+  write(paste('   -Reading DOCat catalogue:', DOcatName,sep=''), file=logName, append=T)
+  
   DOCat<-read.table(DOcatName, header=T)
   sel<-0
   while (length(unique(sel))<num){
@@ -26,10 +33,20 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DoDir, num=10, logName=logName, verb
   }
   NewCATAID<-OzDES[sel,1]
   NewRA<-OzDES[sel,2]
-  NewDEC<-OzDES[sel,2]
-  NewMAG<-OzDES[sel,3]
+  NewDEC<-OzDES[sel,3]
+  NewMAG<-OzDES[sel,4]
   NewSURVEY_CLASS<-rep(3,num)
   NewPRIORITY_CLASS<-rep(9,num)
+  
+  if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
+  write(paste('        -Adding OzDES sources:',sep=''), file=logName, append=T)
+  
+  for (i in 1:num){
+    
+    if (verbose>1){cat('           ',NewCATAID[i], NewRA[i], NewDEC[i], '\n')}
+    write(paste('           ',NewCATAID[i], NewRA[i], NewDEC[i] ,sep=' '), file=logName, append=T)
+
+  }
   
   
   NewPOSITION<-rep('D02A',num)

@@ -349,6 +349,9 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
   
   if (addOzDES==T){
     
+    if (verbose>0){cat('Adding OzDES targets....', '\n')}
+    write('Adding OzDES targets....', file=logName, append=T)
+    
     addOzDES(OzDESCat=OzDESCat, DODir=DODir, num=10, logName=logName, verbose=verbose)
     
   }
