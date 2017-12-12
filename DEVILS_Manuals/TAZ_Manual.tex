@@ -301,7 +301,7 @@ In most cases this code will by run end to end with one line. However, here I sp
 Firstly, TAZ has the functionality to check if the files you have placed are in the correct location. This searches the \textbf{biases/}, \textbf{darks/}, and \textbf{raw/} folders and gives warnings if the wrong data type is in the wrong place, or if the dates of the raw files do not match the dates in the folder name. To do this TAX has a function called \texttt{bizCheck()}. This will manually run at the start of TAZ, but you can run it now, using:\\
 
 
-\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', dobizCheck=T, bizStopError=F, doReduce=F,  zeroPoint=F, doExtract=F, doStack=F, doAutoZ=F, cores=4, doUpdateMaster=F, doTiler=F,verbose=2)}\\
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', dobizCheck=T, bizStopError=F, \\ doReduce=F,  zeroPoint=F, doExtract=F, doStack=F, doAutoZ=F, cores=4, \\ doUpdateMaster=F, doTiler=F,verbose=2)}\\
 
 With the test dataset, this will print a lot of warnings about the data not being from the correct night (as this test dataset is from 2014 and we have put it in folders for 2017!). However, this is good and tells us the function is working correctly. TAZ will continue to run even with these warnings. If you were to set \texttt{bizStopError=T} the code would stop at these warnings and ask you to check the files in each directory.     
 
@@ -324,7 +324,8 @@ TAZ has the functionality to run a 2dfDR reduction on data from a specific night
 
 
 \hspace{10mm} \texttt{$>$ toReduceDirs<-`data/rawdata/run1\_2017\_12/2017\_12\_18'}\\
-\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, toReduceDirs=toReduceDirs, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
+
+\hspace{10mm} \texttt{$>$ TAZ(user='NewUser', workingDir='.', verbose=2, doReduce=T, toReduceDirs \\ =toReduceDirs, doExtract=F, doStack=F, doAutoZ=F, cores=2, doUpdateMaster=F, doTiler=F, zeroPoint=T)}\\
 
 Try this now and you will see that the reduced data in \textbf{data/reduced/run1\_2017\_12/2017\_12\_18} has been over written. In practice, it is suggested you only use this functionality if you know what you are doing!
  

@@ -118,8 +118,16 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     cat('   - Unpacking now.....', '\n')
     
     LibPaths<-.libPaths()
-    system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep='')) 
-    system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar --directory ', LibPaths, '/DEVILSTAZ/data/' ,sep=''))
+    
+    DEVILSPATH<-NA
+    
+    for (jj in 1:length(LibPaths)){
+      packagesList<-list.files(path=LibPaths[jj], pattern='*')
+      if (length(which(packagesList=='DEVILSTAZ'))>0){DEVILSPATH<-LibPaths[jj]}
+    }
+    
+    system(paste('tar -xvf ', DEVILSPATH, '/DEVILSTAZ/data/calibrators.tar --directory ', DEVILSPATH, '/DEVILSTAZ/data/',sep='')) 
+    system(paste('tar -xvf ', DEVILSPATH, '/DEVILSTAZ/data/idxFiles.tar --directory ', DEVILSPATH, '/DEVILSTAZ/data/' ,sep=''))
     
   }
   
@@ -341,7 +349,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
   
   if (addOzDES==T){
     
-    addOzDES(OzDESCat=OzDESCat, DODir=DoDir, logName=logName, verbose=verbose)
+    addOzDES(OzDESCat=OzDESCat, DODir=DODir, num=10, logName=logName, verbose=verbose)
     
   }
   

@@ -56,8 +56,9 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     system('mkdir data/logs')
     system('mkdir data/catalogues')
     system('mkdir data/catalogues/MASTERcats')
+    system('mkdir data/catalogues/OzDESCats')
     #system('mkdir data/calibrators')
-   #system('mkdir data/idxFiles')
+    #system('mkdir data/idxFiles')
 
     if (verbose>0){
         cat(DEVILSGreen('Top level directory structure complete.'), '\n')
@@ -66,10 +67,24 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         cat(DEVILSGreen('Unpacking.....'), '\n')
     }
     
-    LibPaths<-.libPaths()[1]
+    LibPaths<-.libPaths()
     
-    system(paste('cp ', LibPaths, '/DEVILSTAZ/data/calibrators.tar data/',sep='')) 
-    system(paste('cp ', LibPaths, '/DEVILSTAZ/data/idxFiles.tar data/',sep=''))
+    DEVILSPATH<-NA
+    
+    for (jj in 1:length(LibPaths)){
+      packagesList<-list.files(path=LibPaths[jj], pattern='*')
+      if (length(which(packagesList=='DEVILSTAZ'))>0){DEVILSPATH<-LibPaths[jj]}
+    }
+    
+    if (is.na(DEVILSPATH)==T){
+        cat('*** WARNING COULD NOT FIND DEVILSTAZ PACKAGE INSTALATION ***', '\n')
+        cat('Exiting TAZ, please check you have DEVILSTAZ installed correctly', '\n')
+    }
+    
+ 
+    
+    system(paste('cp ', DEVILSPATH, '/DEVILSTAZ/data/calibrators.tar data/',sep='')) 
+    system(paste('cp ', DEVILSPATH, '/DEVILSTAZ/data/idxFiles.tar data/',sep=''))
 
     setwd(paste(workingDir, '/data',sep=''))
     system(paste('tar -xvf calibrators.tar',sep='')) 
