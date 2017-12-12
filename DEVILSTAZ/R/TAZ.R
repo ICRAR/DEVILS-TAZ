@@ -366,11 +366,10 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     DATAguide<-paste(DODir,list.files(path=DODir, pattern='DGui*'),sep='')
     DATAstspec<-paste(DODir,list.files(path=DODir, pattern='DStd*'),sep='')
     DATAsky<-paste(DODir, list.files(path=DODir, pattern='DSky*'),sep='')
-    
-    
+
     if (verbose>1){cat(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),'\n')}
     write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
-    
+  
     
     runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir)
   }
