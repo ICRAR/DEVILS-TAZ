@@ -23,7 +23,7 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     
     GuideFile<-'data/calibrators/GuideStars/DATAguide.tab'
     SkyFile<-'data/calibrators/SkyFibres/DATAsky.tab'
-    StdFile<-'data/calibrators/StdStars/DATAstspec.tab'
+    StdFile<-'data/calibrators/stdstars/DATAstspec.tab'
 
     
 
