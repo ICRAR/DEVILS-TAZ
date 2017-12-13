@@ -12,8 +12,9 @@ RebinTempData = function(logLambda, templateNumbers = c(2:14, 16:22,40:47),
   # set default template numbers to use: 20 stellar and 8 galaxy templates
   
   if(verbose) cat('\nREBIN_TEMPLATE_DATA: Reading ', file)
-  #tdata <- readFITS(file)
-  data('filtered_templates', package='auto.z.v03')
+  tdata <- readFITS(file)
+  
+  #data('filtered_templates', package='auto.z.v03')
   
   specData <- vector("list", length(templateNumbers))
   templateID <- vector("integer", length(templateNumbers))
