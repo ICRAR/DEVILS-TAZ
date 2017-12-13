@@ -19,7 +19,7 @@ the filter response in the form c(rowNum, wavelength(ang), transmission)
 Function reads in a specified filter tansmission curve from the DEVILSTAZ data directory. Note that for this to
 work you must have unpacked the TAZ data files using:
 
-> LibPaths<-.libPaths()[1]
+> LibPaths<-DEVILSPATH
 
 > system(paste('tar -xvf ', LibPaths, '/DEVILSTAZ/data/calibrators.tar --directory ', LibPaths, '/DEVILSTAZ/data/',sep=''))
 

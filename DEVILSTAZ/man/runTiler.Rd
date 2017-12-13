@@ -42,7 +42,7 @@ runTiler(configdir = configdir, workigDir = workigDir, DOcat = DOcat,
 
 \item{verbose}{tell me whats going on: 0=nothing, 1=somethings, 2=everything}
 
-\item{cores}{number of cores to use (max four in this case)}
+\item{cores}{number of cores to use (max four in this case) - currently redundant}
 
 \item{D02A_startPlate}{Start plate number of D02B configurations (0 or 1)}
 }
