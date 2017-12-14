@@ -44,8 +44,9 @@ cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=co
   
   if (Field=='D10'){
     
-    Path<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
-    #Path<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
+    
+    Path<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
+    #Path<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
     
     imNameY<-paste(Path,'UVISTA_Y_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
     imNameJ<-paste(Path,'UVISTA_J_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
@@ -56,23 +57,24 @@ cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=co
   if (Field=='D02'){
 
     Path<-'/mnt/jaws/DEVILS/imaging/D02/VIDEO2017/'
-    Path<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    #Path<-'/Users/luke/work/DEVILS/Imaging/D02/'
     
     imNameY<-paste(Path,'xmm_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path,'xmm_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path,'xmm_Y_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(Path,'xmm_J_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(Path,'xmm_Ks_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   
   if (Field=='D03'){
     
     
+    
     Path<-'/mnt/jaws/DEVILS/imaging/D03/VIDEO2017/'
-    Path<-'/Users/luke/work/DEVILS/Imaging/D03/'
+    #Path<-'/Users/luke/work/DEVILS/Imaging/D03/'
     
     imNameY<-paste(Path,'cdfs_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path,'cdfs_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path,'cdfs_Y_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(Path,'cdfs_J_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(Path,'cdfs_Ks_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   
