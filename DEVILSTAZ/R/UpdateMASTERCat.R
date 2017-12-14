@@ -38,9 +38,6 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
 
         match<-which(DMCat$CATAID==ID)
 
-        #### REMOVE BEFORE REAL RUNS!!!! ####
-        match<-round(runif(1,1,length(DMCat$CATAID)))
-
         if (length(match)>0){
             RA<-spec$RA
             DEC<-spec$DEC

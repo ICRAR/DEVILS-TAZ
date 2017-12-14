@@ -204,7 +204,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''))
             system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DOCats', sep=''))
             
-            system(paste('mkdir data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DOCats/TileFiles', sep=''))
+            
             
             if (verbose>0){
                 cat(DEVILSGreen('                    - Making log file....'), '\n')
