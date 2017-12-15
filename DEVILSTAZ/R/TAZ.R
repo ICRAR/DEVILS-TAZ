@@ -382,23 +382,23 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     ConfigNames<-runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir)
     
-    if (docutoutConfig==T){
+      if (docutoutConfig==T){
       
-        
-      host<-system('hostname',intern = TRUE)
-      if (host=="is-m-00354"){location<-'lukeLap'}
-      if (host=="munro"){location<-'munro'}
-      if (host!="munro" & host!="is-m-00354"){
-        if (verbose>0){cat('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', '\n')}
-        write('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', file=logName, append=T)
+        host<-system('hostname',intern = TRUE)
+        if (host=="is-m-00354"){location<-'lukeLap'}
+        if (host=="munro"){location<-'munro'}
+        if (host!="munro" & host!="is-m-00354"){
+          if (verbose>0){cat('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', '\n')}
+          write('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', file=logName, append=T)
         }
-      if (host=="munro" & host=="is-m-00354"){
-        for (i in length(ConfigNames)){
-        cutoutConfig(configFile=ConfigNames[i], size=15, outDir=paste(strsplit(ConfigNames[i],'.lis')[[1]][1],'_cutouts',sep=''), cores=cores, location=location)
+        if (host=="munro" | host=="is-m-00354"){
+          for (i in 1:length(ConfigNames)){
+              cutoutConfig(configFile=ConfigNames[i], size=15, outDir=paste(strsplit(ConfigNames[i],'.lis')[[1]][1],'_cutouts',sep=''), cores=cores, location=location)
+          }
+        }
+        
       }
-      }
-    }
-    
+      
     }
   
     if (docheckConfig==T){

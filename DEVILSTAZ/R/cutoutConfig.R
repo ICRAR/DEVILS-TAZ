@@ -18,29 +18,29 @@
 cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=cores, location='munro'){
   
   if (location=='munro'){
-    Path_D10<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
+    PathD10<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
     stubYD10<-'Y'
     stubJD10<-'J'
     stubKD10<-'Ks'
-    Path_D02<-'/mnt/jaws/DEVILS/imaging/D02/VIDEO2017/'
+    PathD02<-'/mnt/jaws/DEVILS/imaging/D02/VIDEO2017/'
     stubYD02<-'Y'
     stubJD02<-'J'
     stubKD02<-'Ks'
-    Path_D03<-'/mnt/jaws/DEVILS/imaging/D03/VIDEO2017/'
+    PathD03<-'/mnt/jaws/DEVILS/imaging/D03/VIDEO2017/'
     stubYD03<-'Y'
     stubJD03<-'J'
     stubKD03<-'Ks'
   }
   if (location=='lukeLap'){
-    Path_D10<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
+    PathD10<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
     stubYD10<-'Y'
     stubJD10<-'J'
     stubKD10<-'Ks'
-    Path_D02<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    PathD02<-'/Users/luke/work/DEVILS/Imaging/D02/'
     stubYD02<-'Y'
     stubJD02<-'Y'
     stubKD02<-'Y'
-    Path_D03<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    PathD03<-'/Users/luke/work/DEVILS/Imaging/D02/'
     stubYD03<-'Y'
     stubJD03<-'Y'
     stubKD03<-'Y'
@@ -82,17 +82,17 @@ cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=co
   }
   
   if (Field=='D02'){
-    imNameY<-paste(Path02,'xmm_',stubYD02,'_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path02,'xmm_',stubJD02,'_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path02,'xmm_',stubKD02,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameY<-paste(PathD02,'xmm_',stubYD02,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(PathD02,'xmm_',stubJD02,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(PathD02,'xmm_',stubKD02,'_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   
   if (Field=='D03'){
     
-    imNameY<-paste(Path03,'cdfs_',stubYD03,'_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path03,'cdfs_',stubJD03,'_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path03,'cdfs_',stubKD03,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameY<-paste(PathD03,'cdfs_',stubYD03,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(PathD03,'cdfs_',stubJD03,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(PathD03,'cdfs_',stubKD03,'_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   

@@ -136,7 +136,7 @@ runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAgu
         system(paste('mv ',workigDir,'/TileFiles/',listF[j] ,' ', workigDir,'/TileFiles/', substr(listF[j],1,3), '_', dateF,'_',substr(listF[j],5,nchar(listF[j])), sep=''))
     }
     
-    for (j in 1:length(listF)){
+    for (j in 1:length(listM)){
       ConfigNames<-c(ConfigNames,paste(workigDir,'/TileFiles/', substr(listM[j],1,3), '_', dateF,'_',substr(listM[j],5,nchar(listM[j])), sep=''))
     }
     
