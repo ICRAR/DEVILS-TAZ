@@ -9,11 +9,42 @@
 #' @param size Size of the desired cutouts in Arcsec
 #' @param outDir Path for directory to write files to
 #' @param cores Number of cores to run over
+#' @param location either 'munro' or 'lukeLap'. This only runs on munro or luke's laptop. 
 
 #' @examples 
-
+#' configFile='data/observing/run1_2017_12/2017_12_18/DOCats/Tiling/D03/TargetFork1-1P0/D03_Y2017_SB_R1tile001-53--28P0.lis'
+#' cutoutConfig(configFile=configFile, size=15, outDir='D03_Y2017_SB_R1tile001-53--28P0_cutouts', cores=4)
 #' @export
-cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=cores){
+cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=cores, location='munro'){
+  
+  if (location=='munro'){
+    Path_D10<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
+    stubYD10<-'Y'
+    stubJD10<-'J'
+    stubKD10<-'Ks'
+    Path_D02<-'/mnt/jaws/DEVILS/imaging/D02/VIDEO2017/'
+    stubYD02<-'Y'
+    stubJD02<-'J'
+    stubKD02<-'Ks'
+    Path_D03<-'/mnt/jaws/DEVILS/imaging/D03/VIDEO2017/'
+    stubYD03<-'Y'
+    stubJD03<-'J'
+    stubKD03<-'Ks'
+  }
+  if (location=='lukeLap'){
+    Path_D10<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
+    stubYD10<-'Y'
+    stubJD10<-'J'
+    stubKD10<-'Ks'
+    Path_D02<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    stubYD02<-'Y'
+    stubJD02<-'Y'
+    stubKD02<-'Y'
+    Path_D03<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    stubYD03<-'Y'
+    stubJD03<-'Y'
+    stubKD03<-'Y'
+  }
   
   system(paste('mkdir ',outDir, sep=''))
   registerDoParallel(cores=cores)
@@ -43,38 +74,25 @@ cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=co
 
   
   if (Field=='D10'){
-    
-    
-    Path<-'/mnt/jaws/DEVILS/imaging/D10/UltraVISTA_DR3/'
-    #Path<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
-    
-    imNameY<-paste(Path,'UVISTA_Y_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
-    imNameJ<-paste(Path,'UVISTA_J_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
-    imNameK<-paste(Path,'UVISTA_Ks_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
+
+    imNameY<-paste(PathD10,'UVISTA_',stubYD10,'_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
+    imNameJ<-paste(PathD10,'UVISTA_',stubJD10,'_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
+    imNameK<-paste(PathD10,'UVISTA_',stubKD10,'_21_01_16_allpaw_skysub_015_dr3_rc_v5.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   
   if (Field=='D02'){
-
-    Path<-'/mnt/jaws/DEVILS/imaging/D02/VIDEO2017/'
-    #Path<-'/Users/luke/work/DEVILS/Imaging/D02/'
-    
-    imNameY<-paste(Path,'xmm_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path,'xmm_J_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path,'xmm_Ks_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameY<-paste(Path02,'xmm_',stubYD02,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(Path02,'xmm_',stubJD02,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(Path02,'xmm_',stubKD02,'_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   
   if (Field=='D03'){
     
-    
-    
-    Path<-'/mnt/jaws/DEVILS/imaging/D03/VIDEO2017/'
-    #Path<-'/Users/luke/work/DEVILS/Imaging/D03/'
-    
-    imNameY<-paste(Path,'cdfs_Y_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameJ<-paste(Path,'cdfs_J_maxseeing0p90_2017-02-12.fits',sep='')
-    imNameK<-paste(Path,'cdfs_Ks_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameY<-paste(Path03,'cdfs_',stubYD03,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameJ<-paste(Path03,'cdfs_',stubJD03,'_maxseeing0p90_2017-02-12.fits',sep='')
+    imNameK<-paste(Path03,'cdfs_',stubKD03,'_maxseeing0p90_2017-02-12.fits',sep='')
     hdr<-read.fitshdr(imNameY)
   }
   

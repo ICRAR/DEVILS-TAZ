@@ -5,7 +5,7 @@
 \title{Produces cutout YJK RGB images for all sources in a fibre configuration}
 \usage{
 cutoutConfig(configFile = configFile, size = size, outDir = outDir,
-  cores = cores)
+  cores = cores, location = "munro")
 }
 \arguments{
 \item{configFile}{Path to configuration file to read}
@@ -15,10 +15,16 @@ cutoutConfig(configFile = configFile, size = size, outDir = outDir,
 \item{outDir}{Path for directory to write files to}
 
 \item{cores}{Number of cores to run over}
+
+\item{location}{either 'munro' or 'lukeLap'. This only runs on munro or luke's laptop.}
 }
 \description{
 This is function takes a specified DEVILS fibre configuration
 file (.lis) and produces YJK cutout images of all sources in that file. 
 This also notes which fibres are placed on targerts, standards, sky, or
 guidestars. NOTE: This must be run on Munro!
+}
+\examples{
+configFile='data/observing/run1_2017_12/2017_12_18/DOCats/Tiling/D03/TargetFork1-1P0/D03_Y2017_SB_R1tile001-53--28P0.lis'
+cutoutConfig(configFile=configFile, size=15, outDir='D03_Y2017_SB_R1tile001-53--28P0_cutouts', cores=4)
 }

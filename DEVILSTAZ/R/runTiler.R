@@ -20,7 +20,7 @@
 #' @param logName log filename to write progress to
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @param cores number of cores to use (max four in this case) - currently redundant
-
+#' @return List of paths to new configuration files
 #' @examples 
 #' runTiler(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',workigDir='.', DOcat='data/observing/run1_2017_12/2017_12_19/DOCats/DObjCat_2017_12_19.tab, $
 #'  DATAguide=data/observing/run1_2017_12/2017_12_19/DOCats/DGuideCat_2017_12_19.tab,DATAstspec=data/observing/run1_2017_12/2017_12_19/DOCats/DStdCat_2017_12_19.tab, $ 
@@ -129,12 +129,18 @@ runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAgu
     if (N_D10>0){system(paste('cp ',pathD10,'/D10* ', workigDir,'/TileFiles/',sep=''))}
 
     listF<-list.files(path=paste(workigDir,'/TileFiles/',sep=''),pattern='*')
-
+    listM<-list.files(path=paste(workigDir,'/TileFiles/',sep=''),pattern='*.lis')
+    ConfigNames<-c()
+    
     for (j in 1:length(listF)){
         system(paste('mv ',workigDir,'/TileFiles/',listF[j] ,' ', workigDir,'/TileFiles/', substr(listF[j],1,3), '_', dateF,'_',substr(listF[j],5,nchar(listF[j])), sep=''))
-
     }
     
+    for (j in 1:length(listF)){
+      ConfigNames<-c(ConfigNames,paste(workigDir,'/TileFiles/', substr(listM[j],1,3), '_', dateF,'_',substr(listM[j],5,nchar(listM[j])), sep=''))
+    }
+    
+    return(ConfigNames)
     
 
 }

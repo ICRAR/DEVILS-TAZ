@@ -46,6 +46,9 @@ runTiler(configdir = configdir, workigDir = workigDir, DOcat = DOcat,
 
 \item{D02A_startPlate}{Start plate number of D02B configurations (0 or 1)}
 }
+\value{
+List of paths to new configuration files
+}
 \description{
 This is the highlevel main TAZ function for running running the Tiler software
 to gnerate fibre configuration files. Users must provide DOcats for targets, sky, standards and guides.

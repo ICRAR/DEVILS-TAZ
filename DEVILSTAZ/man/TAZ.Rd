@@ -12,7 +12,8 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   N_D02A = 1, N_D02B = 1, N_D03 = 1, N_D10 = 1, D02A_startPlate = 0,
   D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
-  addOzDES = FALSE, OzDESCat = "NA", cores = cores, verbose = 2)
+  addOzDES = FALSE, OzDESCat = "NA", docheckConfig = T,
+  docutoutConfig = F, cores = cores, verbose = 2)
 }
 \arguments{
 \item{user}{The current use identification. This is added to all logs.}
@@ -21,7 +22,7 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
 
 \item{dobizCheck}{TRUE/FALSE, Check files are in correct part of file structure using bizCheck.R}
 
-\item{bizStopError}{TRUE/FLASE if a file is ofund in the wrong place, should the code be stopped?}
+\item{bizStopError}{TRUE/FLASE if a file is found in the wrong place, should the code be stopped?}
 
 \item{doCalibQC}{TRUE/FALSE, Produce bias and dark frame QC plots using checkQC.R}
 
@@ -75,6 +76,10 @@ data/reduced/stackedSpec/ directory. Then make DOCats for the next observing dat
 \item{addOzDES}{Add OzDES filer tragetes to DOCat wil high priority}
 
 \item{OzDESCat}{Path to current OzDES filler catalogue}
+
+\item{docheckConfig}{TRUE/FALSE, check final configuration files for obvious errors with checkConfig.R}
+
+\item{docutoutConfig}{TRUE/FALSE, make cutout images of configured objects (currently only works on munro and Luke's laptop)}
 
 \item{cores}{number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R}
 

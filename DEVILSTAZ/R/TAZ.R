@@ -8,7 +8,7 @@
 #' @param workingDir The top level directory where the DEVILS data/... directory is found
 
 #' @param dobizCheck TRUE/FALSE, Check files are in correct part of file structure using bizCheck.R
-#' @param bizStopError TRUE/FLASE if a file is ofund in the wrong place, should the code be stopped?
+#' @param bizStopError TRUE/FLASE if a file is found in the wrong place, should the code be stopped?
 #' @param doCalibQC TRUE/FALSE, Produce bias and dark frame QC plots using checkQC.R
 #' @param doReduce TRUE/FALSE, Perform 2dFDR reduction using run2dfDR.R 
 #' @param toReduceDirs directory path to reduce in the DEVILS data structure. Must be of the form, 
@@ -40,6 +40,8 @@
 #' @param configdir Directory path to Configuration software 
 #' @param addOzDES Add OzDES filer tragetes to DOCat wil high priority
 #' @param OzDESCat Path to current OzDES filler catalogue
+#' @param docheckConfig TRUE/FALSE, check final configuration files for obvious errors with checkConfig.R
+#' @param docutoutConfig TRUE/FALSE, make cutout images of configured objects (currently only works on munro and Luke's laptop)
 #' @param cores number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R 
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @examples 
@@ -66,7 +68,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA', cores=cores, verbose=2){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=cores, verbose=2){
   
   if (doReduce==T){
     tmp<-tryCatch(system2('which', args='aaorun', stdout=TRUE))
@@ -181,6 +183,13 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       write('Reducing new datasets....', file=logName, append=T)
       
       newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=cores)
+      
+      ## newReduce not passing from run2dfDR() correctly - find manually....
+      newReduce<-c()
+      for (j in 1:length(toReduce)){
+        tmp<-list.files(path=paste(strsplit(toReduce[j],'/')[[1]][1],'/reduced/', strsplit(toReduce[j],'/')[[1]][3], '/', strsplit(toReduce[j],'/')[[1]][4],'/',sep=''), pattern='*reduced.fits')
+        newReduce<-c(newReduce, paste(strsplit(toReduce[j],'/')[[1]][1],'/reduced/', strsplit(toReduce[j],'/')[[1]][3], '/', strsplit(toReduce[j],'/')[[1]][4],'/',tmp,sep=''))
+      }
       
       stdStars<-read.csv('data/calibrators/stdstars/stdStarCat.csv')
       
@@ -371,8 +380,40 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
   
     
-    runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir)
-  }
+    ConfigNames<-runTiler(workigDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir)
+    
+    if (docutoutConfig==T){
+      
+        
+      host<-system('hostname',intern = TRUE)
+      if (host=="is-m-00354"){location<-'lukeLap'}
+      if (host=="munro"){location<-'munro'}
+      if (host!="munro" & host!="is-m-00354"){
+        if (verbose>0){cat('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', '\n')}
+        write('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', file=logName, append=T)
+        }
+      if (host=="munro" & host=="is-m-00354"){
+        for (i in length(ConfigNames)){
+        cutoutConfig(configFile=ConfigNames[i], size=15, outDir=paste(strsplit(ConfigNames[i],'.lis')[[1]][1],'_cutouts',sep=''), cores=cores, location=location)
+      }
+      }
+    }
+    
+    }
+  
+    if (docheckConfig==T){
+      
+      if (verbose>0){cat('Running checkConfig....', '\n')}
+      write('Running checkConfig....', file=logName, append=T)
+      
+      previousMASTERS<-list.files(path='data/catalogues/MASTERcats/',pattern='*.rda')
+      
+      MASTERDates<-date2jd(year=as.numeric(substr(previousMASTERS,14,15) ), mon=as.numeric(substr(previousMASTERS,11,12)), mday=as.numeric(substr(previousMASTERS,6,9)), hour=12)
+      lastMASTER<-paste('data/catalogues/MASTERcats/',previousMASTERS[which(MASTERDates==max(MASTERDates))],sep='')
+      
+      checkConfig(configFiles = ConfigNames, DMCatN = lastMASTER, logName=logName, verbose=verbose)
+    }
+  
   
   if (verbose==0){cat('** You have reached the end **' , '\n')}
   if (verbose>0){
