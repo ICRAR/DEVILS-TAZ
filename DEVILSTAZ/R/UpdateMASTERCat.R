@@ -27,6 +27,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     if (verbose>1){cat('    - Updating redshifts....', '\n')}
     write(paste('    - Updating redshifts....',sep=''), file=logName, append=T)
     
+    if (length(specs)>0){
+    
     for (i in 1:length(specs)){
 
         if (verbose>1){cat('        - ',i,' of ', length(specs), '\n')}
@@ -69,6 +71,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     write(paste('    - Saving new MASTERcat as: data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''),file=logName, append=T)
     
     save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
+    
+    }
     
     return(paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
 

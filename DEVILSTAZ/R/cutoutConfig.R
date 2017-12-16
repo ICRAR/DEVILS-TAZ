@@ -40,13 +40,14 @@ cutoutConfig<-function(configFile=configFile, size=size, outDir=outDir, cores=co
     stubYD02<-'Y'
     stubJD02<-'Y'
     stubKD02<-'Y'
-    PathD03<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    PathD03<-'/Users/luke/work/DEVILS/Imaging/D03/'
     stubYD03<-'Y'
     stubJD03<-'Y'
     stubKD03<-'Y'
   }
   
   system(paste('mkdir ',outDir, sep=''))
+  
   registerDoParallel(cores=cores)
   
   Config<-readLines(configFile)
