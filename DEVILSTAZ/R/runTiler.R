@@ -110,10 +110,10 @@ runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAgu
 
     while (sum(count)<4){     
         
-        if (length(list.files(path=pathD02A, pattern='*.lis'))==N_D02A) {count[1]<-1}
-        if (length(list.files(path=pathD02B, pattern='*.lis'))==N_D02B) {count[2]<-1}
-        if (length(list.files(path=pathD03, pattern='*.lis'))==N_D03) {count[3]<-1}
-        if (length(list.files(path=pathD10, pattern='*.lis'))==N_D10) {count[4]<-1}
+        if (length(list.files(path=pathD02A, pattern='*.lis'))>=N_D02A) {count[1]<-1}
+        if (length(list.files(path=pathD02B, pattern='*.lis'))>=N_D02B) {count[2]<-1}
+        if (length(list.files(path=pathD03, pattern='*.lis'))>=N_D03) {count[3]<-1}
+        if (length(list.files(path=pathD10, pattern='*.lis'))>=N_D10) {count[4]<-1}
 
     }
 

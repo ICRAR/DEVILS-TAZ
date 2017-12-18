@@ -41,8 +41,8 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
 
     D10_RA<-c(149.38,150.7)
     D10_DEC<-c(1.65,2.79)
-    D02_RA<-c(34.0,37.05)
-    D02_DEC<-c(-5.2,-4.2)
+    D02_RA<-c(34.0-1.5,37.05+1.5)
+    D02_DEC<-c(-5.2-1.5,-4.2+1.5)
 
     D02A_RA<-c(D02_RA[1], sum(D02_RA)/2)
     D02A_DEC<-D02_DEC
@@ -50,8 +50,8 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     D02B_RA<-c(sum(D02_RA)/2,D02_RA[2])
     D02B_DEC<-D02_DEC
 
-    D03_RA<-c(52.3,54.0)
-    D03_DEC<-c(-28.5,-27.5)
+    D03_RA<-c(52.3-1.5,54.0+1.5)-0.037
+    D03_DEC<-c(-28.5-1.5,-27.5+1.5)
 
     Region<-c('D02A','D02B', 'D03', 'D10')
     RAmin<-format(c(min(D02A_RA), min(D02B_RA), min(D03_RA), min(D10_RA)), digits=4, nsmall=4)
@@ -63,9 +63,9 @@ makeDOCats<-function(MASTERCat=MASTERCat,UserName=UserName,dateFor=dateFor, year
     Sem<-rep(semester,4)
     Run<- rep(run,4)
     Loc<-c('D02A','D02B', 'D03', 'D10')
-    Denpri<-c(4,4,4,4)
+    Denpri<-c(3,3,3,3)
     MainSclass<-c(1,1,1,1)
-    LoPclass<-c(4,4,4,4)
+    LoPclass<-c(3,3,3,3)
     ByDen<-c(FALSE,FALSE,FALSE, FALSE)
 
     InfoTab<-data.frame(Region,RAmin,RArange,DECmin,DECrange,Skirt,Year, Sem, Run, Loc, Denpri, MainSclass,LoPclass,ByDen)

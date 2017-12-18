@@ -27,6 +27,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   write(paste('   -Reading DOCat catalogue:', DOcatName,sep=''), file=logName, append=T)
   
   DOCat<-read.table(DOcatName, header=T)
+  
   sel<-0
   while (length(unique(sel))<num){
     sel<-round(runif(num,1,length(OzDES[,1])))

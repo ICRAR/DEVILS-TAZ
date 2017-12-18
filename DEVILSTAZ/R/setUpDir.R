@@ -52,6 +52,8 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
     system('mkdir data/biases/junk')
     system('mkdir data/darks')
     system('mkdir data/darks/junk')
+    system('mkdir data/domeFlats')
+    system('mkdir data/domeFlats/junk')
     system('mkdir data/observing')
     system('mkdir data/logs')
     system('mkdir data/catalogues')
@@ -154,6 +156,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         if (verbose>0){
             cat(DEVILSGreen(paste('    - Making data/biases/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/darks/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/domeFlats/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/rawdata/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/reduced/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/observing/',runs[i],sep='')), '\n')
@@ -162,6 +165,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         
         system(paste('mkdir data/biases/',runs[i],sep=''))       
         system(paste('mkdir data/darks/',runs[i],sep=''))
+        system(paste('mkdir data/domeFlats/',runs[i],sep=''))
         system(paste('mkdir data/rawdata/',runs[i],sep=''))
         system(paste('mkdir data/reduced/',runs[i],sep=''))
         system(paste('mkdir data/observing/',runs[i],sep=''))
