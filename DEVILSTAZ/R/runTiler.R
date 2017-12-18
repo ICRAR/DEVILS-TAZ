@@ -90,14 +90,18 @@ runTiler<-function(configdir=configdir, workigDir=workigDir, DOcat=DOcat, DATAgu
     DATAstspec<<-read.table(DATAstspec,header=T)
     DATAsky<<-read.table(DATAsky,header=T)
     
+    configdirFiles=paste(configdir,'/data_files',sep='')
+    updateExtFibs(configdir=configdirFiles)
+    
+    
     #a = foreach(i=1:length(tileplus_M)) %dopar%  {
     #  Tiler(tileplus=tileplus_M[i], position=position_M[i], plate=plate_M[i], runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',tileplus_M[i]), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')
     #}
       
-    if (N_D02A>0){Tiler(tileplus=N_D02A, position='D02A', plate=plate_D02A, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02A), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    if (N_D02B>0){Tiler(tileplus=N_D02B, position='D02B', plate=plate_D02B, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02B), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    if (N_D03>0){Tiler(tileplus=N_D03, position='D03', plate=plate_D03, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D03), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
-    if (N_D10>0){Tiler(tileplus=N_D10, position='D10', plate=plate_D10, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D10), updatefib=!exists('Fibres'), basedir=workigDir, configdir=configdir, append_letter='D')}
+    if (N_D02A>0){Tiler(tileplus=N_D02A, position='D02A', plate=plate_D02A, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02A), updatefib=FALSE, basedir=workigDir, configdir=configdir, append_letter='D')}
+    if (N_D02B>0){Tiler(tileplus=N_D02B, position='D02B', plate=plate_D02B, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D02B), updatefib=FALSE, basedir=workigDir, configdir=configdir, append_letter='D')}
+    if (N_D03>0){Tiler(tileplus=N_D03, position='D03', plate=plate_D03, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D03), updatefib=FALSE, basedir=workigDir, configdir=configdir, append_letter='D')}
+    if (N_D10>0){Tiler(tileplus=N_D10, position='D10', plate=plate_D10, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D10), updatefib=FALSE, basedir=workigDir, configdir=configdir, append_letter='D')}
 
     #setwd(oldWD)
 
