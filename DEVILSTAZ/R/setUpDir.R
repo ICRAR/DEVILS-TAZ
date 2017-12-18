@@ -222,7 +222,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             dayupUT00<-dayupmulti(Targets=cbind(Names=c('D02', 'D03', 'D10'), RA=c("02:21:59.4", "03:34:36.0", "10:00:24.0"), Dec=c("-04:49:30.0", "-28:06:00.0", "02:06:00.0")), Date=c(datesSeq$year[j],datesSeq$mon[j],datesSeq$mday[j]),Loc='AAT', UTCdiff=00, Time=c(0,0,0))
             dayupUT08<-dayupmulti(Targets=cbind(Names=c('D02', 'D03', 'D10'), RA=c("02:21:59.4", "03:34:36.0", "10:00:24.0"), Dec=c("-04:49:30.0", "-28:06:00.0", "02:06:00.0")), Date=c(datesSeq$year[j],datesSeq$mon[j],datesSeq$mday[j]),Loc='AAT', UTCdiff=8, Time=c(8,0,0))
             dayupUT10<-dayupmulti(Targets=cbind(Names=c('D02', 'D03', 'D10'), RA=c("02:21:59.4", "03:34:36.0", "10:00:24.0"), Dec=c("-04:49:30.0", "-28:06:00.0", "02:06:00.0")), Date=c(datesSeq$year[j],datesSeq$mon[j],datesSeq$mday[j]),Loc='AAT', UTCdiff=10, Time=c(10,0,0))
-            dayupUT11<-dayupmulti(Targets=cbind(Names=c('D02', 'D03', 'D10'), RA=c("02:21:59.4", "03:34:36.0", "10:00:24.0"), Dec=c("-04:49:30.0", "-28:06:00.0", "02:06:00.0")), Date=c(datesSeq$year[j],datesSeq$mon[j],datesSeq$mday[j]),Loc='AAT', UTCdiff=10, Time=c(10,0,0))
+            dayupUT11<-dayupmulti(Targets=cbind(Names=c('D02', 'D03', 'D10'), RA=c("02:21:59.4", "03:34:36.0", "10:00:24.0"), Dec=c("-04:49:30.0", "-28:06:00.0", "02:06:00.0")), Date=c(datesSeq$year[j],datesSeq$mon[j],datesSeq$mday[j]),Loc='AAT', UTCdiff=11, Time=c(11,0,0))
 
             darkHoursUT10<-c(seq(as.numeric(substr(dayupUT10[[1]]$set[1],12,13)),23,1),  seq(0, as.numeric(substr(dayupUT10[[1]]$rise[2],12,13)),1))
 

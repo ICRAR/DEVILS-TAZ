@@ -1,4 +1,4 @@
-addOzDES<-function(OzDESCat=OzDESCat, DODir=DoDir, num=10, logName=logName, verbose=verbose){
+addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verbose=verbose){
   
   
   D10_RA<-c(149.38,150.7)
@@ -31,12 +31,13 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DoDir, num=10, logName=logName, verb
   while (length(unique(sel))<num){
     sel<-round(runif(num,1,length(OzDES[,1])))
   }
-  NewCATAID<-OzDES[sel,1]
-  NewRA<-OzDES[sel,2]
-  NewDEC<-OzDES[sel,3]
-  NewMAG<-OzDES[sel,4]
-  NewSURVEY_CLASS<-rep(3,num)
-  NewPRIORITY_CLASS<-rep(9,num)
+  NewCATAID<-OzDES[,1]
+  NewRA<-OzDES[,2]
+  NewDEC<-OzDES[,3]
+  NewMAG<-OzDES[,4]
+  NewSURVEY_CLASS<-rep(2,num)
+  NewPRIORITY_CLASS<-rep(0,num)
+  NewPRIORITY_CLASS[sel]<-9
   
   if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
   write(paste('        -Adding OzDES sources:',sep=''), file=logName, append=T)
