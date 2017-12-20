@@ -58,16 +58,28 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     }
 
     
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob>0.96)]<-1
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-8
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob>0.97)]<-1
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.97 & is.finite(DMCat$DEVILS_prob)==T)]<-8
 
+
+    
+    Vis<-read.csv('data/catalogues/VIS_Bad.csv', header=T)
+    
+    DMCat$VISCLASS[which(DMCat$CATAID %in% Vis[,1])]<-2
+    DMCat$PRIORITY[which(DMCat$CATAID %in% Vis[,1])]<-0
+    
+    VisGood<-read.csv('data/catalogues/VIS_GoodSpec.csv', header=T)
+    
+    DMCat$VISCLASS[which(DMCat$CATAID %in% VisGood[,1])]<-VisGood[,2]
+    DMCat$PRIORITY[which(DMCat$CATAID %in% VisGood[,1])]<-1
+    
     if (verbose>1){
-        cat(length(which(DMCat$DEVILS_prob>0.96)), '    - Sources with successful redshfits', '\n')
-        cat(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)), '    - Sources with unsuccessful redshfits being prioritised', '\n')
-        cat('    - Saving new MASTERcat as:', paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''), '\n')
+      cat(length(which(DMCat$DEVILS_prob>0.97 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits', '\n')
+      cat(length(which(DMCat$DEVILS_prob<=0.97 & is.finite(DMCat$DEVILS_prob)==T & DMCat$VISCLASS<8)), '    - Sources with unsuccessful redshfits being prioritised', '\n')
+      cat('    - Saving new MASTERcat as:', paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''), '\n')
     }
-    write(paste(length(which(DMCat$DEVILS_prob>0.96)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
-    write(paste(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)), '    - Sources with unsuccessful redshfits being prioritised',sep=''), file=logName, append=T)
+    write(paste(length(which(DMCat$DEVILS_prob>0.97 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
+    write(paste(length(which(DMCat$DEVILS_prob<=0.97 & is.finite(DMCat$DEVILS_prob)==T & DMCat$VISCLASS<8)), '    - Sources with unsuccessful redshfits being prioritised',sep=''), file=logName, append=T)
     write(paste('    - Saving new MASTERcat as: data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''),file=logName, append=T)
     
     

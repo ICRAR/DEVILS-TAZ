@@ -37,7 +37,7 @@ lines<-load.lines()
 line_x <- as.numeric(lines$wave_ang)*(1+spec$z)
 peak_F<-max(spec$flux, na.rm=T)
 
-magplot(spec$wave, hanning.smooth(spec$flux, degree=9), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=c(3600,9000), ylim=c(peak_F*-1.2,peak_F*1.2), lwd=2, main=paste(spec$ID, ' - Hanning Smoothed, degree=9',sep=''))
+magplot(spec$wave, hanning.smooth(spec$flux, degree=9), xlab='Wavelength, Ang', ylab='Counts', grid=T, type='l', xlim=c(3600,9000), ylim=c(peak_F*-0.9,peak_F*0.9), lwd=2, main=paste(spec$ID, ' - Hanning Smoothed, degree=9',sep=''))
 
 plotZ<-spec$z
 if (is.finite(plotZ)==FALSE){
@@ -48,7 +48,7 @@ if (is.finite(plotZ)==FALSE){
 plotLines(z=plotZ, xunit='ang', labPos=0.8*max(spec$flux,na.rm=T), lty=2, cex=1, EmCol='blue', AbsCol='darkgreen', labOff=-50)
 
 
-legend('bottomright', legend=c(paste('ID=',spec$ID,sep=''), paste('z=',textZ,sep=''), paste('mag=',spec$MAG,sep=''), paste('Prob=',spec$prob,sep=''), paste('TEXP=',spec$EXP,sep='')), bg='white')
+legend('bottomright', legend=c(paste('ID=',spec$ID,sep=''), paste('z=',textZ,sep=''), paste('mag=',spec$MAG,sep=''), paste('Prob=',spec$prob,sep=''), paste('TEXP=',spec$EXP,sep='')), bg='white', cex=1.4)
 
 degSmooth<-7
 

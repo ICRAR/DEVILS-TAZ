@@ -13,7 +13,8 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
   addOzDES = FALSE, OzDESCat = "NA", docheckConfig = T,
-  docutoutConfig = F, cores = cores, verbose = 2)
+  docutoutConfig = F, cores = cores, verbose = 2,
+  makeNormalTiles = TRUE, makeBackUpTiles = FALSE, BrightCut = 20)
 }
 \arguments{
 \item{user}{The current use identification. This is added to all logs.}
@@ -84,6 +85,12 @@ data/reduced/stackedSpec/ directory. Then make DOCats for the next observing dat
 \item{cores}{number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R}
 
 \item{verbose}{tell me whats going on: 0=nothing, 1=somethings, 2=everything}
+
+\item{makeNormalTiles}{Make general configurations using all catalogues}
+
+\item{makeBackUpTiles}{Also make bad weather configuration files for just bright sources.}
+
+\item{BrightCut}{Magnitude to cut at for bright sources. Only takes affect it makeBackUpTiles==TRUE.}
 
 \item{D02A_startPlate}{Start plate number of D02B configurations (0 or 1) for runTiler.R}
 }

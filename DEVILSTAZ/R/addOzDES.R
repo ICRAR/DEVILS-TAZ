@@ -27,19 +27,21 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   write(paste('   -Reading DOCat catalogue:', DOcatName,sep=''), file=logName, append=T)
   
   DOCat<-read.table(DOcatName, header=T)
+  DOCat<-DOCat[which(DOCat[,'SURVEY_CLASS']==3),]
   
-  sel<-0
-  while (length(unique(sel))<num){
-    sel<-round(runif(num,1,length(OzDES[,1])))
-  }
+  #sel<-0
+  #while (length(unique(sel))<num){
+   # sel<-round(runif(num,1,length(OzDES[,1])))
+  #}
+  
   DESID<-OzDES[,1]
   NewCATAID<-as.numeric(paste(round(OzDES[,2]*100),round(OzDES[,4]*100),sep=''))
   NewRA<-OzDES[,2]
   NewDEC<-OzDES[,3]
   NewMAG<-OzDES[,4]
   NewSURVEY_CLASS<-rep(2,length(NewDEC))
-  NewPRIORITY_CLASS<-rep(0,length(NewDEC))
-  NewPRIORITY_CLASS[sel]<-9
+  NewPRIORITY_CLASS<-rep(9,length(NewDEC))
+  #NewPRIORITY_CLASS[sel]<-9
   
   if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
   write(paste('        -Adding OzDES sources:',sep=''), file=logName, append=T)

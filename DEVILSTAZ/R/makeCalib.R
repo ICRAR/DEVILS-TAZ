@@ -142,8 +142,8 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
                  count<-length(list.files(path=darkDir, pattern='*_red_DARKcombined.fits'))
              }
              
-             system(paste('rm ',darkDir,'/',darkDate,'*red.fits'),sep='')
-             system(paste('rm ',biasDir,'/',biasDate,'*red.fits'),sep='')
+             system(paste('rm ',darkDir,'/',darkDate,'*red.fits',sep=''))
+             system(paste('rm ',biasDir,'/',biasDate,'*red.fits',sep=''))
              
 
          }else{
