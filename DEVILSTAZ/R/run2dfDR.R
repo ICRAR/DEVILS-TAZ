@@ -57,7 +57,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
-            Sys.sleep(runif(1,5,50))
+            Sys.sleep(j*60)
             
                                         #for (j in 1:length(configList)){
 
