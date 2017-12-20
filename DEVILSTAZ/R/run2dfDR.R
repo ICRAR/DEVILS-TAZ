@@ -90,14 +90,14 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 host<-system('hostname',intern = TRUE)
                 if (host=="munro"){
-                  system(paste('cp ', calib$darkFileBlue, ' ', paste('reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep=''),sep=''))
-                  calib$darkFileBlue<-paste('reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep='')
-                  system(paste('cp ', calib$darkFileRed, ' ', paste('reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkRed.fits',sep=''),sep=''))
-                  calib$darkFileRed<-paste('reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_darkRed.fits',sep='')
-                  system(paste('cp ', calib$biasFileBlue, ' ', paste('reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasBlue.fits',sep=''),sep=''))
-                  calib$biasFileBlue<-paste('reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_biasBlue.fits',sep='')
-                  system(paste('cp ', calib$biasFileRed, ' ', paste('reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep=''),sep=''))
-                  calib$biasFileRed<-paste('reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep='')
+                  system(paste('cp ', calib$darkFileBlue, ' ', paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep=''),sep=''))
+                  calib$darkFileBlue<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep='')
+                  system(paste('cp ', calib$darkFileRed, ' ', paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_darkRed.fits',sep=''),sep=''))
+                  calib$darkFileRed<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_darkRed.fits',sep='')
+                  system(paste('cp ', calib$biasFileBlue, ' ', paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_biasBlue.fits',sep=''),sep=''))
+                  calib$biasFileBlue<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_biasBlue.fits',sep='')
+                  system(paste('cp ', calib$biasFileRed, ' ', paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep=''),sep=''))
+                  calib$biasFileRed<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep='')
                   
                 }
 
