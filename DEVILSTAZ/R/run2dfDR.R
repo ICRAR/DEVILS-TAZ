@@ -55,7 +55,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         if (verbose>1){cat(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), '\n')}
         write(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), file=logName, append=T)
 
-       newReduce = foreach(j=1:length(configList), .combine=rbind) %dopar%  {
+       newReduce = foreach(j=1:length(configList)) %dopar%  {
+         
+          Sys.sleep(runif(1,0,5))
             
                                         #for (j in 1:length(configList)){
 
