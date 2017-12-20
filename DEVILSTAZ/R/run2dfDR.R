@@ -57,9 +57,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
-         
-         host<-system('hostname',intern = TRUE)
-         if (host=="munro"){Sys.sleep((j-1)*60)}
+        
             
                                         #for (j in 1:length(configList)){
 
@@ -88,6 +86,20 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 inFile<-paste(toReduce[i], '/',flat_ccd1,sep='')
 
                 tlmFile<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_tlm.fits', sep='')
+                
+                
+                host<-system('hostname',intern = TRUE)
+                if (host=="munro"){
+                  system(paste('cp ', calib$darkFileBlue, ' ', paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep=''),sep=''))
+                  calib$darkFileBlue<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep='')
+                  system(paste('cp ', calib$darkFileRed, ' ', paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkRed.fits',sep=''),sep=''))
+                  calib$darkFileRed<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_darkRed.fits',sep='')
+                  system(paste('cp ', calib$biasFileBlue, ' ', paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasBlue.fits',sep=''),sep=''))
+                  calib$biasFileBlue<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_biasBlue.fits',sep='')
+                  system(paste('cp ', calib$biasFileRed, ' ', paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep=''),sep=''))
+                  calib$biasFileRed<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_biasRed.fits',sep='')
+                  
+                }
 
 
                 if (verbose>1){
@@ -97,6 +109,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 write(paste('             - Reducing TLM file for blue ccd with line: aaorunTLM(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), file=logName, append=T)
 
 
+              
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
