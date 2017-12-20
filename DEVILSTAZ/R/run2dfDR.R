@@ -18,7 +18,11 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
 
-    registerDoParallel(cores=cores)
+    
+    host<-system('hostname',intern = TRUE)
+    if (host=="munro"){  
+      registerDoParallel(cores=1)
+    }
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
@@ -55,6 +59,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         if (verbose>1){cat(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), '\n')}
         write(paste('    - ',length(configList), ' configuration(s) found in ',toReduce[i], sep=''), file=logName, append=T)
 
+       
+        
+        
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
         
@@ -88,7 +95,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 tlmFile<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_tlm.fits', sep='')
                 
                 
-                host<-system('hostname',intern = TRUE)
+               
                 if (host=="munro"){
                   system(paste('cp ', calib$darkFileBlue, ' ', paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep=''),sep=''))
                   calib$darkFileBlue<-paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_darkBlue.fits',sep='')
