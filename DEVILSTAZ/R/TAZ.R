@@ -285,7 +285,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('Stacking 1D spectra....', '\n')}
     write('Stacking 1D spectra....', file=logName, append=T)      
     
-    newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F)
+    newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F, cores=cores)
     write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
     
   }
