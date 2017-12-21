@@ -14,15 +14,25 @@
 #' @examples 
 #' aaorunARC(file='arc2dF.fits', idx='gama_blue.idx', doDark=T,darkFile='DARKmaster.fits',doBias=T, biasFile='BIASmaster.fits', tlmFile='TLM.fits')
 #' @export
-aaorunARC<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, biasFile=biasFile, tlmFile=tlmFile){
+aaorunARC<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, biasFile=biasFile, tlmFile=tlmFile, runZone=1){
 
     darkNum<-1
     biasNum<-1
     if (doDark==F){darkNum<-0}
     if (doBias==F){biasNum<-0}
     
+    oldWD<-getwd()
+    setwd(paste('runZone',runZone,sep=''))
+    file<-paste('../',file,sep='')
+    idx<-paste('../',idx,sep='')
+    biasFile<-paste('../',biasFile,sep='')
+    darkFile<-paste('../',darkFile,sep='')
+    tlmFile<-paste('../',tlmFile,sep='')
+    
     
     cmd<-paste('aaorun reduce_arc ', file, ' -idxfile ',idx, ' -useflatim 0 -useflat 1 -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, ' -tlmap_filename ', tlmFile, sep='')
+    
     system(cmd)
+    setwd(oldWD)
 
 }

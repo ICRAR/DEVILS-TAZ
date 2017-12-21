@@ -5,7 +5,7 @@
 \title{Reduce an AAT 2df+AAOmega arc file using 2dfDR function aaorun}
 \usage{
 aaorunARC(file = file, idx = idx, doDark = T, darkFile = darkFile,
-  doBias = T, biasFile = biasFile, tlmFile = tlmFile)
+  doBias = T, biasFile = biasFile, tlmFile = tlmFile, runZone = 1)
 }
 \arguments{
 \item{file}{Path to the input fits file to be reduced}

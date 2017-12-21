@@ -22,6 +22,14 @@ aaorunFLAT<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, bi
     biasNum<-1
     if (doDark==F){darkNum<-0}
     if (doBias==F){biasNum<-0}
+    
+    oldWD<-getwd()
+    setwd(paste('runZone',runZone,sep=''))
+    file<-paste('../',file,sep='')
+    idx<-paste('../',idx,sep='')
+    biasFile<-paste('../',biasFile,sep='')
+    darkFile<-paste('../',darkFile,sep='')
+    arcFile<-paste('../',arcFile,sep='')
 
     if (is.numeric(waveStart)==FALSE){ 
         cmd<-paste('aaorun reduce_fflat ', file, ' -idxfile ',idx, ' -useflatim 0 -do_tlmap 0 -do_extra 0 -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, ' -wavel_filename ', arcFile, sep='')
@@ -32,5 +40,7 @@ aaorunFLAT<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, bi
         }
   
     system(cmd)
+
+    setwd(oldWD)
 
 }

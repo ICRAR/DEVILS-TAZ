@@ -24,9 +24,18 @@ aaorunObj<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, b
     if (doDark==F){darkNum<-0}
     if (doBias==F){biasNum<-0}
     
+    oldWD<-getwd()
+    setwd(paste('runZone',runZone,sep=''))
+    file<-paste('../',file,sep='')
+    idx<-paste('../',idx,sep='')
+    flatFile<-paste('../',flatFile,sep='')
+    biasFile<-paste('../',biasFile,sep='')
+    darkFile<-paste('../',darkFile,sep='')
+    arcFile<-paste('../',arcFile,sep='')
+    tlmFile<-paste('../',tlmFile,sep='')
     
     cmd<-paste('aaorun reduce_object ', file, ' -idxfile ',idx, ' -useflatim 0 -usefflat 1 -fflat_filename ',flatFile,' -tlmap_filename ',tlmFile,' -wavel_filename ',arcFile,'    -do_bias ',biasNum,' -do_extra 1 -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, sep='')
     
     system(cmd)
-
+    setwd(oldWD)
 }
