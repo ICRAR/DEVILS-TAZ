@@ -20,9 +20,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
     
     host<-system('hostname',intern = TRUE)
-    if (host=="munro"){  
-      registerDoParallel(cores=1)
-    }
+    #if (host=="munro"){  
+     # registerDoParallel(cores=1)
+    #}
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
