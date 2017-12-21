@@ -237,21 +237,18 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newIds<-c()
     
     
+    write.csv('ID', file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''), row.names=F, quote=F)
+    
+    
     a = foreach(i=1:length(newReduce)) %dopar%  {
     #for (i in 1:length(newReduce)){
       
       if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
-      
-      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint)
-      newSpec<-c(newSpec, as.character(tmpnewSpec$newSpec))
-      newIds<-c(newIds, as.character(tmpnewSpec$newID))
-      
+      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
     }
-    
-    write.csv(newSpec, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newSpec.csv', sep=''), row.names=F, quote=F)
-    write.csv(newIds, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''), row.names=F, quote=F)
-    
+    newIds<-read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''), header=T)
+   
     
   }
   

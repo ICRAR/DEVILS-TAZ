@@ -11,7 +11,7 @@
 #' @examples 
 #'extractNewSpec(file='objected2df_red.fits', logName='tmpLog.txt', verbose=1, makePlot=F, zeroPoint=F)
 #' @export
-extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F, zeroPoint=T){
+extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F, zeroPoint=T,NowDate=NowDate){
 
     
     if (zeroPoint==T){
@@ -222,6 +222,8 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
                 
                 newSpec<-c(newSpec, paste(dir,'/', date, '_',specName,sep=''))
                 newID<-c(newID, specName)
+                
+                write(specName, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''), append=T)
                 
             }
         }                              
