@@ -115,8 +115,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 write(paste('             - Reducing TLM file for blue ccd with line: aaorunTLM(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), file=logName, append=T)
 
-
-              
+                system(paste('rm -rf runZone', j, sep=''))
+                system(paste('mkdir runZone', j, sep=''))
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
@@ -362,6 +362,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 newReduce2<-paste('data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
                 return(newReduce2)
+                
+                system(paste('rm -rf runZone', j, sep=''))
                 
             }
        }
