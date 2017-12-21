@@ -33,6 +33,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
 
     newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
     
+    
     a = foreach(i=1:length(ids)) %dopar%  {
     #for (i in 1:length(ids)){
 

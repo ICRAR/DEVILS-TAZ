@@ -254,7 +254,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     # horrible hack to sort out issues:
     tmpD<-newIds[which(nchar(newIds)>12)]
     tmpD2<-unlist(strsplit(tmpD,'D'))
-    tmpD3<-tmp2[which(tmp2!="")]
+    tmpD3<-tmp2[which(tmpD2!="")]
     tmpD3<-paste('D',tmpD3,sep='')
     tmpS<-tmpD3[which(nchar(tmpD3)>12)]
     tmpD3<-tmpD3[which(nchar(tmpD3)<=12)]
