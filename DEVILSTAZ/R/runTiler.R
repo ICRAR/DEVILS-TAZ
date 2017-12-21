@@ -102,6 +102,14 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     DOcat[which(DOcat[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-6
     DOcat[which(DOcat[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-7
     
+    #**** Flip for bright:
+    tmp<-DOcatBright
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==4),'PRIORITY_CLASS']<-7
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-6
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-5
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-4
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-3
+    DOcatBright<-tmp
     
     
     configdirFiles=paste(configdir,'/data_files',sep='')
