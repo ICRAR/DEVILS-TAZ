@@ -117,7 +117,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 system(paste('rm -rf runZone', j, sep=''))
                 system(paste('mkdir runZone', j, sep=''))
-                sys.sleep(2)
+                Sys.sleep(2)
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
