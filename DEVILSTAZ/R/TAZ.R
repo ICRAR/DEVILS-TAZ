@@ -237,12 +237,13 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newIds<-c()
     
     
-    for (i in 1:length(newReduce)){
+    a = foreach(i=1:length(newReduce)) %dopar%  {
+    #for (i in 1:length(newReduce)){
       
       if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
       
-      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=T, zeroPoint=zeroPoint)
+      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint)
       newSpec<-c(newSpec, as.character(tmpnewSpec$newSpec))
       newIds<-c(newIds, as.character(tmpnewSpec$newID))
       
@@ -272,7 +273,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('Stacking 1D spectra....', '\n')}
     write('Stacking 1D spectra....', file=logName, append=T)      
     
-    newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=T)
+    newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F)
     write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
     
   }

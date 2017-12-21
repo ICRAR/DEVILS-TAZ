@@ -13,9 +13,12 @@
 #' @examples 
 #' stackSpec(ids='all',  logName='tempLog.txt', verbose=1,makePlots=T)
 #' @export
-stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
+stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores=cores){
 
-    if (ids[1]=='all'){
+  
+  registerDoParallel(cores=cores)
+    
+  if (ids[1]=='all'){
         ids<-c()
         
         listSpec<-list.files(path='data/reduced/allSpec/', pattern=paste('*.Rdata',sep=''))
@@ -27,9 +30,11 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         }
     }
     
-    newStacks<-c()
+
+    newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
     
-    for (i in 1:length(ids)){
+    a = foreach(i=1:length(ids)) %dopar%  {
+    #for (i in 1:length(ids)){
 
         if (verbose>1){cat('    - Stacking spectrum: ', ids[i], '\n')}
         write(paste('    - Stacking spectrum: ', ids[i],sep=''), file=logName, append=T)
@@ -237,7 +242,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T){
         spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), fluxSc=fluxSc,fluxScBlue=fluxScBlue,fluxScRed=fluxScRed)
 
         save(spec, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''))
-        newStacks<-c(newStacks, as.character(paste('data/reduced/stackedSpec/',ID,'.Rdata',sep='')))
+        
 
         specStack<-spec
         

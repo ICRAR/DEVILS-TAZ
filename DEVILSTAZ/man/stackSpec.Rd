@@ -4,7 +4,8 @@
 \alias{stackSpec}
 \title{Stack repeat obervations with 2dF}
 \usage{
-stackSpec(ids = ids, logName = logName, verbose = verbose, makePlot = T)
+stackSpec(ids = ids, logName = logName, verbose = verbose, makePlot = T,
+  cores = cores)
 }
 \arguments{
 \item{ids}{vector list of IDs to stack. Can be a list of IDs or set to 'all' which will stack all unique IDs in
