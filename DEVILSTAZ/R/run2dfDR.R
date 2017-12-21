@@ -120,7 +120,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
-                    aaorunTLM(file=paste(toReduce[i], '/',flat_ccd1,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, outname=tlmFile)
+                    aaorunTLM(file=paste(toReduce[i], '/',flat_ccd1,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, outname=tlmFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))

@@ -15,7 +15,7 @@
 #' aaorunTML(file='arc2dF.fits', idx='gama_blue.idx', doDark=T,darkFile='DARKmaster.fits',doBias=T, biasFile='BIASmaster.fits',outname='TLM.fits')
 #' @export
 #' @export
-aaorunTLM<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, biasFile=biasFile, outname=outname){
+aaorunTLM<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, biasFile=biasFile, outname=outname, runZone=1){
 
     darkNum<-1
     biasNum<-1
@@ -23,9 +23,17 @@ aaorunTLM<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, b
     if (doBias==F){biasNum<-0}
     
     
+    oldWD<-getwd()
+    setwd(paste('runZone',runZone,sep=''))
+    file<-paste('../',file,sep='')
+    idx<-paste('../',idx,sep='')
+    biasFile<-paste('../',biasFile,sep='')
+    darkFile<-paste('../',darkFile,sep='')
+    outname<-paste('../',outname,sep='')
+    
     cmd<-paste('aaorun reduce_fflat ', file, ' -idxfile ',idx, ' -useflatim 0 -do_redfl 0 -lacosmic NO -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, ' -tlmap_filename ',   outname, sep='')
     
- 
     system(cmd)
+    setwd(oldWD)
 
 }

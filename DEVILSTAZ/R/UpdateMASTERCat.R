@@ -75,7 +75,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     
     if (verbose>1){
       cat(length(which(DMCat$DEVILS_prob>0.97 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits', '\n')
-      cat(length(which(DMCat$DEVILS_prob<=0.97 & is.finite(DMCat$DEVILS_prob)==T & DMCat$VISCLASS<8)), '    - Sources with unsuccessful redshfits being prioritised', '\n')
+      cat(length(which(DMCat$DEVILS_prob<=0.97 & is.finite(DMCat$DEVILS_prob)==T & (DMCat$VISCLASS<8 | is.infinte(DMCat$VISCLASS)==FALSE))), '    - Sources with unsuccessful redshfits being prioritised', '\n')
       cat('    - Saving new MASTERcat as:', paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''), '\n')
     }
     write(paste(length(which(DMCat$DEVILS_prob>0.97 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
