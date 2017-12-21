@@ -249,7 +249,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     }
 
     newIds<-unique(as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T)))
-    newIds<-newIds[2,length(newIds)]
+    newIds<-newIds[2:length(newIds)]
   }
   
   if (doExtract==F){
