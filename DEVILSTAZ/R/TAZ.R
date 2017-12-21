@@ -248,8 +248,23 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
     }
 
-    newIds<-unique(as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T)))
+    newIds<-as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T))
     newIds<-newIds[2:length(newIds)]
+    
+    # horrible hack to sort out issues:
+    tmpD<-newIds[which(nchar(newIds)>12)]
+    tmpD2<-unlist(strsplit(tmpD,'D'))
+    tmpD3<-tmp2[which(tmp2!="")]
+    tmpD3<-paste('D',tmpD3,sep='')
+    tmpS<-tmpD3[which(nchar(tmpD3)>12)]
+    tmpD3<-tmpD3[which(nchar(tmpD3)<=12)]
+    
+    tmpS2<-unlist(strsplit(tmpS,'S'))
+    tmpS2[which(substr(tmpS2,1,1)!='D')]<-paste('S', tmpS2[which(substr(tmpS2,1,1)!='D')],sep='')
+    
+    newIds<-unique(c(newIds[which(nchar(newIds)<=12)], tmpD3, tmpS2))
+    
+    
   }
   
   if (doExtract==F){
