@@ -6,7 +6,7 @@
 \usage{
 aaorunObj(file = file, idx = idx, doDark = T, darkFile = darkFile,
   doBias = T, biasFile = biasFile, flatFile = flatFile,
-  tlmFile = tlmFile, arcFile = arcFile)
+  tlmFile = tlmFile, arcFile = arcFile, runZone = 1)
 }
 \arguments{
 \item{file}{Path to the input file to be reduced}

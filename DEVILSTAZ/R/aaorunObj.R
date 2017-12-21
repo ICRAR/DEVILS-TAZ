@@ -17,7 +17,7 @@
 #' @examples 
 #' aaorunObj(file='object2dF.fits', idx='gama_blue.idx', doDark=T,darkFile='DARKmaster.fits',doBias=T, biasFile='BIASmaster.fits', flatFile='flat2dF.fits',tmlFile='TLM.fits',arcFile='arc2dF.fits')
 #' @export
-aaorunObj<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, biasFile=biasFile, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile){
+aaorunObj<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, biasFile=biasFile, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=1){
 
     darkNum<-1
     biasNum<-1

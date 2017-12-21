@@ -16,7 +16,7 @@
 #' @examples 
 #' aaorunFLAT(file='flat2dF.fits', idx='gama_blue.idx', doDark=T,darkFile='DARKmaster.fits',doBias=T, biasFile='BIASmaster.fits', arcFile='arc2dF.fits')
 #' @export
-aaorunFLAT<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, biasFile=biasFile, arcFile=arcFile, waveStart='NA',waveEnd='NA'){
+aaorunFLAT<-function(file=file, idx=idx, doDark=T,darkFile=darkFile,doBias=T, biasFile=biasFile, arcFile=arcFile, waveStart='NA',waveEnd='NA', runZone=1){
 
     darkNum<-1
     biasNum<-1
