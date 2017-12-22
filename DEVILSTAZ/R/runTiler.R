@@ -546,7 +546,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
       
       listF<-list.files(path=paste(workingDirBright,'/TileFiles/',sep=''),pattern='*')
       listM<-list.files(path=paste(workingDirBright,'/TileFiles/',sep=''),pattern='*.lis')
-      ConfigNames<-c()
+
       
       for (j in 1:length(listF)){
         system(paste('mv ',workingDirBright,'/TileFiles/',listF[j] ,' ', workingDirBright,'/TileFiles/', substr(listF[j],1,3), '_', dateF,'_BackUp_',substr(listF[j],5,nchar(listF[j])), sep=''))
