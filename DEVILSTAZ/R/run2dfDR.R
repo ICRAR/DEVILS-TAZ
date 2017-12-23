@@ -18,7 +18,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
 
-    
+    system('cleanup')  
+  
     host<-system('hostname',intern = TRUE)
     #if (host=="munro"){  
      # registerDoParallel(cores=1)
