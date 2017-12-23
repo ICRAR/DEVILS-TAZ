@@ -83,7 +83,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
                 sky<-spec$sky
                 skyBlue<-spec$skyBlue
                 skyRed<-spec$skyRed
-                EXP<-spec$EXP
+                EXP<-as.numeric(spec$EXP)
 
                 if (verbose>1){cat('           - Extracting continuum of spec...',j, '\n')}
                 write(paste('           - Extracting continuum of spec...',j, sep=''), file=logName, append=T)
@@ -147,7 +147,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
                 snRed_N<-spec$snRed
                 print(EXP)
                 print(spec$EXP)
-                EXP<-EXP+spec$EXP
+                EXP<-EXP+as.numeric(spec$EXP)
                 
                 fluxInt<-approx(wave_N, flux_N, wave)$y
                 fluxIntBlue<-approx(waveBlue_N, fluxBlue_N, waveBlue)$y
