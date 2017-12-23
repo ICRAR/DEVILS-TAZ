@@ -34,8 +34,8 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
     
     
-    a = foreach(i=1:length(ids)) %dopar%  {
-    #for (i in 1:length(ids)){
+    #a = foreach(i=1:length(ids)) %dopar%  {
+    for (i in 1:length(ids)){
 
         if (verbose>1){cat('    - Stacking spectrum: ', ids[i], '\n')}
         write(paste('    - Stacking spectrum: ', ids[i],sep=''), file=logName, append=T)
@@ -146,7 +146,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
                 snBlue_N<-spec$snBlue
                 snRed_N<-spec$snRed
                 EXP<-EXP+spec$EXP
-
+                
                 fluxInt<-approx(wave_N, flux_N, wave)$y
                 fluxIntBlue<-approx(waveBlue_N, fluxBlue_N, waveBlue)$y
                 fluxIntRed<-approx(waveRed_N, fluxRed_N, waveRed)$y
