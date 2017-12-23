@@ -34,8 +34,8 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
     
     
-    #a = foreach(i=1:length(ids)) %dopar%  {
-    for (i in 1:length(ids)){
+    a = foreach(i=1:length(ids)) %dopar%  {
+    #for (i in 1:length(ids)){
 
         if (verbose>1){cat('    - Stacking spectrum: ', ids[i], '\n')}
         write(paste('    - Stacking spectrum: ', ids[i],sep=''), file=logName, append=T)
