@@ -145,6 +145,8 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
                 sn_N<-spec$sn
                 snBlue_N<-spec$snBlue
                 snRed_N<-spec$snRed
+                print(EXP)
+                print(spec$EXP)
                 EXP<-EXP+spec$EXP
                 
                 fluxInt<-approx(wave_N, flux_N, wave)$y
