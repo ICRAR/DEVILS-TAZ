@@ -120,7 +120,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
                 system(paste('mkdir runZone', j, sep=''))
                 system(paste('mkdir /home/ldavies/imp_scratch/runZone', j, sep=''))
-                system(paste('export IMP_SCRATCH=/home/ldavies/imp_scratch/runZone', j, sep=''))
+                Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
