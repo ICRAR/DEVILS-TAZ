@@ -117,10 +117,18 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 write(paste('             - Reducing TLM file for blue ccd with line: aaorunTLM(file=',toReduce[i], '/',flat_ccd1, ' idx=idx, doDark=T,darkFile=',calib$darkFileBlue,', doBias=T,biasFile=',calib$biasFileBlue,', outname=',tlmFile,')', sep=''), file=logName, append=T)
 
                 system(paste('rm -rf runZone', j, sep=''))
-                system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
                 system(paste('mkdir runZone', j, sep=''))
-                system(paste('mkdir /home/ldavies/imp_scratch/runZone', j, sep=''))
-                Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
+                
+                if (host=="munro"){
+                  system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
+                  system(paste('mkdir /home/ldavies/imp_scratch/runZone', j, sep=''))
+                  Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
+                }
+                if (host=="lukeLap"){
+                  system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
+                  system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
+                  Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
+                }
                 
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
