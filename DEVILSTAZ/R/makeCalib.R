@@ -147,6 +147,8 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              
 
          }else{
+           
+           
            write(paste('            - Blue master dark found, using ', darkDir,'/',darkDate,'_blue_DARKcombined.fits',sep=''), file=logName, append=T)
            write(paste('            - Red master dark found, using ', darkDir,'/',darkDate,'_red_DARKcombined.fits',sep=''), file=logName, append=T)
            if (verbose>1){cat(paste('            - Blue master dark found, using ', darkDir,'/',darkDate,'_blue_DARKcombined.fits',sep=''), '\n')}
