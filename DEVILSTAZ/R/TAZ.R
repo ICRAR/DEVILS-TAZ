@@ -47,6 +47,8 @@
 #' @param makeNormalTiles Make general configurations using all catalogues 
 #' @param makeBackUpTiles Also make bad weather configuration files for just bright sources. 
 #' @param BrightCut Magnitude to cut at for bright sources. Only takes affect it makeBackUpTiles==TRUE.
+#' @param email If you want TAZ to send you email updates enter your email here.
+#' @param emailPassword If you want TAZ to send you email updates you must enter the TAZ email password here.
 #' @examples 
 #' # Detailed descriptions of the this function and how to use it can be found in the TAZ manual 
 #' here: https://github.com/ICRAR/DEVILS-TAZ/blob/master/DEVILS_Manuals/TAZ_Manual.pdf . However, 
@@ -71,7 +73,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=cores, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=cores, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA){
   
   system('cleanup')
   
@@ -219,7 +221,29 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     }
     
     
+    if (is.na(email)==F){
+      if (is.na(emailPassword)==F){
+        
+        
+        subject<-'Update From TAZ - 2dFDR Reduction Completed'
+        bodyText<-paste('run2dfDR() finished at ',date(), sep='')
+        
+        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+        
+      }else{
+        
+        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+        email<-NA
+        
+      }
+    }
+    
+    
+    
   }
+ 
+  
   
   if (doReduce==F){
     
@@ -249,6 +273,26 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
       tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
     }
+    
+    if (is.na(email)==F){
+      if (is.na(emailPassword)==F){
+        
+        
+        subject<-'Update From TAZ - extractNewSpec Completed'
+        bodyText<-paste('extractNewSpec() finished at ',date(), sep='')
+        
+        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+        
+      }else{
+        
+        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+        email<-NA
+        
+      }
+    }
+    
+
 
     newIds<-as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T))
     newIds<-newIds[2:length(newIds)]
@@ -292,8 +336,27 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F, cores=cores)
     write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
     
+    
+    if (is.na(email)==F){
+      if (is.na(emailPassword)==F){
+        
+        
+        subject<-'Update From TAZ - stackSpec Completed'
+        bodyText<-paste('stackSpec() finished at ',date(), sep='')
+        
+        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+        
+      }else{
+        
+        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+        email<-NA
+        
+      }
+    }
+    
   }
-  
+ 
   if (doStack==F & doAutoZ==T){
     
     if (verbose>0){cat('*** doStack=F so no stacking undertaken.', '\n')}
@@ -311,7 +374,30 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (toAutoZStacks=='all'){newStacks<-'all'}
     
     runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
+    
+    if (is.na(email)==F){
+      if (is.na(emailPassword)==F){
+        
+        
+        subject<-'Update From TAZ - runAutoZ Completed'
+        bodyText<-paste('runAutoZ() finished at ',date(), sep='')
+        
+        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+        
+      }else{
+        
+        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+        email<-NA
+        
+      }
+    }
+    
+    
   }
+  
+
+  
   
   if (doUpdateMaster==T){
     
@@ -368,6 +454,27 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     DODir<-makeDOCats(MASTERCat=newMaster, UserName=user, dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
     
+  
+  
+  if (is.na(email)==F){
+    if (is.na(emailPassword)==F){
+      
+      load(newMaster)
+      numGood<-length(which(DMCat$DEVILS_prob>0.97))
+      
+      subject<-'Update From TAZ - UpdateMASTERCat Completed'
+      bodyText<-paste('UpdateMASTERCat() finished at ',date() ,'\n', 'There are now ',numGood,' good redshifts', sep='')
+      
+      TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+      
+    }else{
+      
+      cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+      write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+      email<-NA
+      
+    }
+  }
   }
   
   if (doUpdateMaster==F & doTiler==T){
@@ -420,8 +527,28 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
         }
         
       }
-      
+    
+    if (is.na(email)==F){
+      if (is.na(emailPassword)==F){
+        
+        
+        subject<-'Update From TAZ - runTiler Completed'
+        bodyText<-paste('runTiler() finished at ',date(), sep='')
+        
+        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
+        
+      }else{
+        
+        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+        email<-NA
+        
+      }
     }
+      
+  }
+  
+  
   
     if (docheckConfig==T){
       

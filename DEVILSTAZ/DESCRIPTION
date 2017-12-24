@@ -7,5 +7,5 @@ Author: Luke Davies
 Maintainer: Luke Davies <luke.j.davies@uwa.edu.au>
 Description: DEVILS data reduction and analyis pipeline
 License: GPL-3
-Depends: R (>= 3.00), astro, Tiler, celestial, magicaxis, whatsup, Cairo, FITSio, fftw, doParallel, gridExtra, crayon
+Depends: R (>= 3.00), astro, Tiler, celestial, magicaxis, whatsup, Cairo, FITSio, fftw, doParallel, gridExtra, crayon, mailR
 RoxygenNote: 6.0.1

@@ -11,6 +11,7 @@ install.packages('doParallel',type='source', repos='http://cran.us.r-project.org
 install.packages('gridExtra',type='source', repos='http://cran.us.r-project.org')
 install.packages('astrolibR',type='source', repos='http://cran.us.r-project.org')
 install.packages('moonsun',type='source', repos='http://cran.us.r-project.org')
+install.packages('mailR',type='source', repos='http://cran.us.r-project.org')
 #install.packages('XML',type='source', repos='http://cran.us.r-project.org')
 
 
@@ -63,7 +64,7 @@ cat('******** CHECKING CORRECT INSTALLTION OF TAZ PACKAGES *********','\n')
 cat('***************************************************************','\n')
 cat('\n','\n')
 
-packageList<-c('crayon','devtools', 'Tiler', 'astro','sphereplot','rgl','plotrix','fields','xtable','doParallel','gridExtra','celestial','magicaxis','whatsup', 'astrolibR', 'moonsun', 'XML', 'DEVILSTAZ')
+packageList<-c('crayon','devtools', 'Tiler', 'astro','sphereplot','rgl','plotrix','fields','xtable','doParallel','gridExtra','celestial','magicaxis','whatsup', 'astrolibR', 'moonsun', 'XML', 'DEVILSTAZ', 'mailR')
 
 LibList<-installed.packages()[,1]
 
