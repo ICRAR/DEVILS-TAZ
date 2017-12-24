@@ -221,24 +221,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     }
     
     
-    if (is.na(email)==F){
-      if (is.na(emailPassword)==F){
-        
-        
-        subject<-'Update From TAZ - 2dFDR Reduction Completed'
-        bodyText<-paste('run2dfDR() finished at ',date(), sep='')
-        
-        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-        
-      }else{
-        
-        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-        email<-NA
-        
-      }
-    }
-    
+   
     
     
   }
@@ -274,23 +257,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
     }
     
-    if (is.na(email)==F){
-      if (is.na(emailPassword)==F){
-        
-        
-        subject<-'Update From TAZ - extractNewSpec Completed'
-        bodyText<-paste('extractNewSpec() finished at ',date(), sep='')
-        
-        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-        
-      }else{
-        
-        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-        email<-NA
-        
-      }
-    }
+ 
     
 
 
@@ -375,24 +342,6 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
     
-    if (is.na(email)==F){
-      if (is.na(emailPassword)==F){
-        
-        
-        subject<-'Update From TAZ - runAutoZ Completed'
-        bodyText<-paste('runAutoZ() finished at ',date(), sep='')
-        
-        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-        
-      }else{
-        
-        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-        email<-NA
-        
-      }
-    }
-    
     
   }
   
@@ -455,26 +404,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     DODir<-makeDOCats(MASTERCat=newMaster, UserName=user, dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
     
   
-  
-  if (is.na(email)==F){
-    if (is.na(emailPassword)==F){
-      
-      load(newMaster)
-      numGood<-length(which(DMCat$DEVILS_prob>0.97))
-      
-      subject<-'Update From TAZ - UpdateMASTERCat Completed'
-      bodyText<-paste('UpdateMASTERCat() finished at ',date() ,'\n', 'There are now ',numGood,' good redshifts', sep='')
-      
-      TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-      
-    }else{
-      
-      cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-      write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-      email<-NA
-      
-    }
-  }
+ 
   }
   
   if (doUpdateMaster==F & doTiler==T){
@@ -528,23 +458,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
         
       }
     
-    if (is.na(email)==F){
-      if (is.na(emailPassword)==F){
-        
-        
-        subject<-'Update From TAZ - runTiler Completed'
-        bodyText<-paste('runTiler() finished at ',date(), sep='')
-        
-        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-        
-      }else{
-        
-        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-        email<-NA
-        
-      }
-    }
+
       
   }
   
