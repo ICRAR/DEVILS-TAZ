@@ -112,8 +112,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     DOcatBright<-tmp
     
     
-    configdirFiles=paste(configdir,'/data_files',sep='')
-    updateExtFibs(configdir=configdirFiles)
+    #configdirFiles=paste(configdir,'/data_files',sep='')
+    updateExtFibs(configdir=configdir)
     
     
     #a = foreach(i=1:length(tileplus_M)) %dopar%  {
