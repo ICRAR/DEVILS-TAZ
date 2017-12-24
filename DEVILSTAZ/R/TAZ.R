@@ -287,6 +287,8 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('Stacking 1D spectra....', '\n')}
     write('Stacking 1D spectra....', file=logName, append=T)      
     
+    if (toStackIDs=='all'){newIds<-'all'}
+    
     newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F, cores=cores)
     write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
     
@@ -305,6 +307,9 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
   if (doAutoZ==T){
     if (verbose>0){cat('Running AutoZ for new spectra....', '\n')}
     write('Running AutoZ for new spectra....', file=logName, append=T)
+    
+    if (toAutoZStacks=='all'){newStacks<-'all'}
+    
     runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
   }
   
