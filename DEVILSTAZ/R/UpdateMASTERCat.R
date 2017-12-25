@@ -85,9 +85,22 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     
     }
     
-    save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
+    host<-system('hostname',intern = TRUE)
+    if (host=="munro"){
+      nowTime<-strsplit(as.character(Sys.time()), ' ')[[1]][2]
+      nowHour<-as.numeric(strsplit(as.character(nowTime), ':')[[1]][1])+as.numeric(strsplit(as.character(nowTime), ':')[[1]][2])/60
+      JD_UTC<-date2jd(year=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][3]), hour=nowHour)
+      JD_Perth<-JD_UTC+0.33333
+      nowDate<-jd2date(JD=JD_Perth)
+      nowDate<-paste(nowDate$year,'_',nowDate$mon,'_',nowDate$mday,sep='')
+    }else{
+      nowDate<-Sys.Date()
+    }
     
-    return(paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''))
+    
+    save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',nowDate,'.rda', sep=''))
+    
+    return(paste('data/catalogues/MASTERcats/DMCat',nowDate,'.rda', sep=''))
 
 
     }

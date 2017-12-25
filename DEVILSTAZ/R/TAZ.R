@@ -385,7 +385,20 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     }
     
     JD<-date2jd(year=nightsYears,mon=nightsMonths, mday=nightsDays, hour=0)
-    JDMaster<-date2jd(year=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][3]), hour=0)
+    
+    host<-system('hostname',intern = TRUE)
+    if (host=="munro"){
+      nowTime<-strsplit(as.character(Sys.time()), ' ')[[1]][2]
+      nowHour<-as.numeric(strsplit(as.character(nowTime), ':')[[1]][1])+as.numeric(strsplit(as.character(nowTime), ':')[[1]][2])/60
+      JD_UTC<-date2jd(year=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][3]), hour=nowHour)
+      JD_Perth<-JD_UTC+0.33333
+      nowDate<-jd2date(JD=JD_Perth)
+      nowDate<-paste(nowDate$year,'_',nowDate$mon,'_',nowDate$mday,sep='')
+    }else{
+      nowDate<-Sys.Date()
+    }
+    
+    JDMaster<-date2jd(year=as.numeric(strsplit(as.character(nowDate),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(nowDate),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(nowDate),'-')[[1]][3]), hour=0)
     
     JD<-JD[which(JD-JDMaster>=0)]
     runName<-runName[which(JD-JDMaster>=0)]
