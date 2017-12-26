@@ -11,7 +11,7 @@
 #' load(paste(.libPaths(),'/DEVILSTAZ/data/ExampleSpec.Rdata',sep=''))
 #' plotSpec(spec)
 #' @export
-plotSpec<-function(spec=spec){
+plotSpec<-function(spec=spec, ...){
   
 options(warn=-1)  
   

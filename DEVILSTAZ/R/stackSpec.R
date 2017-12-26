@@ -340,18 +340,18 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     
     spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), fluxSc=fluxSc,fluxScBlue=fluxScBlue,fluxScRed=fluxScRed)
     
-    save(spec, file=paste('data/reduced/stackedSpecTmp/',ID,'.Rdata',sep=''))
+    save(spec, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''))
     
     
     specStack<-spec
     
     if (makePlot==T){
       
-      if (verbose>1){cat('   - Plotting stack as: ',paste('data/reduced/stackedSpecTmp/plots/',ID,'.pdf',sep=''), '\n')}
-      write(paste('   - Plotting stack as: data/reduced/stackedSpecTmp/plots/',ID,'.pdf', sep=''), file=logName, append=T)
+      if (verbose>1){cat('   - Plotting stack as: ',paste('data/reduced/stackedSpec/plots/',ID,'.pdf',sep=''), '\n')}
+      write(paste('   - Plotting stack as: data/reduced/stackedSpec/plots/',ID,'.pdf', sep=''), file=logName, append=T)
       
       peak<-max(spec$flux[which(spec$wave>6000)], na.rm=T)
-      pdf(paste('data/reduced/stackedSpecTmp/plots/',ID,'.pdf',sep=''), width=12,height=5*(NStack)+2)
+      pdf(paste('data/reduced/stackedSpec/plots/',ID,'.pdf',sep=''), width=12,height=5*(NStack)+2)
       
       par(mfrow = c(NStack+2, 1))
       par(mar=c(3.1,3.1,1.1,1.1))

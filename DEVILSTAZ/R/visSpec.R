@@ -10,7 +10,7 @@ visSpec<-function(){
       s<-readline('Enter Selection (default=nothing, 9=galaxy with correct z, 10=QSO with correct z, 11=QSO with incorrect z:')
      
       if (s!=1){
-        write(paste(spec$ID,',',s, sep=''),file='data/catalogues/VIS_GoodSpec.csv', append=T)
+        write(paste(spec$ID,',',s, sep=''),file='data/catalogues/VIS_GoodSpec_tmp.csv', append=T)
       }
       }
   }
