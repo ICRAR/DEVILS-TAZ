@@ -393,7 +393,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       JD_UTC<-date2jd(year=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(Sys.Date()),'-')[[1]][3]), hour=nowHour)
       JD_Perth<-JD_UTC+0.33333
       nowDate<-jd2date(JD=JD_Perth)
-      nowDate<-paste(nowDate$year,'_',nowDate$mon,'_',nowDate$mday,sep='')
+      nowDate<-paste(nowDate$year,'-',nowDate$mon,'-',nowDate$mday,sep='')
     }else{
       nowDate<-Sys.Date()
     }
