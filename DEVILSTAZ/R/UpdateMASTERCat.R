@@ -100,7 +100,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     
     save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',nowDate,'.rda', sep=''))
     
-    if (makePlots=T){
+    if (makePlots==T){
       selGal<-which(DMCat$STARCLASS==0)
       selPrev<-which(DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
       selGood<-which(DMCat$DEVILS_prob>0.96)
@@ -216,15 +216,13 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       } 
       
       size<-max(c(max(RABins)-min(RABins),max(DECBins)-min(DECBins)))
-      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = grey.colors(255))
       
       preComp<-prevDensity/targetDensity
-      image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
       
       nowComp<-goodDensity/targetDensity
-      nowComp[which(nowComp>1)]<-1
-      
-      image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
       
       dev.off()
       
@@ -254,9 +252,13 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       } 
       
       size<-max(c(max(RABins)-min(RABins),max(DECBins)-min(DECBins)))
-      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, prevDensity/targetDensity, main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, goodDensity/targetDensity, main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = grey.colors(255))
+      
+      preComp<-prevDensity/targetDensity
+      image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
+      
+      nowComp<-goodDensity/targetDensity
+      image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
       
       dev.off()
       
@@ -285,9 +287,13 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       } 
       
       size<-max(c(max(RABins)-min(RABins),max(DECBins)-min(DECBins)))
-      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, prevDensity/targetDensity, main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, goodDensity/targetDensity, main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = grey.colors(255))
+      
+      preComp<-prevDensity/targetDensity
+      image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
+      
+      nowComp<-goodDensity/targetDensity
+      image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
       
       dev.off()
       
