@@ -361,7 +361,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('    - Using previous MASTER catalogue as:',lastMASTER, '\n')}
     write(paste('    - Using previous MASTER catalogue as:',lastMASTER,sep=''), file=logName, append=T)
     
-    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', logName=logName, verbose=verbose)
+    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', logName=logName, verbose=verbose, makePlots=T)
     
     
     if (verbose>0){cat('Finding next observing night....', '\n')}
