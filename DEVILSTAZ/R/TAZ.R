@@ -372,7 +372,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     runName<-c()
     for (i in 1:length(runs)){
       nights<-c(nights, list.files(path=paste('data/observing/',runs[i],sep=''),pattern='*'))
-      runName<-c(runName,runs[i])
+      runName<-c(runName,rep(runs[i],length(list.files(path=paste('data/observing/',runs[i],sep=''),pattern='*'))))
     }
     nightsYears<-c(1:length(nights))
     nightsMonths<-c(1:length(nights))

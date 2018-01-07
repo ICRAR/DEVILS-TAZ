@@ -62,16 +62,22 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-8
 
 
-    
+    ### removing a few things found to be junk
     Vis<-read.csv('data/catalogues/VIS_Bad.csv', header=T)
     
     DMCat$VISCLASS[which(DMCat$CATAID %in% Vis[,1])]<-2
     DMCat$PRIORITY[which(DMCat$CATAID %in% Vis[,1])]<-0
     
+    ### removing things with low AutoZ prob but a visually inspected good redshift:
     VisGood<-read.csv('data/catalogues/VIS_GoodSpec.csv', header=T)
     
-    DMCat$VISCLASS[which(DMCat$CATAID %in% VisGood[,1])]<-VisGood[,2]
-    DMCat$PRIORITY[which(DMCat$CATAID %in% VisGood[,1])]<-1
+    DMCat$VISRED<-DMCat$VISCLASS
+    DMCat$VISRED[]<-NA
+    DMCat$VIS_SPECFLAG<-DMCat$VISRED
+    
+    DMCat$VIS_SPECFLAG[which(DMCat$CATAID %in% VisGood[,1])]<-VisGood[,3]
+    DMCat$PRIORITY[which(DMCat$VIS_SPECFLAG>1)]<-1
+    DMCat$DEVILS_z[which(DMCat$VIS_SPECFLAG>1)]<-VisGood[,2]
     
     if (verbose>1){
       cat(length(which(DMCat$DEVILS_prob>0.97 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits', '\n')

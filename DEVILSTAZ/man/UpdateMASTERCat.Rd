@@ -5,7 +5,7 @@
 \title{Update DMcats with new redshifts and make DOCats}
 \usage{
 UpdateMASTERCat(cat = cat, specDir = specDir, logName = logName,
-  verbose = verbose)
+  verbose = verbose, makePlots = F)
 }
 \arguments{
 \item{cat}{Path to current DMCat}
@@ -16,6 +16,8 @@ Usually will be data/reduced/stackedSpec}
 \item{logName}{log filename to write progress to}
 
 \item{verbose}{tell me whats going on: 0=nothing, 1=somethings, 2=everything}
+
+\item{makePlots}{make current survey progress plots}
 }
 \description{
 This is the high-level main TAZ function for updating the DMCat with

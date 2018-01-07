@@ -4,7 +4,7 @@
 \alias{plotSpec}
 \title{Plots a spectrum object generated as part of TAZ}
 \usage{
-plotSpec(spec = spec, ...)
+plotSpec(spec = spec, leg.cex = 1.4)
 }
 \arguments{
 \item{spec}{An R stucture containing spec$wave = vector of spectrum wavelengths
