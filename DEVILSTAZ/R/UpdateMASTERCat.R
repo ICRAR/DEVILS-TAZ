@@ -182,15 +182,15 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       selD02<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0)
       selD02Prev<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD02Good<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$PRIORITY==1 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))))
+      selD02Good<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
       
       selD03<-which(DMCat$FIELD=='D03' & DMCat$PRIORITY>0)
       selD03Prev<-which((DMCat$FIELD=='D03') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD03Good<-which((DMCat$FIELD=='D03') & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$PRIORITY==1 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))))
+      selD03Good<-which((DMCat$FIELD=='D03') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
       
       selD10<-which(DMCat$FIELD=='D10' & DMCat$PRIORITY>0)
       selD10Prev<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD10Good<-which((DMCat$FIELD=='D10') & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$PRIORITY==1 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))))
+      selD10Good<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_D02_comp.pdf',sep=''),width=24,height=8)
       
@@ -217,8 +217,14 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       size<-max(c(max(RABins)-min(RABins),max(DECBins)-min(DECBins)))
       image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, prevDensity/targetDensity, main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
-      image(RABins+bin/2,DECBins+bin/2, goodDensity/targetDensity, main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      
+      preComp<-prevDensity/targetDensity
+      image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
+      
+      nowComp<-goodDensity/targetDensity
+      nowComp[which(nowComp>1)]<-1
+      
+      image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2))
       
       dev.off()
       
