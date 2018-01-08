@@ -21,6 +21,18 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-read.csv(OzDESCat, header=T)
   
+  OzDES<-OzDES[which(OzDES[,2]>52 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2)]
+
+  if (length(OzDES[,1])>20){
+      num<-20
+      sel<-0
+      while (length(unique(sel))<num){
+        sel<-round(runif(num,1,length(OzDES[,1])))
+      }
+      
+      OzDES[sel,]
+  }
+    
   DOcatName<-paste(DODir,'/', list.files(path=DODir, pattern='DObj*'),sep='')
   
   if (verbose>1){cat('    -Reading DOCat catalogue:', DOcatName, '\n')}
@@ -29,10 +41,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   DOCat<-read.table(DOcatName, header=T)
   DOCat<-DOCat[which(DOCat[,'SURVEY_CLASS']==3),]
   
-  #sel<-0
-  #while (length(unique(sel))<num){
-   # sel<-round(runif(num,1,length(OzDES[,1])))
-  #}
+
   
   DESID<-OzDES[,1]
   NewCATAID<-as.numeric(paste(round(OzDES[,2]*100),round(OzDES[,4]*100),sep=''))
@@ -41,6 +50,14 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   NewMAG<-OzDES[,4]
   NewSURVEY_CLASS<-rep(2,length(NewDEC))
   NewPRIORITY_CLASS<-rep(9,length(NewDEC))
+  
+  NewPOSITION<-rep('D02A',length(NewDEC))
+  NewPOSITION[which(NewRA>(D02B_RA[1]-5) & NewRA<(D02B_RA[2]+5))]<-'D02B'
+  NewPOSITION[which(NewRA>(D03_RA[1]-5) & NewRA<(D03_RA[2]+5))]<-'D03'
+  NewPOSITION[which(NewRA>(D10_RA[1]-5) & NewRA<(D10_RA[2]+5))]<-'D10'
+  
+  
+  
   #NewPRIORITY_CLASS[sel]<-9
   
   if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
@@ -53,11 +70,6 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
 
   }
   
-  
-  NewPOSITION<-rep('D02A',length(NewDEC))
-  NewPOSITION[which(NewRA>(D02B_RA[1]-5) & NewRA<(D02B_RA[2]+5))]<-'D02B'
-  NewPOSITION[which(NewRA>(D03_RA[1]-5) & NewRA<(D03_RA[2]+5))]<-'D03'
-  NewPOSITION[which(NewRA>(D10_RA[1]-5) & NewRA<(D10_RA[2]+5))]<-'D10'
   
   newRows<-data.frame(NewCATAID, NewRA, NewDEC, NewMAG, NewSURVEY_CLASS, NewPRIORITY_CLASS, NewPOSITION)
   names(newRows)<-c('CATAID', 'RA', 'DEC', 'MAG', 'SURVEY_CLASS', 'PRIORITY_CLASS', 'POSITION')
