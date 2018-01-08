@@ -21,7 +21,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-read.csv(OzDESCat, header=T)
   
-  OzDES<-OzDES[which(OzDES[,2]>52 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2)]
+  OzDES<-OzDES[which(OzDES[,2]>52 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2),]
 
   if (length(OzDES[,1])>20){
       num<-20
@@ -30,7 +30,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
         sel<-round(runif(num,1,length(OzDES[,1])))
       }
       
-      OzDES[sel,]
+      OzDES<-OzDES[sel,]
   }
     
   DOcatName<-paste(DODir,'/', list.files(path=DODir, pattern='DObj*'),sep='')
