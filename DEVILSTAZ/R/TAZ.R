@@ -254,7 +254,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       
       if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
-      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
+      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=T, zeroPoint=zeroPoint,NowDate=NowDate)
     }
     
  
@@ -413,8 +413,8 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     JDMaster<-date2jd(year=as.numeric(strsplit(as.character(nowDate),'-')[[1]][1]),mon=as.numeric(strsplit(as.character(nowDate),'-')[[1]][2]), mday=as.numeric(strsplit(as.character(nowDate),'-')[[1]][3]), hour=0)
     
-    JD<-JD[which(JD-JDMaster>=0)]
     runName<-runName[which(JD-JDMaster>=0)]
+    JD<-JD[which(JD-JDMaster>=0)]
     dateFor_a<-jd2date(JD[which(JD-JDMaster==min(JD-JDMaster))])
     runFor<-runName[which(JD-JDMaster==min(JD-JDMaster))]
     dateFor<-paste(runFor,'/',dateFor_a$year,'_', dateFor_a$mon,'_',dateFor_a$mday, sep='')
