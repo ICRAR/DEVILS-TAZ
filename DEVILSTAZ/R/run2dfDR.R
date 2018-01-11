@@ -397,7 +397,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
        tmpKeep<-tmp[which(substr(tmp,nchar(tmp)-15, nchar(tmp)-5)=='reduced_red')]
        tmpDel<-tmp[which(substr(tmp,nchar(tmp)-15, nchar(tmp)-5)!='reduced_red')]
        for (kk in 1:length(tmpDel)){                    
-         system(paste('rm data/reduced/',dateReduc,'/ccd2/', tmpDel[kk],sep=''))
+         #system(paste('rm data/reduced/',dateReduc,'/ccd2/', tmpDel[kk],sep=''))
        }
        
 
