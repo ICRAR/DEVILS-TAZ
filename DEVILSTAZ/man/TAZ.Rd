@@ -15,7 +15,7 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   addOzDES = FALSE, OzDESCat = "NA", docheckConfig = T,
   docutoutConfig = F, cores = cores, verbose = 2,
   makeNormalTiles = TRUE, makeBackUpTiles = FALSE, BrightCut = 20,
-  email = NA, emailPassword = NA)
+  email = NA, emailPassword = NA, doCosmic = F)
 }
 \arguments{
 \item{user}{The current use identification. This is added to all logs.}
@@ -96,6 +96,8 @@ data/reduced/stackedSpec/ directory. Then make DOCats for the next observing dat
 \item{email}{If you want TAZ to send you email updates enter your email here.}
 
 \item{emailPassword}{If you want TAZ to send you email updates you must enter the TAZ email password here.}
+
+\item{doCosmic}{TRUE/FALSE do aditional cosmic ray rejection in extract.spec()}
 
 \item{D02A_startPlate}{Start plate number of D02B configurations (0 or 1) for runTiler.R}
 }

@@ -5,7 +5,7 @@
 \title{Extract 1D spectra from a reduced FITS file}
 \usage{
 extractNewSpec(file = file, logName = logName, verbose = verbose,
-  makePlot = F, zeroPoint = T, NowDate = NowDate)
+  makePlot = F, zeroPoint = T, NowDate = NowDate, doCosmic = doCosmic)
 }
 \arguments{
 \item{file}{reduced 2dF+AAOmega frame to extract spectra from}
@@ -17,6 +17,8 @@ extractNewSpec(file = file, logName = logName, verbose = verbose,
 \item{makePlot}{make 1D plots of extracted spectra}
 
 \item{zeroPoint}{TRUE/FALSE apply pre-calcuated (from fluxCal.R) zeroPoint flux scaling}
+
+\item{doCosmic}{TRUE/FALSE do additonal cosmic ray rejection}
 }
 \description{
 Function extracts 1D spectra from a reduced 2dF+AAOmega frame and
