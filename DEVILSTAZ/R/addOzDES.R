@@ -23,6 +23,8 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-OzDES[which(OzDES[,2]>52 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2),]
 
+  tmp<-OzDES[which(OzDES[,1]=='DES17C3gyp'),]
+  
   if (length(OzDES[,1])>20){
       num<-20
       sel<-0
@@ -32,6 +34,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
       
       OzDES<-OzDES[sel,]
   }
+  OzDES<-rbind(OzDES,tmp)
     
   DOcatName<-paste(DODir,'/', list.files(path=DODir, pattern='DObj*'),sep='')
   
@@ -50,6 +53,8 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   NewMAG<-OzDES[,4]
   NewSURVEY_CLASS<-rep(2,length(NewDEC))
   NewPRIORITY_CLASS<-rep(9,length(NewDEC))
+  
+  NewPRIORITY_CLASS[which(DESID=='DES17C3gyp')]<-10
   
   NewPOSITION<-rep('D02A',length(NewDEC))
   NewPOSITION[which(NewRA>(D02B_RA[1]-5) & NewRA<(D02B_RA[2]+5))]<-'D02B'

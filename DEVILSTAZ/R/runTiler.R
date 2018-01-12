@@ -93,7 +93,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     DATAstspec<<-read.table(DATAstspec,header=T)
     DATAsky<<-read.table(DATAsky,header=T)
     
-    DOcatBright<-DOcat[which((DOcat[,'MAG']<BrightCut & DOcat[,'PRIORITY_CLASS']>1) | DOcat[,'PRIORITY_CLASS']==9),]
+    DOcatBright<-DOcat[which((DOcat[,'MAG']<BrightCut & DOcat[,'PRIORITY_CLASS']>1) | DOcat[,'PRIORITY_CLASS']==9 | DOcat[,'PRIORITY_CLASS']==10),]
     
     #**** Mapping down to bump up OzDES fillers:
     DOcat[which(DOcat[,'PRIORITY_CLASS']==4),'PRIORITY_CLASS']<-3
@@ -101,6 +101,9 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     DOcat[which(DOcat[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-5
     DOcat[which(DOcat[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-6
     DOcat[which(DOcat[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-7
+    
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-8
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-9
     
     #**** Flip for bright:
     tmp<-DOcatBright
@@ -110,6 +113,9 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-4
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-3
     DOcatBright<-tmp
+    
+    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-8
+    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-9
     
     
     #configdirFiles=paste(configdir,'/data_files',sep='')
