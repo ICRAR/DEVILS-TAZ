@@ -97,25 +97,25 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     
     #**** Mapping down to bump up OzDES fillers:
     DOcat[which(DOcat[,'PRIORITY_CLASS']==4),'PRIORITY_CLASS']<-3
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-4
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-5
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-6
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-7
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-3
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-3
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-4
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-5
     
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-8
-    DOcat[which(DOcat[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-9
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-7
+    DOcat[which(DOcat[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-8
     
     #**** Flip for bright:
     tmp<-DOcatBright
-    tmp[which(DOcatBright[,'PRIORITY_CLASS']==4),'PRIORITY_CLASS']<-7
-    tmp[which(DOcatBright[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-6
-    tmp[which(DOcatBright[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-5
-    tmp[which(DOcatBright[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-4
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==4),'PRIORITY_CLASS']<-5
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-4
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-3
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-3
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-3
     DOcatBright<-tmp
     
-    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-8
-    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-9
+    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-7
+    DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==10),'PRIORITY_CLASS']<-8
     
     
     #configdirFiles=paste(configdir,'/data_files',sep='')
