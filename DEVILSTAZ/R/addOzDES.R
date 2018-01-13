@@ -21,7 +21,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-read.csv(OzDESCat, header=T)
   
-  OzDES<-OzDES[which(OzDES[,2]>52 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2),]
+  OzDES<-OzDES[which(OzDES[,2]>51.9 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2),]
 
   tmp<-OzDES[which(OzDES[,1]=='DES17C3gyp'),]
   
@@ -55,6 +55,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   NewPRIORITY_CLASS<-rep(9,length(NewDEC))
   
   NewPRIORITY_CLASS[which(DESID=='DES17C3gyp')]<-10
+  
   
   NewPOSITION<-rep('D02A',length(NewDEC))
   NewPOSITION[which(NewRA>(D02B_RA[1]-5) & NewRA<(D02B_RA[2]+5))]<-'D02B'
