@@ -21,7 +21,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-read.csv(OzDESCat, header=T)
   
-  OzDES<-OzDES[which(OzDES[,2]>51.9 & OzDES[,2]<54.2 & OzDES[,3]>-28.8 & OzDES[,3] < -27.2),]
+  OzDES<-OzDES[which(OzDES[,2]>51.7 & OzDES[,2]<54.5 & OzDES[,3]>-29.0 & OzDES[,3] < -27),]
 
   tmp<-OzDES[which(OzDES[,1]=='DES17C3gyp'),]
   
@@ -69,7 +69,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
   write(paste('        -Adding OzDES sources:',sep=''), file=logName, append=T)
   
-  for (i in 1:num){
+  for (i in 1:length(NewRA)){
     
     if (verbose>1){cat('           ',NewCATAID[i], NewRA[i], NewDEC[i], '\n')}
     write(paste('           ',NewCATAID[i], NewRA[i], NewDEC[i] ,sep=' '), file=logName, append=T)
