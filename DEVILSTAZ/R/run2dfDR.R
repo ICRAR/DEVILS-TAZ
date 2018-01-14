@@ -77,6 +77,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
           system('rm -rf /Users/luke/imp_scratch/runZone*')
         }
         
+        system('rm -rf runZone*')
+        
 
 
                 
@@ -136,6 +138,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 system(paste('rm -rf runZone', j, sep=''))
                 system(paste('mkdir runZone', j, sep=''))
+                
+                
                 
                 if (host=="munro"){
                   system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
