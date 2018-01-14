@@ -39,6 +39,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
     
     for (i in 1:length(toReduce)){
+      
+      system(paste(toReduce[i],'/*im.fits',sep=''))
+      system(paste(toReduce[i],'/*ex.fits',sep=''))
 
         if (verbose>1){cat(paste('   - Reducing date: ',toReduce[i], sep=''), '\n')}
         write(paste(' - Reducing date: ',toReduce[i], sep=''), file=logName, append=T)
@@ -73,8 +76,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
           system('rm -rf /Users/luke/imp_scratch/runZone*')
         }
         
-        system(paste(toReduce[i],'/*im.fits',sep=''))
-        system(paste(toReduce[i],'/*ex.fits',sep=''))
+
 
                 
         
