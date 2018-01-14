@@ -54,7 +54,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   NewSURVEY_CLASS<-rep(2,length(NewDEC))
   NewPRIORITY_CLASS<-rep(9,length(NewDEC))
   
-  NewPRIORITY_CLASS[which(DESID=='DES17C3gyp')]<-10
+  
   
   
   NewPOSITION<-rep('D02A',length(NewDEC))
