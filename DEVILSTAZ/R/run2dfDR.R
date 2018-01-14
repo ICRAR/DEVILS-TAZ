@@ -42,6 +42,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
       
        system(paste('rm -rf ', toReduce[i],'/*im.fits',sep=''))
        system(paste('rm -rf ', toReduce[i],'/*ex.fits',sep=''))
+       system(paste('rm -rf ', toReduce[i],'/*red*.fits',sep=''))
 
         if (verbose>1){cat(paste('   - Reducing date: ',toReduce[i], sep=''), '\n')}
         write(paste(' - Reducing date: ',toReduce[i], sep=''), file=logName, append=T)
