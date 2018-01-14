@@ -42,7 +42,8 @@
 #' @param OzDESCat Path to current OzDES filler catalogue
 #' @param docheckConfig TRUE/FALSE, check final configuration files for obvious errors with checkConfig.R
 #' @param docutoutConfig TRUE/FALSE, make cutout images of configured objects (currently only works on munro and Luke's laptop)
-#' @param cores number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R 
+#' @param cores number of cores to use in runAutoZ.R, and runTiler.R
+#' @param reducCores number of cores to use in run2dfDR.R (different from above as can be problem for 2dfDR if large)
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @param makeNormalTiles Make general configurations using all catalogues 
 #' @param makeBackUpTiles Also make bad weather configuration files for just bright sources. 
@@ -74,7 +75,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=cores, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=cores, reducCores=reducCores, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F){
   
   system('cleanup')
   
@@ -190,7 +191,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       if (verbose>0){cat('Reducing new datasets....', '\n')}
       write('Reducing new datasets....', file=logName, append=T)
       
-      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=1)
+      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=reducCores)
       
       ## newReduce not passing from run2dfDR() correctly - find manually....
       newReduce<-c()
