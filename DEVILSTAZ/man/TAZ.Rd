@@ -13,7 +13,7 @@ TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
   addOzDES = FALSE, OzDESCat = "NA", docheckConfig = T,
-  docutoutConfig = F, cores = cores, verbose = 2,
+  docutoutConfig = F, cores = 1, reducCores = 1, verbose = 2,
   makeNormalTiles = TRUE, makeBackUpTiles = FALSE, BrightCut = 20,
   email = NA, emailPassword = NA, doCosmic = F)
 }
@@ -83,7 +83,9 @@ data/reduced/stackedSpec/ directory. Then make DOCats for the next observing dat
 
 \item{docutoutConfig}{TRUE/FALSE, make cutout images of configured objects (currently only works on munro and Luke's laptop)}
 
-\item{cores}{number of cores to use in run2dfDR.R, runAutoZ.R, and runTiler.R}
+\item{cores}{number of cores to use in runAutoZ.R, and runTiler.R}
+
+\item{reducCores}{number of cores to use in run2dfDR.R (different from above as can be problem for 2dfDR if large)}
 
 \item{verbose}{tell me whats going on: 0=nothing, 1=somethings, 2=everything}
 
