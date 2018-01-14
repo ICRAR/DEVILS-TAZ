@@ -10,11 +10,11 @@
 #' @param doCalibQC TRUE/FLASE, produce QC check plots for biases and darks
 #' @param logName log filename to write progress to
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
-#' @param cores number of cores to use
+#' @param reducCores number of cores to use
 #' @examples 
-#' run2dfDR(toReduce='data/rawdata/run1_2017_12/2017_12_18', doCalibQC=F, logName='tempLog.txt', verbose=1, cores=4)
+#' run2dfDR(toReduce='data/rawdata/run1_2017_12/2017_12_18', doCalibQC=F, logName='tempLog.txt', verbose=1, reducCores=4)
 #' @export
-run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, cores=cores){
+run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores){
 
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
 
@@ -25,7 +25,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
      # registerDoParallel(cores=1)
     #}
     
-    registerDoParallel(cores=cores)
+    registerDoParallel(cores=reducCores)
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
