@@ -65,6 +65,19 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
        
         
         
+        
+        if (host=="munro"){
+          system('rm -rf /home/ldavies/imp_scratch/runZone*')
+        }
+        if (host=="lukeLap"){
+          system('rm -rf /Users/luke/imp_scratch/runZone*')
+        }
+        
+        system(paste(toReduce[i],'/*im.fits',sep=''))
+        system(paste(toReduce[i],'/*ex.fits',sep=''))
+
+                
+        
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
         
