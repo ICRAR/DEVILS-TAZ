@@ -27,11 +27,13 @@ aaorunTLM<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, b
     setwd(paste('runZone',runZone,sep=''))
     file<-paste('../',file,sep='')
     idx<-paste('../',idx,sep='')
-    biasFile<-paste('../',biasFile,sep='')
-    darkFile<-paste('../',darkFile,sep='')
+    if (doBias==T) {biasFile<-paste('../',biasFile,sep='')}else{biasFile<-'NA'}
+    if (doDark==T) {darkFile<-paste('../',darkFile,sep='')}else{darkFile<-'NA'}
+
     outname<-paste('../',outname,sep='')
     
     cmd<-paste('aaorun reduce_fflat ', file, ' -idxfile ',idx, ' -useflatim 0 -do_redfl 0 -lacosmic NO -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, ' -tlmap_filename ',   outname, sep='')
+    
     
     system(cmd)
     setwd(oldWD)

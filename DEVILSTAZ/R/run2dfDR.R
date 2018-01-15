@@ -86,7 +86,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
         
-            
+         
                                         #for (j in 1:length(configList)){
 
             if (verbose>1){cat(paste('         - Reducing configuration: ', configList[j], sep=''), '\n')}

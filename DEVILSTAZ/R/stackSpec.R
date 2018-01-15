@@ -31,7 +31,10 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
       ids<-c(ids, tmp)
       
     }
+    ids<-unique(ids)
   }
+  
+
   
   
   newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
