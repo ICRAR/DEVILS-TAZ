@@ -499,8 +499,22 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       
       previousMASTERS<-list.files(path='data/catalogues/MASTERcats/',pattern='*.rda')
       
-      MASTERDates<-date2jd(year=as.numeric(substr(previousMASTERS,14,15) ), mon=as.numeric(substr(previousMASTERS,11,12)), mday=as.numeric(substr(previousMASTERS,6,9)), hour=12)
+      year<-c()
+      month<-c()
+      day<-c()
+      
+      for (i in 1:length(previousMASTERS)){
+        yeartmp<-strsplit(previousMASTERS[i],'-')[[1]][1]
+        year<-c(year,as.numeric(strsplit(yeartmp,'DMCat')[[1]][2]))
+        month<-c(month,as.numeric(strsplit(previousMASTERS[i],'-')[[1]][2]))
+        daytmp<-strsplit(previousMASTERS[i],'-')[[1]][3]
+        day<-c(day,as.numeric(strsplit(daytmp,'.rda')[[1]][1]))
+      }
+      
+      
+      MASTERDates<-date2jd(year=year, mon=month, mday=day, hour=12)
       lastMASTER<-paste('data/catalogues/MASTERcats/',previousMASTERS[which(MASTERDates==max(MASTERDates))],sep='')
+      
       
       checkConfig(configFiles = ConfigNames, DMCatN = lastMASTER, logName=logName, verbose=verbose)
     }
