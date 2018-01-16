@@ -196,7 +196,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_arc.fits',sep='')))==0){
                     
-                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd1,sep=''), idx=idx,  doDark=T,darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, tlmFile=tlmFile)
+                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd1,sep=''), idx=idx,  doDark=T,darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, tlmFile=tlmFile, , runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(arc_ccd1),'.fits')[[1]][1],'red.fits', sep='')))
@@ -232,7 +232,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_flat.fits',sep='')))==0){
                     
-                    aaorunFLAT(file=paste(toReduce[i], '/',flat_ccd1,sep=''), idx=idx,  doDark=T, darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, arcFile=arcFile)
+                    aaorunFLAT(file=paste(toReduce[i], '/',flat_ccd1,sep=''), idx=idx,  doDark=T, darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, arcFile=arcFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(flat_ccd1),'.fits')[[1]][1],'red.fits', sep='')))
@@ -268,7 +268,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     if (verbose>1){cat('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1), '\n')}
                     write(paste('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1),sep=''), file=logName, append=T)
 
-                    aaorunObj(file=paste(toReduce[i], '/',targets_ccd1[k],sep=''), idx=idx, doDark=T,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile)
+                    aaorunObj(file=paste(toReduce[i], '/',targets_ccd1[k],sep=''), idx=idx, doDark=T,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits', sep='')))
@@ -351,7 +351,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 tlmFile<-paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_tlm.fits', sep='')
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))==0){       
-                    aaorunTLM(file=paste(toReduce[i], '/',flat_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T,biasFile=calib$biasFileRed, outname=tlmFile)
+                    aaorunTLM(file=paste(toReduce[i], '/',flat_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T,biasFile=calib$biasFileRed, outname=tlmFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_tlm.fits',sep='')))
@@ -384,7 +384,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_arc.fits',sep='')))==0){
                     
-                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T,biasFile=calib$biasFileRed, tlmFile=tlmFile)
+                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T,biasFile=calib$biasFileRed, tlmFile=tlmFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(arc_ccd2),'.fits')[[1]][1],'red.fits', sep='')))
@@ -421,7 +421,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_flat.fits',sep='')))==0){
                     
-                    aaorunFLAT(file=paste(toReduce[i], '/',flat_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed,doBias=T, biasFile=calib$biasFileRed, arcFile=arcFile)
+                    aaorunFLAT(file=paste(toReduce[i], '/',flat_ccd2,sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed,doBias=T, biasFile=calib$biasFileRed, arcFile=arcFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(flat_ccd2),'.fits')[[1]][1],'red.fits', sep='')))
@@ -463,7 +463,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     write(paste('             - Using line: aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=T,darkFile=',calib$darkFileRed,', doBias=T, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), file=logName, append=T)
                     
 
-                    aaorunObj(file=paste(toReduce[i], '/',targets_ccd2[k],sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T, biasFile=calib$biasFileRed, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile)
+                    aaorunObj(file=paste(toReduce[i], '/',targets_ccd2[k],sep=''), idx=idx, doDark=T,darkFile=calib$darkFileRed, doBias=T, biasFile=calib$biasFileRed, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red.fits', sep='')))
