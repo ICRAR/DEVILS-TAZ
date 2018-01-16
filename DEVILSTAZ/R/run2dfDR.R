@@ -196,7 +196,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 if (length(list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste(dateReduc2,'_config_',j,'_arc.fits',sep='')))==0){
                     
-                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd1,sep=''), idx=idx,  doDark=T,darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, tlmFile=tlmFile, , runZone=j)
+                    aaorunARC(file=paste(toReduce[i], '/',arc_ccd1,sep=''), idx=idx,  doDark=T,darkFile=calib$darkFileBlue,  doBias=T,biasFile=calib$biasFileBlue, tlmFile=tlmFile, runZone=j)
                     count<-0
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(arc_ccd1),'.fits')[[1]][1],'red.fits', sep='')))
