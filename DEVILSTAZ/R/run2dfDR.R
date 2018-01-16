@@ -72,10 +72,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         
         
         if (host=="munro"){
-          system('rm -rf /home/ldavies/imp_scratch/runZone*')
+          system('rm -rf /home/ldavies/imp_scratch/*')
         }
         if (host=="lukeLap"){
-          system('rm -rf /Users/luke/imp_scratch/runZone*')
+          system('rm -rf /Users/luke/imp_scratch/*')
         }
         
         system('rm -rf runZone*')
