@@ -141,7 +141,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         
         configFile<-list.files(path=paste(workingDir,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],sep=''), pattern='*.lis')
         configFile<-paste(workingDir,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],'/',configFile, sep='')
-        
+        configFile<-configFile[1]
         #cat(red('New Config File=',configFile),'\n')
         #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
         
@@ -174,7 +174,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         
         configFile<-list.files(path=paste(workingDir,'/D02B/TargetFork',i,'-',i,'P',plate_D02B[i],sep=''), pattern='*.lis')
         configFile<-paste(workingDir,'/D02B/TargetFork',i,'-',i,'P',plate_D02B[i],'/',configFile, sep='')
-        
+        configFile<-configFile[1]
         #cat(red('New Config File=',configFile),'\n')
         #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
         
@@ -208,7 +208,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         
         configFile<-list.files(path=paste(workingDir,'/D03/TargetFork',i,'-',i,'P',plate_D03[i],sep=''), pattern='*.lis')
         configFile<-paste(workingDir,'/D03/TargetFork',i,'-',i,'P',plate_D03[i],'/',configFile, sep='')
-        
+        configFile<-configFile[1]
         #cat(red('New Config File=',configFile),'\n')
         #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
         
@@ -242,6 +242,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         
         configFile<-list.files(path=paste(workingDir,'/D10/TargetFork',i,'-',i,'P',plate_D10[i],sep=''), pattern='*.lis')
         configFile<-paste(workingDir,'/D10/TargetFork',i,'-',i,'P',plate_D10[i],'/',configFile, sep='')
+        configFile<-configFile[1]
         
         #cat(red('New Config File=',configFile),'\n')
         #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
@@ -361,7 +362,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           
           configFile<-list.files(path=paste(workingDirBright,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],sep=''), pattern='*.lis')
           configFile<-paste(workingDirBright,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],'/',configFile, sep='')
-          
+          configFile<-configFile[1]
           #cat(red('New Config File=',configFile),'\n')
           #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcatBright[,'PRIORITY_CLASS']==1))),'\n')
           
@@ -394,7 +395,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           
           configFile<-list.files(path=paste(workingDirBright,'/D02B/TargetFork',i,'-',i,'P',plate_D02B[i],sep=''), pattern='*.lis')
           configFile<-paste(workingDirBright,'/D02B/TargetFork',i,'-',i,'P',plate_D02B[i],'/',configFile, sep='')
-          
+          configFile<-configFile[1]
           #cat(red('New Config File=',configFile),'\n')
           #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
           
@@ -428,7 +429,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           
           configFile<-list.files(path=paste(workingDirBright,'/D03/TargetFork',i,'-',i,'P',plate_D03[i],sep=''), pattern='*.lis')
           configFile<-paste(workingDirBright,'/D03/TargetFork',i,'-',i,'P',plate_D03[i],'/',configFile, sep='')
-          
+          configFile<-configFile[1]
           #cat(red('New Config File=',configFile),'\n')
           #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
           
@@ -462,7 +463,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           
           configFile<-list.files(path=paste(workingDirBright,'/D10/TargetFork',i,'-',i,'P',plate_D10[i],sep=''), pattern='*.lis')
           configFile<-paste(workingDirBright,'/D10/TargetFork',i,'-',i,'P',plate_D10[i],'/',configFile, sep='')
-          
+          configFile<-configFile[1]
           #cat(red('New Config File=',configFile),'\n')
           #cat(red('Previous PRIORITY CLASS = 1:',length(which(DOcat[,'PRIORITY_CLASS']==1))),'\n')
           
