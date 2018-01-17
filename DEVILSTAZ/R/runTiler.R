@@ -111,7 +111,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==5),'PRIORITY_CLASS']<-7
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==6),'PRIORITY_CLASS']<-5
     tmp[which(DOcatBright[,'PRIORITY_CLASS']==7),'PRIORITY_CLASS']<-5
-    tmp[which(DOcatBright[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-5
+    tmp[which(DOcatBright[,'PRIORITY_CLASS']==8),'PRIORITY_CLASS']<-4
     DOcatBright<-tmp
     
     DOcatBright[which(DOcatBright[,'PRIORITY_CLASS']==9),'PRIORITY_CLASS']<-8
@@ -150,8 +150,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         ID<-c()
         TYPE<-c()
         
-        for (i in 1:length(Config)){
-          tmp<-strsplit(Config[i], ' ')[[1]]
+        for (j in 1:length(Config)){
+          tmp<-strsplit(Config[j], ' ')[[1]]
           tmp<-tmp[which(tmp!="")]
           if (length(tmp)==16){
             ID<-c(ID,tmp[3])
@@ -183,8 +183,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         ID<-c()
         TYPE<-c()
         
-        for (i in 1:length(Config)){
-          tmp<-strsplit(Config[i], ' ')[[1]]
+        for (j in 1:length(Config)){
+          tmp<-strsplit(Config[j], ' ')[[1]]
           tmp<-tmp[which(tmp!="")]
           if (length(tmp)==16){
             ID<-c(ID,tmp[3])
@@ -217,8 +217,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         ID<-c()
         TYPE<-c()
         
-        for (i in 1:length(Config)){
-          tmp<-strsplit(Config[i], ' ')[[1]]
+        for (j in 1:length(Config)){
+          tmp<-strsplit(Config[j], ' ')[[1]]
           tmp<-tmp[which(tmp!="")]
           if (length(tmp)==16){
             ID<-c(ID,tmp[3])
@@ -251,8 +251,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
         ID<-c()
         TYPE<-c()
         
-        for (i in 1:length(Config)){
-          tmp<-strsplit(Config[i], ' ')[[1]]
+        for (j in 1:length(Config)){
+          tmp<-strsplit(Config[j], ' ')[[1]]
           tmp<-tmp[which(tmp!="")]
           if (length(tmp)==16){
             ID<-c(ID,tmp[3])
@@ -370,8 +370,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           ID<-c()
           TYPE<-c()
           
-          for (i in 1:length(Config)){
-            tmp<-strsplit(Config[i], ' ')[[1]]
+          for (j in 1:length(Config)){
+            tmp<-strsplit(Config[j], ' ')[[1]]
             tmp<-tmp[which(tmp!="")]
             if (length(tmp)==16){
               ID<-c(ID,tmp[3])
@@ -403,8 +403,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           ID<-c()
           TYPE<-c()
           
-          for (i in 1:length(Config)){
-            tmp<-strsplit(Config[i], ' ')[[1]]
+          for (j in 1:length(Config)){
+            tmp<-strsplit(Config[j], ' ')[[1]]
             tmp<-tmp[which(tmp!="")]
             if (length(tmp)==16){
               ID<-c(ID,tmp[3])
@@ -437,8 +437,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           ID<-c()
           TYPE<-c()
           
-          for (i in 1:length(Config)){
-            tmp<-strsplit(Config[i], ' ')[[1]]
+          for (j in 1:length(Config)){
+            tmp<-strsplit(Config[j], ' ')[[1]]
             tmp<-tmp[which(tmp!="")]
             if (length(tmp)==16){
               ID<-c(ID,tmp[3])
@@ -471,8 +471,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
           ID<-c()
           TYPE<-c()
           
-          for (i in 1:length(Config)){
-            tmp<-strsplit(Config[i], ' ')[[1]]
+          for (j in 1:length(Config)){
+            tmp<-strsplit(Config[j], ' ')[[1]]
             tmp<-tmp[which(tmp!="")]
             if (length(tmp)==16){
               ID<-c(ID,tmp[3])
