@@ -83,7 +83,6 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
 
                 
-        
        newReduce = foreach(j=1:length(configList)) %dopar%  {
          
         
