@@ -250,38 +250,58 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     write.csv('ID', file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''), row.names=F, quote=F)
     
-    
+    ExtractedDates<-c()
     a = foreach(i=1:length(newReduce)) %dopar%  {
     #for (i in 1:length(newReduce)){
       
       if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
       tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate, doCosmic=doCosmic)
+      
+     
     }
     
- 
+    ExtractedDates<-c()
+    for (i in 1:length(newReduce)){
+      ExtractedDates<-c(ExtractedDates, strsplit(newReduce[i], '/')[[1]][4])
+    }
+    ExtractedDates<-unique(ExtractedDates)
     
 
 
-    newIds<-as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T))
-    newIds<-newIds[2:length(newIds)]
+      #newIds<-as.matrix(read.csv(paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newIDs.csv', sep=''),header=T))
+      #newIds<-newIds[2:length(newIds)]
     
     # horrible hack to sort out issues:
-    tmpD<-newIds[which(nchar(newIds)>12)]
-    tmpD2<-unlist(strsplit(tmpD,'D'))
-    tmpD3<-tmpD2[which(tmpD2!="")]
-    tmpD3<-paste('D',tmpD3,sep='')
-    tmpS<-tmpD3[which(nchar(tmpD3)>12)]
-    tmpD3<-tmpD3[which(nchar(tmpD3)<=12)]
+      #tmpD<-newIds[which(nchar(newIds)>12)]
+      #tmpD2<-unlist(strsplit(tmpD,'D'))
+      #tmpD3<-tmpD2[which(tmpD2!="")]
+      #tmpD3<-paste('D',tmpD3,sep='')
+      #tmpS<-tmpD3[which(nchar(tmpD3)>12)]
+      #tmpD3<-tmpD3[which(nchar(tmpD3)<=12)]
     
-    tmpS2<-unlist(strsplit(tmpS,'S'))
-    tmpS2[which(substr(tmpS2,1,1)!='D')]<-paste('S', tmpS2[which(substr(tmpS2,1,1)!='D')],sep='')
+      #tmpS2<-unlist(strsplit(tmpS,'S'))
+      #tmpS2[which(substr(tmpS2,1,1)!='D')]<-paste('S', tmpS2[which(substr(tmpS2,1,1)!='D')],sep='')
     
-    newIds<-unique(c(newIds[which(nchar(newIds)<=12)], tmpD3, tmpS2))
+      #newIds<-unique(c(newIds[which(nchar(newIds)<=12)], tmpD3, tmpS2))
+    
+    # better way to sort out issues:
+    allSpecList<-list.files(path='data/reduced/allSpec/', pattern='*')
+    newIds_tmp<-c()
+    for (j in 1:length(ExtractedDates)){
+      newIds_tmp<-c(newIds_tmp, allSpecList[which(substr(allSpecList, 1,nchar(ExtractedDates[j]))==ExtractedDates[j])])
+    }
+
+    newIds<-c()
+    for (j in 1:length(newIds_tmp)){
+      tmp<-strsplit(newIds_tmp[j],'_')[[1]][4]
+      newIds<-c(newIds, strsplit(tmp[[1]],'.Rdata')[[1]])    
+    }
+    newIds<-newIds[which(is.na(newIds)==F)]
+    newIds<-unique(newIds)
+    #######
     
     
-  }
-  
   if (doExtract==F){
     
     if (verbose>0){cat('*** doExtract=F so no extraction undertaken.', '\n')}
@@ -340,7 +360,10 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('Running AutoZ for new spectra....', '\n')}
     write('Running AutoZ for new spectra....', file=logName, append=T)
     
+  
+    newStacks<-paste('data/reduced/stackedSpec/',newIds,'.Rdata',sep='')
     if (toAutoZStacks=='all'){newStacks<-'all'}
+    
     
     runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
     

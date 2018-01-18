@@ -62,7 +62,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-8
 
     #### Stop observing if TEXP>10h
-    DMCat$PRIORITY[which(as.numeric(DMCat$DEVILS_EXP)>=600)]<-0
+    DMCat$PRIORITY[which(as.numeric(DMCat$DEVILS_EXP)>=10*60*60)] <- -1
     
     ### removing a few things found to be junk
     Vis<-read.csv('data/catalogues/VIS_Bad.csv', header=T)
