@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-import('FITSio', 'astro', 'Tiler', 'magicaxis', 'whatsup', 'Cairo', 'fftw', 'doParallel','gridExtra', 'crayon')
+import('FITSio', 'astro', 'Tiler', 'magicaxis', 'whatsup', 'Cairo', 'fftw', 'doParallel','gridExtra', 'crayon', 'imager','EBImage')

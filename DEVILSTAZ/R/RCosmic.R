@@ -32,8 +32,8 @@ RCosmic<-function(image, hdr, error, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2
     subError<-EBImage::resize(error, w=dim(image)[1]*2, h=dim(image)[2]*2)
 
 
-    convIm<- convolution(subIm, LA_kernel)
-    convError<- convolution(subIm, LA_kernel)
+    convIm<- as.matrix(imager::convolve(as.cimg(subIm), as.cimg(LA_kernel)))
+    convError<- as.matrix(imager::convolve(as.cimg(subIm), as.cimg(LA_kernel)))
 
     
     select_neg <- which(convIm<0, arr.ind = TRUE)
@@ -50,14 +50,18 @@ RCosmic<-function(image, hdr, error, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2
     tmpIm<-S
     tmpIm[which(is.na(tmpIm)==T, arr.ind=TRUE)]<-0
     S_prime <- S-medianFilter(tmpIm,2)
-    fine<-as.matrix(blur(as.im(S_prime), sigma = sigma, normalise=FALSE, bleed = FALSE, varcov=NULL))
+    
+    
+    S_prime[which(is.nan(S_prime)==T, arr.ind=TRUE)]<-0
+    S_prime[which(is.na(S_prime)==T, arr.ind=TRUE)]<-0
+    fine<-as.matrix(gblur(S_prime, sigma))
     
     fine_norm = image/fine
     select_neg <- which(fine_norm<0, arr.ind = TRUE)
     fine_norm[select_neg]<-0
     
     subNormIm<-EBImage::resize(fine_norm, w=dim(fine_norm)[1]*2, h=dim(fine_norm)[2]*2)
-    Lap2<- convolution(subNormIm, LA_kernel)
+    Lap2<-as.matrix(imager::convolve(as.cimg(subNormIm), as.cimg(LA_kernel)))
     Lap2<-EBImage::resize(Lap2, w=dim(Lap2)[1]/2, h=dim(Lap2)[2]/2)
     
     select<-which(Lap2>rlim & S_prime>sigma_det,arr.ind = TRUE)
