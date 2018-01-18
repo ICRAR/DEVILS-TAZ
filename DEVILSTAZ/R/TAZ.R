@@ -300,6 +300,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newIds<-newIds[which(is.na(newIds)==F)]
     newIds<-unique(newIds)
     #######
+  }
     
     
   if (doExtract==F){
