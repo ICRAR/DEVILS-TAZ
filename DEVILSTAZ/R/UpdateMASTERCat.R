@@ -306,7 +306,80 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       dev.off()
       
       
+      pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_RedshiftProgress.pdf',sep=''),width=8,height=8)
       
+      pdf('2018-1-20_RedshiftProgress.pdf',width=8,height=8)
+      
+      previousMASTERS<-list.files(path='data/catalogues/MASTERcats/',pattern='*.rda')
+      
+      
+      year<-c()
+      month<-c()
+      day<-c()
+      
+      for (j in 1:length(previousMASTERS)){
+        yeartmp<-strsplit(previousMASTERS[j],'-')[[1]][1]
+        year<-c(year,as.numeric(strsplit(yeartmp,'DMCat')[[1]][2]))
+        month<-c(month,as.numeric(strsplit(previousMASTERS[j],'-')[[1]][2]))
+        daytmp<-strsplit(previousMASTERS[j],'-')[[1]][3]
+        day<-c(day,as.numeric(strsplit(daytmp,'.rda')[[1]][1]))
+      }
+      
+      dateNew<-as.Date(paste(year,'-',month,'-',day,sep=''))
+      
+      MASTERDates<-date2jd(year=year, mon=month, mday=day, hour=12)
+      lastMASTER<-paste('data/catalogues/MASTERcats/',previousMASTERS[which(MASTERDates==max(MASTERDates))],sep='')
+      load(lastMASTER)
+      
+     
+      
+      dateNew<-dateNew[sort.int(MASTERDates, index.return = TRUE)$ix]
+      previousMASTERS<-previousMASTERS[sort.int(MASTERDates, index.return = TRUE)$ix]
+      MASTERDates<-MASTERDates[sort.int(MASTERDates, index.return = TRUE)$ix]
+      
+      
+      runCount<-MASTERDates
+      nightCount<-MASTERDates
+      for (j in 1:length(previousMASTERS)){
+        load(paste('data/catalogues/MASTERcats/',previousMASTERS[j], sep=''))
+        runCount[j]<-length(which(DMCat$DEVILS_prob >=0.96 & is.finite(DMCat$DEVILS_prob)==T))
+        if (j>1){nightCount[j]<-runCount[j]-runCount[j-1]} else{nightCount[j]<-runCount[j]} 
+      }
+      
+      
+      dateAll<-jd2date(seq(round(min(MASTERDates)), round(max(MASTERDates)), 1))
+      
+  
+      dateAllNew<-as.Date(paste(dateAll$year,'-',dateAll$mon,'-',dateAll$mday,sep=''))
+      
+      
+      plot(dateNew,runCount, col=rgb(24/255,128/255,127/255), ylab='Cumulative Number of Redshfits', xlab='Date', type='l', lwd=2)
+      
+      for (j in 1:length(dateAllNew)){
+        
+        lines(c(dateAllNew[j],dateAllNew[j]), c(-10000,10000), col='grey', lty=2, lwd=0.5)
+        
+      }
+      
+      points(dateNew,nightCount, pch=21,bg=rgb(24/255,128/255,127/255))
+      
+      
+      for (j in 1:length(nightCount)){
+        
+        polygon(c(dateNew[j]-1, dateNew[j]+1, dateNew[j]+1, dateNew[j]-1),c(runCount[j]-70, runCount[j]-70, runCount[j]+70, runCount[j]+70), col='white', border=NA) 
+       
+      }
+      
+      for (j in 1:length(nightCount)){
+        
+        if (nightCount[j]>0) {text(dateNew[j], runCount[j], nightCount[j], col=rgb(24/255,128/255,127/255), cex=0.8)}
+        
+      }
+      
+
+      
+      
+      dev.off()
       
     }
     
