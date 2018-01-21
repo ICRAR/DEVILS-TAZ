@@ -23,7 +23,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   OzDES<-OzDES[which(OzDES[,2]>51.7 & OzDES[,2]<54.5 & OzDES[,3]>-29.0 & OzDES[,3] < -27),]
 
-  tmp<-OzDES[which(OzDES[,1]=='DES17C3gyp'),]
+  #tmp<-OzDES[which(OzDES[,1]=='DES17C3gyp'),]
   
   if (length(OzDES[,1])>20){
       num<-20
@@ -34,7 +34,7 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
       
       OzDES<-OzDES[sel,]
   }
-  OzDES<-rbind(OzDES,tmp)
+  #OzDES<-rbind(OzDES,tmp)
     
   DOcatName<-paste(DODir,'/', list.files(path=DODir, pattern='DObj*'),sep='')
   
