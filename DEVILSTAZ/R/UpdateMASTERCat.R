@@ -126,6 +126,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_YMAG_successHist.pdf',sep=''),width=8,height=8)
       
+      
+      
       allHist_a<-maghist(DMCat$YMAG[selGal],plot=F)
       allHist<-maghist(DMCat$YMAG[selGal], col=rgb(0.3,0.3,0.3,1), xlab='Y-mag', ylab='#', log='y', main='Number histogram', ylim=c(1,max(allHist_a$counts,na.rm=T)*5.0))
       totGoodHist<-maghist(DMCat$YMAG[selTotGood], col=rgb(0,0.6,0,1), add=T, log='y',breaks=allHist$breaks)
@@ -133,6 +135,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       badHist<-maghist(DMCat$YMAG[selBad], col=rgb(1,0,0,1), add=T, log='y',breaks=allHist$breaks)
       goodHist<-maghist(DMCat$YMAG[selGood], col=rgb(24/255,128/255,127/255,1), add=T, log='y',breaks=allHist$breaks)
       
+      badHist2<-maghist(DMCat$YMAG[selBad], col=rgb(1,0,0,1), add=T, log='y',breaks=allHist$breaks[which(allHist$breaks<21)])
       
       legend('topleft', legend=c('All Galaxies','Total Good Redshifts', 'Pre-DEVILS redshift','DEVILS Redshift', 'DEVILS-observed no redshift'), text.col=c('dimgrey','darkgreen','blue', rgb(24/255,128/255,127/255),'red'))
       
@@ -145,6 +148,10 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       }
       
       dev.off()
+      
+  
+      
+      
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_YMAG_EXP_total.pdf',sep=''),width=8,height=8)
       
@@ -165,7 +172,6 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       for (i in 1:length(allHist$mids)){
         polygon(c(allHist$breaks[i],allHist$breaks[i]+0.5, allHist$breaks[i]+0.5, allHist$breaks[i]), c(1,1,histEXPgood[i], histEXPgood[i]), col=rgb(24/255,128/255,127/255, 0.4))
         polygon(c(allHist$breaks[i],allHist$breaks[i]+0.5, allHist$breaks[i]+0.5, allHist$breaks[i]), c(1,1,histEXPbad[i], histEXPbad[i]), col=rgb(1,0,0,0.4))
-        
       }
       
       legend('topleft', legend=c('DEVILS Redshift', 'DEVILS-observed no redshift'), text.col=c(rgb(24/255,128/255,127/255),'red'))
@@ -187,6 +193,48 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       dev.off()
       
       
+      pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_predicted_remaining_time.pdf',sep=''),width=8,height=8)
+      
+      pdf(paste(nowDate,'_predicted_remaining_time.pdf',sep=''),width=8,height=8)
+      
+      remnum<-allHist$counts-totGoodHist$counts
+      medEXPGood<-allHist$counts
+      meanEXPGood<-allHist$counts
+      medEXPAll<-allHist$counts
+      meanEXPAll<- allHist$counts
+      for (j in 1:length(allHist$counts)){
+        selGood2<-which(DMCat$DEVILS_prob>0.96 & DMCat$YMAG>allHist$breaks[j] & DMCat$YMAG<=allHist$breaks[j]+0.5)
+        selAll<-which(is.finite(as.numeric(DMCat$DEVILS_EXP)==T) & DMCat$YMAG>allHist$breaks[j] & DMCat$YMAG<=allHist$breaks[j]+0.5)
+        medEXPGood[j]<-median(as.numeric(DMCat$DEVILS_EXP[selGood2]), na.rm=T)/60/60
+        medEXPAll[j]<-median(as.numeric(DMCat$DEVILS_EXP[selAll]), na.rm=T)/60/60  
+        meanEXPGood[j]<-mean(as.numeric(DMCat$DEVILS_EXP[selGood2]), na.rm=T)/60/60
+        meanEXPAll[j]<-mean(as.numeric(DMCat$DEVILS_EXP[selAll]), na.rm=T)/60/60 
+      }
+      
+      histMedGood<-remnum*medEXPGood
+      histMedAll<-remnum*medEXPAll
+      histMeanGood<-remnum*meanEXPGood
+      histMeanAll<-remnum*meanEXPAll
+      
+      magplot(allHist$mids,histMedGood,col='white', main='Predicted Future Exposure Time', xlab='Y-mag', ylab='Total Exposure Time Left, Fibre hours', ylim=c(1,max(c(histMedGood,histMedAll,histMeanGood,histMeanAll),na.rm=T)*1.2), xlim=c(17,21.5))
+      
+      for (j in 1:length(allHist$mids)){
+        polygon(c(allHist$breaks[j],allHist$breaks[j]+0.5, allHist$breaks[j]+0.5, allHist$breaks[j]), c(1,1,histMedGood[j], histMedGood[j]), border=rgb(0,0,1, 0.4), lwd=3)
+        polygon(c(allHist$breaks[j],allHist$breaks[j]+0.5, allHist$breaks[j]+0.5, allHist$breaks[j]), c(1,1,histMedAll[j], histMedAll[j]), border=rgb(1,0,0,0.4), lwd=3)
+        polygon(c(allHist$breaks[j],allHist$breaks[j]+0.5, allHist$breaks[j]+0.5, allHist$breaks[j]), c(1,1,histMeanGood[j], histMeanGood[j]), border=rgb(0.0,0.6,0., 0.4), lwd=3)
+        polygon(c(allHist$breaks[j],allHist$breaks[j]+0.5, allHist$breaks[j]+0.5, allHist$breaks[j]), c(1,1,histMeanAll[j], histMeanAll[j]), border=rgb(0.6,0.6,0,0.4), lwd=3)
+      }
+      
+      TotTimeMedGood<-(sum(histMedGood, na.rm=T)/360/7.)*1.5
+      TotTimeMedAll<-(sum(histMedAll, na.rm=T)/360/7.)*1.5
+      TotTimeMeanGood<-(sum(histMeanGood, na.rm=T)/360/7.)*1.5
+      TotTimeMeanAll<-(sum(histMeanAll, na.rm=T)/360/7.)*1.5
+      
+      legend('topleft', legend=c('Time Left = 72 nights', paste('Predicted (Median with z) = ', ceiling(TotTimeMedGood),' nights',sep=''), paste('Predicted (Median All Current) = ', ceiling(TotTimeMedAll),' nights',sep=''), paste('Predicted (Mean with z) = ', ceiling(TotTimeMeanGood),' nights',sep=''), paste('Predicted (Mean All Current) = ', ceiling(TotTimeMeanAll),' nights',sep=''), '(Assuming 33% bad weather, 7h per night)'), text.col=c('black',rgb(0,0,1),rgb(1,0,0),rgb(0,0.6,0),rgb(0.6,0.6,0)))
+      
+      dev.off()
+      
+      
       
       selD02<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0)
       selD02Prev<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
@@ -201,6 +249,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       selD10Good<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_D02_comp.pdf',sep=''),width=24,height=8)
+    
       
       par(mfrow = c(1, 3))
       par(mar=c(3.1,3.1,1.1,1.1))
@@ -226,11 +275,18 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       size<-max(c(max(RABins)-min(RABins),max(DECBins)-min(DECBins)))
       image(RABins+bin/2,DECBins+bin/2, targetDensity/max(targetDensity,na.rm=T), main='Sample Density', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = grey.colors(255))
       
+      magbar('topleft', range=c(0, max(targetDensity,na.rm=T)), col=grey.colors(255), title='Y mag<21.2 # targets')
+      
       preComp<-prevDensity/targetDensity
       image(RABins+bin/2,DECBins+bin/2, preComp/max(preComp,na.rm=T) , main='Pre-DEVILS Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
       
+      magbar('topleft', range=c(0,1), col=heat.colors(255), title='Pre-DEVILS redshfit density')
+      
       nowComp<-goodDensity/targetDensity
       image(RABins+bin/2,DECBins+bin/2, nowComp/max(nowComp[which(is.finite(nowComp)==T)],na.rm=T), main='Current Completeness', xlab='R.A., deg', ylab='Declination, deg', xlim=c(median(RABins)-size/2, median(RABins)+size/2),ylim=c(median(DECBins)-size/2, median(DECBins)+size/2), col = heat.colors(255))
+      
+      magbar('topleft', range=c(0,1), col=heat.colors(255), title='Current redshfit density')
+      
       
       dev.off()
       
@@ -308,7 +364,6 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_RedshiftProgress.pdf',sep=''),width=8,height=8)
       
-      pdf('2018-1-20_RedshiftProgress.pdf',width=8,height=8)
       
       previousMASTERS<-list.files(path='data/catalogues/MASTERcats/',pattern='*.rda')
       
