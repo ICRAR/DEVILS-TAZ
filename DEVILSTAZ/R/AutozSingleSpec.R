@@ -63,9 +63,8 @@ PROCESSTIME <- proc.time()
   logVlambda <- log(VacuumFromAir(spec$lambda),10)  
   length <- length(logVlambda)
   # Rebin filtered spectrum ensuring zero outside range.
-  specRebin <- approx(x = c(3.0, logVlambda[1] - 0.001, logVlambda, logVlambda[length]+0.001, 4.5), 
-                      y = c(0, 0, spec$flux, 0, 0),
-                      xout = newLogLambda, method = "linear", yleft=0.0, yright=0.0)#TODO check interpol is correct
+  #specRebin <- approx(x = c(3.0, logVlambda[1] - 0.001, logVlambda, logVlambda[length]+0.001, 4.5), y = c(0, 0, spec$flux, 0, 0), xout = newLogLambda, method = "linear", yleft=0.0, yright=0.0)#TODO check interpol is correct
+  specRebin <- approx(x = c(2.8, logVlambda[1] - 0.001, logVlambda, logVlambda[length]+0.001, 4.7), y = c(0, 0, spec$flux, 0, 0), xout = newLogLambda, method = "linear", yleft=0.0, yright=0.0)#TODO check interpol is correct
   spec$lambda <- specRebin$x
   spec$flux <- specRebin$y
   

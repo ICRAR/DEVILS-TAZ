@@ -107,7 +107,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     
     
     save(DMCat, file=paste('data/catalogues/MASTERcats/DMCat',nowDate,'.rda', sep=''))
-    
+
+ 
     if (makePlots==T){
       selGal<-which(DMCat$STARCLASS==0)
       selPrev<-which(DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)

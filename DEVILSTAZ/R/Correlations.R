@@ -13,7 +13,10 @@
 #' None applicable as internal function.... 
 #' @export
 DoCrossCorr = function(spec, gap, tempData, helioVel, plan, z_prior){
-  corrSize <- 17000
+  
+  #corrSize <- 17000
+  corrSize <- 20000 #test new
+  
   # prepare output data
   dataout <- vector('list',length(tempData$templateNumbers))
   count = 1

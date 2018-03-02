@@ -4,11 +4,14 @@
 \alias{plotSpec}
 \title{Plots a spectrum object generated as part of TAZ}
 \usage{
-plotSpec(spec = spec, leg.cex = 1.4)
+plotSpec(spec = spec, leg.cex = 1.4, degSmooth = 7, xlim = NA,
+  ylim = NA)
 }
 \arguments{
 \item{spec}{An R stucture containing spec$wave = vector of spectrum wavelengths
 and spec$flux = vector of spectrum fluxes.}
+
+\item{leg.cex}{Size of font in legend}
 }
 \description{
 Function takes a 'spec' R list with sepc$wave, spec$flux, ...
