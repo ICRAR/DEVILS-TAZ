@@ -1,14 +1,13 @@
 #' Produce QC diagnositic plots for dark and bias frames
 #'
-#' @description Function convolves a given spectrum with a filter band pass and returns either
-#' convolved spectrum or a total sum within the filter. Note that for the example to
-#' work you must have unpacked the TAZ data files using:
+#' @description Produces diagnostic plots of all biases/darks in a given directory. Will
+#' plot and image of the calibration from and a number of diagnositcs.
 #' 
 #' @param biasDir directory containing bias frames
 #' @param darksDir directory containing dark frames 
 #' @param verbose 0 or 1, let me know whats going on. 0=no, 1=yes
 #' @examples 
-#' checkCal(biasDir='data/biases/run1_2017_12/', darksDir='data/biases/run1_2017_12/', verbose=1)
+#' checkCal(biasDir='data/biases/run1_2017_12/', darksDir='data/darks/run1_2017_12/', verbose=1)
 #' @export
 checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
 
@@ -49,8 +48,10 @@ checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
 
     par(mfrow = c(ceiling(length(biasList)/2.0), 2))
     par(mar=c(3.1,3.1,1.1,1.1))
+    tmp<-seq(1,length(biasList),1)
+    if (max(tmp)!=ceiling(length(biasList)/2.0)*2){tmp<-c(tmp,0)}
 
-    layout(matrix(seq(1,length(biasList),1), ceiling(length(biasList)/2.0), 2, byrow = TRUE))
+    layout(matrix(tmp, ceiling(length(biasList)/2.0), 2, byrow = TRUE))
 
     for (i in 1:length(biasList)){
         tmp<-read.fits(paste(biasDir,'/',biasList[i], sep=''), hdu=1)
@@ -80,7 +81,7 @@ checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
     dev.off()
 
 
-     File_M<-c()
+    File_M<-c()
     CCD_M<-c()
     Exposure_M<-c()
     Gain_M<-c()
@@ -102,9 +103,11 @@ checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
 
     par(mfrow = c(ceiling(length(darkList)/2.0), 2))
     par(mar=c(3.1,3.1,1.1,1.1))
-
-    layout(matrix(seq(1,length(darkList),1), ceiling(length(darkList)/2.0), 2, byrow = TRUE))
-
+    tmp<-seq(1,length(darkList),1)
+    if (max(tmp)!=ceiling(length(darkList)/2.0)*2){tmp<-c(tmp,0)}
+    
+    layout(matrix(tmp, ceiling(length(darkList)/2.0), 2, byrow = TRUE))
+    
     for (i in 1:length(darkList)){
         tmp<-read.fits(paste(darksDir,'/',darkList[i], sep=''), hdu=1)
         magimage(tmp$dat[[1]], main=darkList[i], xlim=c(-1500,2000), ylim=c(0,4000))
