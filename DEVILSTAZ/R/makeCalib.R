@@ -74,14 +74,14 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep=''), file=logName, append=T)
-            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='"'))
+            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/gama_blue.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='"'))
 
             tmp<-list.files(path=biasDir, pattern='*red.fits')
             tmp<-tmp[which(substr(tmp, 6,6)=='2')]
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep=''), file=logName, append=T)
-            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
+            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/gama_red.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
 
 
 
@@ -106,13 +106,13 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              darkfilesBlue<-paste(darkDir,'/',darkfiles[which(substr(darkfiles, 6,6)=='1')],sep='')
              for (j in 1:length(darkfilesBlue)){
                  write(paste('              - Reducing Dark File:',darkfilesBlue[j], sep=''), file=logName, append=T)
-                 system(paste('aaorun reduce_dark ',darkfilesBlue[j], ' -idxfile data/idxFiles/ozdes_blue.idx -usebiasim 1 -bias_filename ',biasFileBlue,sep=''))
+                 system(paste('aaorun reduce_dark ',darkfilesBlue[j], ' -idxfile data/idxFiles/gama_blue.idx -usebiasim 1 -bias_filename ',biasFileBlue,sep=''))
              }
 
               darkfilesRed<-paste(darkDir,'/',darkfiles[which(substr(darkfiles, 6,6)=='2')],sep='')
              for (j in 1:length(darkfilesRed)){
                  write(paste('              - Reducing Dark File:',darkfilesRed[j], sep=''), file=logName, append=T)
-                 system(paste('aaorun reduce_dark ',darkfilesRed[j], ' -idxfile data/idxFiles/ozdes_red.idx -usebiasim 1 -bias_filename ',biasFileRed,sep=''))
+                 system(paste('aaorun reduce_dark ',darkfilesRed[j], ' -idxfile data/idxFiles/gama_red.idx -usebiasim 1 -bias_filename ',biasFileRed,sep=''))
              }
 
              
@@ -125,13 +125,13 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              tmp<-tmp[which(substr(tmp, 6,6)=='1')]
              tmp<-paste(darkDir,'/',tmp, sep='', collapse=' ')
              write(paste('              - Making Master Dark:',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep=''), file=logName, append=T)
-             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
+             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/gama_blue.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
 
              tmp<-list.files(path=darkDir, pattern='*red.fits')
              tmp<-tmp[which(substr(tmp, 6,6)=='2')]
              tmp<-paste(darkDir,'/',tmp, sep='', collapse=' ')
              write(paste('              - Making Master Dark:',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep=''), file=logName, append=T)
-             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep='"'))
+             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/gama_red.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep='"'))
 
 
 
