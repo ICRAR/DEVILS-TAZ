@@ -5,9 +5,9 @@
 #' 
 #' @param biasDir directory containing bias frames
 #' @param darksDir directory containing dark frames 
-#' @param verbose 0 or 1, let me know whats going on. 0=no, 1=yes
+#' @param verbose 0, 1,2 , let me know whats going on. 0=no, 1=a bit, 2=a lot
 #' @examples 
-#' checkCal(biasDir='data/biases/run1_2017_12/', darksDir='data/darks/run1_2017_12/', verbose=1)
+#' checkCal(biasDir='data/biases/run2_2018_01/', darksDir='data/darks/run2_2018_01/', verbose=2)
 #' @export
 checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
 
@@ -54,6 +54,11 @@ checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
     layout(matrix(tmp, ceiling(length(biasList)/2.0), 2, byrow = TRUE))
 
     for (i in 1:length(biasList)){
+      
+      if (verbose>1){
+        cat('      - Checking bias file:', biasList[i],' ',i, 'of', length(biasList), '....',  '\n')
+      }
+      
         tmp<-read.fits(paste(biasDir,'/',biasList[i], sep=''), hdu=1)
         magimage(tmp$dat[[1]], main=biasList[i], xlim=c(-1500,2000), ylim=c(0,4000))
         legend('topleft', legend=c(paste('File: ',biasList[i],sep=''), paste('CCD =',get.fitskey('SPECTID', tmp$hdr[[1]]), sep=''), paste('Grating =',get.fitskey('GRATID', tmp$hdr[[1]]), sep=''), paste('Dectector =',get.fitskey('DETECTOR', tmp$hdr[[1]]), sep=''), paste('Exposure =',get.fitskey('EXPOSED', tmp$hdr[[1]]),'sec', sep=''),  paste('Readout amplifier (e-/ADU) =',get.fitskey('RO_GAIN', tmp$hdr[[1]]), sep=''), paste('Readout noise (electrons) =',get.fitskey('RO_NOISE', tmp$hdr[[1]]), sep=''), paste('Mean Counts =', format(mean(tmp$dat[[1]], na.rm=T), nsmall=3, digits=3), sep=''), paste('Median Counts =', median(tmp$dat[[1]], na.rm=T), sep=''), paste('NA pixels =', length(which(is.finite(tmp$dat[[1]])==F)), sep=''), paste('SD counts =', format(sd(tmp$dat[[1]], na.rm=T), nsmall=3, digits=3), sep=''),  paste('Max counts =', max(tmp$dat[[1]], na.rm=T), sep=''),paste('Min counts =', min(tmp$dat[[1]], na.rm=T), sep='')))
@@ -109,6 +114,11 @@ checkCal<-function(biasDir=biasDir, darksDir=darksDir, verbose=1){
     layout(matrix(tmp, ceiling(length(darkList)/2.0), 2, byrow = TRUE))
     
     for (i in 1:length(darkList)){
+      
+      if (verbose>1){
+        cat('      - Checking dark file:', darkList[i],' ',i, 'of', length(darkList), '....',  '\n')
+      }
+      
         tmp<-read.fits(paste(darksDir,'/',darkList[i], sep=''), hdu=1)
         magimage(tmp$dat[[1]], main=darkList[i], xlim=c(-1500,2000), ylim=c(0,4000))
         legend('topleft', legend=c(paste('File: ',darkList[i],sep=''), paste('CCD =',get.fitskey('SPECTID', tmp$hdr[[1]]), sep=''), paste('Grating =',get.fitskey('GRATID', tmp$hdr[[1]]), sep=''), paste('Dectector =',get.fitskey('DETECTOR', tmp$hdr[[1]]), sep=''), paste('Exposure =',get.fitskey('EXPOSED', tmp$hdr[[1]]),'sec', sep=''),  paste('Readout amplifier (e-/ADU) =',get.fitskey('RO_GAIN', tmp$hdr[[1]]), sep=''), paste('Readout noise (electrons) =',get.fitskey('RO_NOISE', tmp$hdr[[1]]), sep=''), paste('Mean Counts =', format(mean(tmp$dat[[1]], na.rm=T), nsmall=3, digits=3), sep=''), paste('Median Counts =', median(tmp$dat[[1]], na.rm=T), sep=''), paste('NA pixels =', length(which(is.finite(tmp$dat[[1]])==F)), sep=''), paste('SD counts =', format(sd(tmp$dat[[1]], na.rm=T), nsmall=3, digits=3), sep=''),  paste('Max counts =', max(tmp$dat[[1]], na.rm=T), sep=''),paste('Min counts =', min(tmp$dat[[1]], na.rm=T), sep='')))
