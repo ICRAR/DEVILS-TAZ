@@ -55,13 +55,13 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
             biasfilesBlue<-paste(biasDir,'/',biasfiles[which(substr(biasfiles, 6,6)=='1')],sep='')
             for (j in 1:length(biasfilesBlue)){
                 write(paste('              - Reducing Bias File:',biasfilesBlue[j], sep=''), file=logName, append=T)
-                system(paste('aaorun reduce_bias ',biasfilesBlue[j], ' -idxfile data/idxFiles/ozdes_blue.idx', sep=''))
+                system(paste('aaorun reduce_bias ',biasfilesBlue[j], ' -idxfile data/idxFiles/gama_blue.idx', sep=''))
             }
 
             biasfilesRed<-paste(biasDir,'/',biasfiles[which(substr(biasfiles, 6,6)=='2')],sep='')
             for (j in 1:length(biasfilesRed)){
                 write(paste('              - Reducing Bias File:',biasfilesRed[j], sep=''), file=logName, append=T)
-                system(paste('aaorun reduce_bias ',biasfilesRed[j], ' -idxfile data/idxFiles/ozdes_red.idx', sep=''))
+                system(paste('aaorun reduce_bias ',biasfilesRed[j], ' -idxfile data/idxFiles/gama_red.idx', sep=''))
             }
             
             count<-0
@@ -109,7 +109,7 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
                  system(paste('aaorun reduce_dark ',darkfilesBlue[j], ' -idxfile data/idxFiles/gama_blue.idx -usebiasim 1 -bias_filename ',biasFileBlue,sep=''))
              }
 
-              darkfilesRed<-paste(darkDir,'/',darkfiles[which(substr(darkfiles, 6,6)=='2')],sep='')
+            darkfilesRed<-paste(darkDir,'/',darkfiles[which(substr(darkfiles, 6,6)=='2')],sep='')
              for (j in 1:length(darkfilesRed)){
                  write(paste('              - Reducing Dark File:',darkfilesRed[j], sep=''), file=logName, append=T)
                  system(paste('aaorun reduce_dark ',darkfilesRed[j], ' -idxfile data/idxFiles/gama_red.idx -usebiasim 1 -bias_filename ',biasFileRed,sep=''))
