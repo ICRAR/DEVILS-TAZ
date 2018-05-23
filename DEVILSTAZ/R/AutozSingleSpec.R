@@ -34,7 +34,7 @@
 #' plotLines(z=autoz_out$z)
 #' cat('Probability of correct redshift is: ', autoz_out$prob)
 #' @export
-AutozSingleSpec = function(specRaw, tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',oversample = 5, num = 5, templateNumbers = c(2:14,16:22,40:47), stLambda = 3726, endLambda = 8850, minval = -1.0e4, maxval = 1.0e6, z_prior=c(-1,1000), doHelio=T,verbose = TRUE){
+AutozSingleSpec = function(specRaw, tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',oversample = 5, num = 5, templateNumbers = c(2:14,16:22,40:47), stLambda = 3726, endLambda = 8850, minval = -1.0e4, maxval = 1.0e6, z_prior=c(-1,1000), doHelio=T,highZ=T, verbose = TRUE){
   
   # TODO remove timing
   TOTALTIME <- proc.time()
@@ -43,14 +43,14 @@ AutozSingleSpec = function(specRaw, tempFile = 'data/calibrators/AutoZTemp/filte
   specNum<-1
   
   #set up new lambda scale to rebin spectrum and templates to
-  logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample)
+  logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample, highZ==highZ)
   newLogLambda <- logLambdaData$logLambda
   
   
     specRaw$lambda <- lambda
 PROCESSTIME <- proc.time()
   spec <- ProcessSpectrum(specRaw, stLambda = stLambda, endLambda = endLambda, minval = minval, maxval = maxval, 
-                          useInvCorrection = useInvCorrection,  verbose = verbose,)
+                          useInvCorrection = useInvCorrection,  verbose = verbose)
   PROCESSTIME <- proc.time()[3] - PROCESSTIME[3]
   
   spec$countHighval  <- length(which(spec$flux > 20))
@@ -78,7 +78,7 @@ PROCESSTIME <- proc.time()
  plan = 0
 CROSSTIME <- proc.time()
   #get cross correlation info and find highest peaks in data
-  ccinfo <- DoCrossCorr(spec = spec, gap = logLambdaData$gap, tempData = tempData, helioVel = helioVel, plan = plan, z_prior=z_prior)
+  ccinfo <- DoCrossCorr(spec = spec, gap = logLambdaData$gap, tempData = tempData, helioVel = helioVel, plan = plan, z_prior=z_prior,highZ=highZ)
 CROSSTIME <- CROSSTIME[3] - proc.time()[3]
   peaks <- FindHighestPeaks(ccinfo, num=num)
   #fit quadratic and adjust redshift slightly. Also save ccSigma data

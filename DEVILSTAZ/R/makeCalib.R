@@ -36,8 +36,10 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
 
         darkDir<-paste('data/darks/', strsplit(toReduce, '/')[[1]][3],sep='')
         biasDir<-paste('data/biases/', strsplit(toReduce, '/')[[1]][3],sep='')
+
         
-        biasDate<-strsplit(biasDir, '/')[[1]][3]
+        
+        biasDate<-strsplit(toReduce, '/')[[1]][4]
         darkDate<-strsplit(darkDir, '/')[[1]][3]
         biasFileBlue<-paste(biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='')
         darkFileBlue<-paste(darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='')
@@ -45,13 +47,19 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
         darkFileRed<-paste(darkDir,'/',darkDate,'_red_DARKcombined.fits', sep='')
         calib<-data.frame(rawDir=toReduce, biasFileBlue=biasFileBlue, darkFileBlue=darkFileBlue, biasFileRed=biasFileRed, darkFileRed=darkFileRed)
         
-        if (length(list.files(path=biasDir, pattern='*BIAScombined.fits'))==0){
+        if (length(list.files(path=biasDir, pattern=paste(biasDate,'_blue_BIAScombined.fits',sep='')))==0){
 
             
             write('            - No master bias. Making *BAIScombined.fits......', file=logName, append=T)
             if (verbose>1){cat('            - No master bias. Making *BAIScombined.fits......', '\n')}
             
-            biasfiles<-list.files(path=biasDir, pattern='*.fits')
+            reducDay<-as.numeric(strsplit(biasDate, '_')[[1]][3])
+            reducMonth<-as.numeric(strsplit(biasDate, '_')[[1]][2])
+            reducYear<-as.numeric(strsplit(biasDate, '_')[[1]][1])
+            reducMonth<-tolower(substr(months(as.Date(paste(reducYear, '-',reducMonth,'-',reducDay,sep=''))),1,3))
+            
+            biasfiles<-list.files(path=biasDir, pattern=paste(reducDay,reducMonth,'*',sep=''))
+            
             biasfilesBlue<-paste(biasDir,'/',biasfiles[which(substr(biasfiles, 6,6)=='1')],sep='')
             for (j in 1:length(biasfilesBlue)){
                 write(paste('              - Reducing Bias File:',biasfilesBlue[j], sep=''), file=logName, append=T)
@@ -81,7 +89,7 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep=''), file=logName, append=T)
-            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
+            system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
 
 
 
@@ -125,7 +133,7 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              tmp<-tmp[which(substr(tmp, 6,6)=='1')]
              tmp<-paste(darkDir,'/',tmp, sep='', collapse=' ')
              write(paste('              - Making Master Dark:',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep=''), file=logName, append=T)
-             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
+             system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
 
              tmp<-list.files(path=darkDir, pattern='*red.fits')
              tmp<-tmp[which(substr(tmp, 6,6)=='2')]

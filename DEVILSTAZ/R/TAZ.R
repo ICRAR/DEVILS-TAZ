@@ -24,6 +24,7 @@
 #' @param toStackIDs If doExtract=F and doStack=T, provide a string vector of IDs you wish to stack. Can be a list of IDs 
 #' or set to 'all' which will stack all unique IDs in the 'data/reduced/allSpec/' directory.
 #' @param doAutoZ TRUE/FALSE, Perform AutoZ redshift fitting using runAutoZ.R 
+#' @param highZ TRUE/FALSE, run auto-z in high redshfit (z>0.9) mode.
 #' @param toAutoZStacks  If doStack=F and doAutoZ=T, provide vector list of file paths to run AutoZ over. 
 #' Must either be full directory path, or can set to 'all' to run over all spectra in the 'data/reduced/stackedSpec/' directory.  
 #' @param doUpdateMaster TRUE/FALSE, Update and generate a new DMCat (with timestamp) using the redshift measurement in the 
@@ -367,7 +368,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (toAutoZStacks=='all'){newStacks<-'all'}
     
     
-    runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores)
+    runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores, highZ=highZ)
     
     
   }

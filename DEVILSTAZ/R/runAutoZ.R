@@ -15,7 +15,7 @@
 #' 
 #' runAutoZ(specs=c('data/reduced/stackedSpec/G007372.RData'), logName='tempLog.txt', verbose=1, makePlots=T, cores=4)
 #' @export
-runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, cores=cores){
+runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, cores=cores, highZ=T){
 
 
     if (specs[1]=='all'){
@@ -46,7 +46,7 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, c
         
         
         
-        autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F)
+        autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F,highZ=highZ, templateNumbers = c(2:14,16:28,33:80))
         
         spec$z<-autoz_out$results[1]
         spec$prob<-autoz_out$prob
