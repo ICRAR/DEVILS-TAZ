@@ -274,7 +274,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits', sep='')))
                     }
                     
-                    
+                    addString<-''
                     if (doCosmic==T) {
                       if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
                         fileBlue<-paste(toReduce[i], '/',targets_ccd1[k],'red',sep='')
@@ -312,12 +312,13 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         
                         
                       if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
+                      addString<-'_CosRej'
                     }
                     
                     
                     
                     
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_CosRej.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red',addString,'.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
                     
@@ -515,8 +516,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     while(count<1){
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red.fits', sep='')))
                     }
-                    
-                    
+                    addString<-''
+                    if (doCosmic==T) {
+                      
                     fileRed<-paste(toReduce[i], '/',targets_ccd2[k],'red',sep='')
                     imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
                     imRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
@@ -549,9 +551,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     Sys.sleep(1)
                     system(paste('fappend ',fileRed,'.fits[9] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     
-          
+                    addString<-'_CosRej'
+                    }
                     
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red_CosRej.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red',addString,'.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
                     
