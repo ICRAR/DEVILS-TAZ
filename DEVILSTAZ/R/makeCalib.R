@@ -21,6 +21,8 @@
 #' @export
 makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose=verbose){
 
+ 
+  
     if (verbose>0){cat('     - Running makeCalib.....', '\n')}
 
     write('     - Running makeCalib.....', file=logName, append=T)
