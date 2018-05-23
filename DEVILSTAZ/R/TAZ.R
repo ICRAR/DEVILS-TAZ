@@ -191,7 +191,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       if (verbose>0){cat('Reducing new datasets....', '\n')}
       write('Reducing new datasets....', file=logName, append=T)
       
-      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores)
+      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=F)
       
       ## newReduce not passing from run2dfDR() correctly - find manually....
       newReduce<-c()
