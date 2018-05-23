@@ -15,7 +15,8 @@
 #' data/rawdata/run#_YYYY_MM/YYYY_MM_DD (i.e. data/rawdata/run1_2017_12/2017_12_18). *** NOTE: IF YOU
 #' WITH TAZ TO IDENTIFY ALL UNDREDUCED DATES SET toReduceDirs='NA'** Also, this will overwrite any data in the 
 #' corresponding reduced directory for that night, so use with care!  
-#' @param zeroPoint 
+#' @param doDark TRUE/FALSE, do dark frame subtraction in 2dFDR reduction
+#' @param zeroPoint TRUE/FALSE, Do zeroPoint flux scaling
 #' @param doExtract TRUE/FALSE, Perform 1D spectral extraction using extractNewSpec.R 
 #' @param toExtractFiles If doReduce=F and doExtract=T, provide a string vector of the reduced files to 
 #' extract. These must have the full path (i.e. data/reduced/run1_2017_12/2017_12_18/2017_12_18_config_1_reduced.fits) 
@@ -75,7 +76,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA', zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F){
   
   system('cleanup')
   
@@ -191,7 +192,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       if (verbose>0){cat('Reducing new datasets....', '\n')}
       write('Reducing new datasets....', file=logName, append=T)
       
-      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=F)
+      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=doDark)
       
       ## newReduce not passing from run2dfDR() correctly - find manually....
       newReduce<-c()
