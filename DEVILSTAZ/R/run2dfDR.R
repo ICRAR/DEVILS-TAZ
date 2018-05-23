@@ -277,25 +277,47 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     
                     if (doCosmic==T) {
                       if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
-                        fileBlue<-paste(toReduce[i], '/',targets_ccd1[k],'red.fits',sep='')
-                        imBlue <- readFITS(file=fileBlue,hdu=1)
-                        snBlue <- readFITS(file=fileBlue,hdu=2)
-                        
-                          #RO_GAIN<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_GAIN")+1])
-                          #RO_NOISE<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_NOISE")+1])
-                          RO_GAIN<-1.9
+                        fileBlue<-paste(toReduce[i], '/',targets_ccd1[k],'red',sep='')
+                        imBlue <- read.fits(file=paste(fileBlue,'.fits', sep=''),hdu=1)
+                        snBlue <- readFITS(file=paste(fileBlue,'.fits', sep=''),hdu=2)
+                        RO_GAIN<-1.9
                         RO_NOISE<-1.8
-                      CosSub<-RCosmic(imBlue$imDat, imBlue$hdr, snBlue$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
-                      CosMaskBlue<-array(1,dim=dim(imBlue$imDat))
-                      CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$imDat)==F, arr.ind = TRUE)]<-NA
-                      imBlue$imDat<-CosSub
+                        CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                        CosMaskBlue<-array(1,dim=dim(imBlue$dat[[1]]))
+                        CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
+                        imBlue$dat[[1]]<-CosSub  
+                     
+                        
+                        write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
+                        
+                
+                        system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[2] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[3] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[4] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[5] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[6] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[7] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[8] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        Sys.sleep(1)
+                        system(paste('fappend ',fileBlue,'.fits[9] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        
+                        
+                        
                       if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
                     }
                     
                     
                     
                     
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_CosRej.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
                     
@@ -494,7 +516,42 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red.fits', sep='')))
                     }
                     
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
+                    
+                    fileRed<-paste(toReduce[i], '/',targets_ccd2[k],'red',sep='')
+                    imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
+                    imRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
+                    RO_GAIN<-1.9
+                    RO_NOISE<-1.8
+                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], imRed$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                    CosMaskRed<-array(1,dim=dim(imRed$dat[[1]]))
+                    CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
+                    imRed$dat[[1]]<-CosSub  
+                    
+                    
+                    write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
+                    
+                    
+                    system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[2] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[3] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[4] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[5] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[6] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[7] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[8] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    Sys.sleep(1)
+                    system(paste('fappend ',fileRed,'.fits[9] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    
+          
+                    
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red_CosRej.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
                     
