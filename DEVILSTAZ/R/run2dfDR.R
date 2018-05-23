@@ -11,10 +11,11 @@
 #' @param logName log filename to write progress to
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @param reducCores number of cores to use
+#' @param doCosmic  TRUE/FALSE do additonal cosmic ray rejection 
 #' @examples 
 #' run2dfDR(toReduce='data/rawdata/run1_2017_12/2017_12_18', doCalibQC=F, logName='tempLog.txt', verbose=1, reducCores=4)
 #' @export
-run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=T){
+run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=T, doCosmic=doCosmic){
 
                                         #****** need to add to log file in run2dfDR and vebose outputs *****
 
@@ -105,7 +106,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 
                 
-                idx<-'data/idxFiles/gama_blue.idx'
+                idx<-'data/idxFiles/ozdes_blue.idx'
 
                 if (verbose>1){cat('             ** For blue ccd using: ', idx, '\n')}
                 write(paste('             ** For blue ccd using: ', idx,sep=''), file=logName, append=T)
@@ -273,9 +274,34 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits', sep='')))
                     }
                     
+                    
+                    if (doCosmic==T) {
+                      if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
+                        fileBlue<-paste(toReduce[i], '/',targets_ccd1[k],'red.fits',sep='')
+                        imBlue <- readFITS(file=fileBlue,hdu=1)
+                        snBlue <- readFITS(file=fileBlue,hdu=2)
+                        
+                          #RO_GAIN<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_GAIN")+1])
+                          #RO_NOISE<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_NOISE")+1])
+                          RO_GAIN<-1.9
+                        RO_NOISE<-1.8
+                      CosSub<-RCosmic(imBlue$imDat, imBlue$hdr, snBlue$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                      CosMaskBlue<-array(1,dim=dim(imBlue$imDat))
+                      CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$imDat)==F, arr.ind = TRUE)]<-NA
+                      imBlue$imDat<-CosSub
+                      if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
+                    }
+                    
+                    
+                    
+                    
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd1/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
+                    
+                  
+                    
+                    
                     
                     if (host=="munro"){
                       system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
@@ -332,7 +358,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
 
                                         # reduce calibrations ccd2
-                idx<-'data/idxFiles/gama_red.idx'
+                idx<-'data/idxFiles/ozdes_red.idx'
 
                 if (verbose>1){cat('             ** For red ccd using: ', idx, '\n')}
                 write(paste('             ** For red ccd using: ', idx,sep=''), file=logName, append=T)

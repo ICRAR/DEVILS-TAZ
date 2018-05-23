@@ -192,7 +192,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       if (verbose>0){cat('Reducing new datasets....', '\n')}
       write('Reducing new datasets....', file=logName, append=T)
       
-      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=doDark)
+      newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=doDark, doCosmic=doCosmic)
       
       ## newReduce not passing from run2dfDR() correctly - find manually....
       newReduce<-c()
@@ -257,7 +257,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       
       if (verbose>0){cat('  -Extracting 1D spectra from: ', newReduce[i], '\n')}
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
-      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate, doCosmic=doCosmic)
+      tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate, doCosmic=F)
       
      
     }

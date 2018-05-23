@@ -99,7 +99,8 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     if (doCosmic==T) {
         if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
         RO_GAIN<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_GAIN")+1])
-        CosSub<-RCosmic(imBlue$imDat, imBlue$hdr, snBlue$imDat, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+        RO_GAIN<-1.9
+        CosSub<-RCosmic(imBlue$imDat, imBlue$hdr, snBlue$imDat, rdnoise=1.8, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
         CosMaskBlue<-array(1,dim=dim(imBlue$imDat))
         CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$imDat)==F, arr.ind = TRUE)]<-NA
         imBlue$imDat<-CosSub
@@ -122,7 +123,8 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     if (doCosmic==T) {
         if (verbose>0){cat('     - Running Cosmic rejection for Red CCD....', '\n')}
         RO_GAIN<-as.numeric(imRed$hdr[which(imRed$hdr=="RO_GAIN")+1])
-        CosSub<-RCosmic(imRed$imDat, imRed$hdr, snRed$imDat, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+        RO_GAIN<-1.9
+        CosSub<-RCosmic(imRed$imDat, imRed$hdr, snRed$imDat, rdnoise=1.8, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
         CosMaskRed<-array(1,dim=dim(imRed$imDat))
         CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$imDat)==F, arr.ind = TRUE)]<-NA
         imRed$imDat<-CosSub

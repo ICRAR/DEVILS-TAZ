@@ -34,7 +34,7 @@ aaorunObj<-function(file=file, idx=idx, doDark=T, darkFile=darkFile, doBias=T, b
     arcFile<-paste('../',arcFile,sep='')
     tlmFile<-paste('../',tlmFile,sep='')
     
-    cmd<-paste('aaorun reduce_object ', file, ' -idxfile ',idx, ' -useflatim 0 -usefflat 1 -fflat_filename ',flatFile,' -tlmap_filename ',tlmFile,' -wavel_filename ',arcFile,'    -do_bias ',biasNum,' -do_extra 1 -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, sep='')
+    cmd<-paste('aaorun reduce_object ', file, ' -idxfile ',idx, ' -lacosmic NO -useflatim 0 -usefflat 1 -fflat_filename ',flatFile,' -tlmap_filename ',tlmFile,' -wavel_filename ',arcFile,'    -do_bias ',biasNum,' -do_extra 1 -usebiasim ',biasNum,' -bias_filename ',biasFile, ' -usedarkim ',darkNum,' -dark_filename ',darkFile, sep='')
     
     system(cmd)
     setwd(oldWD)

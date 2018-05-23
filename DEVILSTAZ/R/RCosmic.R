@@ -7,7 +7,7 @@
 #' @examples 
 #' 
 #' @export
-RCosmic<-function(image, hdr, error, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
+RCosmic<-function(image, hdr, error, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
   
 
   sigma = fwhm_gauss/2.354
@@ -16,7 +16,7 @@ RCosmic<-function(image, hdr, error, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2
   
   image = image*gain
 
-  rdnoise <- as.numeric(hdr[which(hdr=="RO_NOISE")+1])
+  #rdnoise <- as.numeric(hdr[which(hdr=="RO_NOISE")+1])
   LA_kernel<-array(c(0,-1,0,-1,4,-1,0,-1,0), dim=c(3,3))/4
   
   

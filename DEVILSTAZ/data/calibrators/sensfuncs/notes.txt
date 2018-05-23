@@ -1,0 +1,28 @@
+cp aaomega_TF385R_X5700_20150125.fits AAOMEGA-2DF_X5700_385R_E2V3A.fits
+cp aaomega_TF580V_X5700_20150125.fits AAOMEGA-2DF_X5700_580V_E2V2A.fits
+cp aaomega_TF385R_X5700_20150503.fits AAOMEGA-2DF_X5700_385R_E2V3.fits
+cp aaomega_TF580V_X5700_20150503.fits AAOMEGA-2DF_X5700_580V_E2V2.fits
+
+2017/04/29
+----------
+
+How to add FITS files to the repository
+
+From https://svn.mso.anu.edu.au/commit_rejects.php
+
+To fix, remove it from the list of files to be added and recommit or,
+if it absolutely must be version controlled as named, use one of the
+following bypass mechanisms to add the file to the repository: 
+
+add a property named 'bypass:junk-filter' (without quotes) to the
+offending file(s) and re-commit; there is no need to remove the
+property afterwards (although you can if you wish) 
+
+svn-rename the file to append ".BYPASS_JUNK_FILTER" to the end of the
+filename (after any existing extension) and re-commit; afterwards, you
+will likely want to svn-rename again to remove the bypass extension,
+then re-commit
+
+svn add AAOMEGA-2DF_X5700_385R_E2V3A.fits
+svn propset bypass:junk-filter on AAOMEGA-2DF_X5700_385R_E2V3A.fits
+svn commit AAOMEGA-2DF_X5700_385R_E2V3A.fits -m "bla bla"
