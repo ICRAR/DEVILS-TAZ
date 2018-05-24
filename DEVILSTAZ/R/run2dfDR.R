@@ -520,9 +520,11 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     addString<-''
                     if (doCosmic==T) {
                       
+                      if (verbose>0){cat('     - Running Cosmic rejection for Red CCD....', '\n')}
+                      
                     fileRed<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red', sep='')
                     imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
-                    imRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
+                    snRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
                     RO_GAIN<-1.9
                     RO_NOISE<-1.8
                     CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], imRed$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
@@ -552,6 +554,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     Sys.sleep(1)
                     system(paste('fappend ',fileRed,'.fits[9] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     
+                    if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
                     addString<-'_CosRej'
                     }
                     
