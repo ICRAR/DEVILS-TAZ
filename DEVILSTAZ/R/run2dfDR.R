@@ -353,7 +353,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 combineList<-paste('data/reduced/',dateReduc,'/ccd1/',list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
-                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -combinedfile data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep='')
+                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic NO -SKYCOMBINE MEDIAN -OPERATION MEDIAN -combinedfile data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep='')
                 system(cmd)
 
                 count<-0
@@ -588,7 +588,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 combineList<-paste('data/reduced/',dateReduc,'/ccd2/',list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
-                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -combinedfile data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')
+                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic NO -SKYCOMBINE MEDIAN -OPERATION MEDIAN -combinedfile data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')
                 system(cmd)
 
                 if (host=="munro"){
@@ -622,7 +622,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 spliceList<-paste(c(paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep=''), paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')),sep='',collapse=' ')
 
                 idx<-'data/idxFiles/gama_blue.idx'
-                cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
+                cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic NO -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
 
                 system(cmd)
                 

@@ -84,14 +84,14 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep=''), file=logName, append=T)
-            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='"'))
+            system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_blue.idx -SKYCOMBINE MEDIAN -OPERATION MEDIAN -COMBINEDFILE ',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='"'))
 
             tmp<-list.files(path=biasDir, pattern='*red.fits')
             tmp<-tmp[which(substr(tmp, 6,6)=='2')]
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep=''), file=logName, append=T)
-            system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
+            system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_red.idx -SKYCOMBINE MEDIAN -OPERATION MEDIAN -COMBINEDFILE ',biasDir,'/',biasDate,'_red_BIAScombined.fits', sep='"'))
 
 
 
@@ -135,13 +135,13 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
              tmp<-tmp[which(substr(tmp, 6,6)=='1')]
              tmp<-paste(darkDir,'/',tmp, sep='', collapse=' ')
              write(paste('              - Making Master Dark:',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep=''), file=logName, append=T)
-             system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_blue.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
+             system(paste('aaorun combine_image ',tmp, '  -idxfile data/idxFiles/ozdes_blue.idx -SKYCOMBINE MEDIAN -OPERATION MEDIAN -COMBINEDFILE ',darkDir,'/',darkDate,'_blue_DARKcombined.fits', sep='"'))
 
              tmp<-list.files(path=darkDir, pattern='*red.fits')
              tmp<-tmp[which(substr(tmp, 6,6)=='2')]
              tmp<-paste(darkDir,'/',tmp, sep='', collapse=' ')
              write(paste('              - Making Master Dark:',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep=''), file=logName, append=T)
-             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_red.idx -COMBINEDFILE ',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep='"'))
+             system(paste('aaorun combine_image ',tmp, ' -idxfile data/idxFiles/ozdes_red.idx -SKYCOMBINE MEDIAN -OPERATION MEDIAN -COMBINEDFILE ',darkDir,'/',darkDate,'_red_DARKcombined.fits', sep='"'))
 
 
 
