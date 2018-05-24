@@ -280,8 +280,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         fileBlue<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red', sep='')
                         imBlue <- read.fits(file=paste(fileBlue,'.fits', sep=''),hdu=1)
                         snBlue <- readFITS(file=paste(fileBlue,'.fits', sep=''),hdu=2)
-                        RO_GAIN<-1.9
-                        RO_NOISE<-1.8
+                        RO_GAIN<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_GAIN")+1])
+                        RO_NOISE<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_NOISE")+1])
+                        #RO_GAIN<-1.9
+                        #RO_NOISE<-1.8
                         CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                         CosMaskBlue<-array(1,dim=dim(imBlue$dat[[1]]))
                         CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
@@ -525,8 +527,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     fileRed<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red', sep='')
                     imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
                     snRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
-                    RO_GAIN<-1.9
-                    RO_NOISE<-1.8
+                    RO_GAIN<-as.numeric(imRed$hdr[which(imRed$hdr=="RO_GAIN")+1])
+                    RO_NOISE<-as.numeric(imRed$hdr[which(imRed$hdr=="RO_NOISE")+1])
+            
                     CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                     CosMaskRed<-array(1,dim=dim(imRed$dat[[1]]))
                     CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
