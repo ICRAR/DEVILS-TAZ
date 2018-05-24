@@ -527,7 +527,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     snRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
                     RO_GAIN<-1.9
                     RO_NOISE<-1.8
-                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], imRed$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                     CosMaskRed<-array(1,dim=dim(imRed$dat[[1]]))
                     CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
                     imRed$dat[[1]]<-CosSub  
