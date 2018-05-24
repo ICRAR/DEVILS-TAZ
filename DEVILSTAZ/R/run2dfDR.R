@@ -277,7 +277,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     addString<-''
                     if (doCosmic==T) {
                       if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
-                        fileBlue<-paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red', sep='')
+                        fileBlue<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red', sep='')
                         imBlue <- read.fits(file=paste(fileBlue,'.fits', sep=''),hdu=1)
                         snBlue <- readFITS(file=paste(fileBlue,'.fits', sep=''),hdu=2)
                         RO_GAIN<-1.9
@@ -520,7 +520,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     addString<-''
                     if (doCosmic==T) {
                       
-                    fileRed<-paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red', sep='')
+                    fileRed<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red', sep='')
                     imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
                     imRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
                     RO_GAIN<-1.9
