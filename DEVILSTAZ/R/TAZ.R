@@ -79,10 +79,7 @@
 #' 
 TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F){
   
-  if (is.na(CosmicPars)==T){
-    
-    CosmicPars<-list(rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0)
-  }
+  
   
   system('cleanup')
   
