@@ -562,9 +562,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     addString<-'_CosRej'
                     }
                     
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red',addString,'.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
-                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red',addString,'.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'im.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'im_config',j,'.fits', sep=''))
+                    system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'ex.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'ex_config',j,'.fits', sep=''))
                     
                     if (host=="munro"){
                       system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))

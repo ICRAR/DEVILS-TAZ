@@ -71,8 +71,8 @@ RCosmic<-function(image, hdr, error, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5,
     
       for (j in 1:dim(select)[1]){
         tmp<-select[j,]
-        lowX<-tmp[1]-3
-        highX<-tmp[1]+3
+        lowX<-tmp[1]-2
+        highX<-tmp[1]+2
         lowY<-tmp[2]
         highY<-tmp[2]
         if(lowX<=0){lowX<-1}
