@@ -284,16 +284,16 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
                         #RO_GAIN<-1.9
                         #RO_NOISE<-4.0
-                        CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$imDat, rdnoise=RO_NOISE, sigma_det=7, rlim=1.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                        CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$imDat, rdnoise=RO_NOISE, sigma_det=8, rlim=2.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                         CosMaskBlue<-array(1,dim=dim(imBlue$dat[[1]]))
                         CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
                         imBlue$dat[[1]]<-CosSub  
-                     
+                        snBlue$dat[[1]]<-snBlue$dat[[1]]*CosMaskBlue
                         
                         write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
+                        write.fits(snBlue, file=paste(fileBlue,'_CosRej_var.fits', sep=''))
                         
-                
-                        system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'_CosRej_var.fits ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
                         Sys.sleep(1)
                         system(paste('fappend ',fileBlue,'.fits[2] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
                         Sys.sleep(1)
@@ -531,16 +531,16 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
                     #RO_GAIN<-1.9
                     #RO_NOISE<-4.0
-                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$imDat, rdnoise=RO_NOISE, sigma_det=7, rlim=1.5, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$imDat, rdnoise=RO_NOISE, sigma_det=8, rlim=2.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                     CosMaskRed<-array(1,dim=dim(imRed$dat[[1]]))
                     CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
                     imRed$dat[[1]]<-CosSub  
-                    
+                    snRed$dat[[1]]<-snRed$dat[[1]]*CosMaskRed
                     
                     write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
+                    write.fits(snRed, file=paste(fileRed,'_CosRej_var.fits', sep=''))
                     
-                    
-                    system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    system(paste('fappend ',fileRed,'_CosRej_var.fits ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     Sys.sleep(1)
                     system(paste('fappend ',fileRed,'.fits[2] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     Sys.sleep(1)
