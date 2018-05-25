@@ -279,12 +279,12 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                       if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
                         fileBlue<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red', sep='')
                         imBlue <- read.fits(file=paste(fileBlue,'.fits', sep=''),hdu=1)
-                        snBlue <- readFITS(file=paste(fileBlue,'.fits', sep=''),hdu=2)
+                        snBlue <- read.fits(file=paste(fileBlue,'.fits', sep=''),hdu=2)
                         RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imBlue$hdr[[1]]))
                         RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
                         #RO_GAIN<-1.9
                         #RO_NOISE<-4.0
-                        CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$imDat, rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                        CosSub<-RCosmic(imBlue$dat[[1]], imBlue$hdr[[1]], snBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=8, rlim=1.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                         CosMaskBlue<-array(1,dim=dim(imBlue$dat[[1]]))
                         CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
                         imBlue$dat[[1]]<-CosSub  
@@ -526,12 +526,12 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                       
                     fileRed<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red', sep='')
                     imRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=1)
-                    snRed <- readFITS(file=paste(fileRed,'.fits', sep=''),hdu=2)
+                    snRed <- read.fits(file=paste(fileRed,'.fits', sep=''),hdu=2)
                     RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
                     RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
                     #RO_GAIN<-1.9
                     #RO_NOISE<-4.0
-                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$imDat, rdnoise=RO_NOISE, sigma_det=8, rlim=2.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
+                    CosSub<-RCosmic(imRed$dat[[1]], imRed$hdr[[1]], snRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=8, rlim=2.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
                     CosMaskRed<-array(1,dim=dim(imRed$dat[[1]]))
                     CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
                     imRed$dat[[1]]<-CosSub  
