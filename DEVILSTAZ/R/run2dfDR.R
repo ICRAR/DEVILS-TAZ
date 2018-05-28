@@ -292,24 +292,24 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         
                         write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
                         write.fits(snBlue, file=paste(fileBlue,'_CosRej_var.fits', sep=''))
-                        
-                        system(paste('fappend ',fileBlue,'_CosRej_var.fits ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[2] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'_CosRej_var.fits[0] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[3] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'.fits[2] ',fileBlue,'_CosRej.fits ',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[4] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'.fits[3] ',fileBlue,'_CosRej.fits ',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[5] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'.fits[4] ',fileBlue,'_CosRej.fits ',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[6] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'.fits[5] ',fileBlue,'_CosRej.fits ',sep=''))
                         Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[7] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
-                        Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[8] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
-                        Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[9] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        system(paste('fappend ',fileBlue,'.fits[6] ',fileBlue,'_CosRej.fits ',sep=''))
+                        #Sys.sleep(1)
+                        #system(paste('fappend ',fileBlue,'.fits[7] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        #Sys.sleep(1)
+                        #system(paste('fappend ',fileBlue,'.fits[8] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
+                        #Sys.sleep(1)
+                        #system(paste('fappend ',fileBlue,'.fits[9] ',fileBlue,'_CosRej.fits pkeywds+',sep=''))
                         
                         
                         
@@ -551,12 +551,12 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     system(paste('fappend ',fileRed,'.fits[5] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     Sys.sleep(1)
                     system(paste('fappend ',fileRed,'.fits[6] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
-                    Sys.sleep(1)
-                    system(paste('fappend ',fileRed,'.fits[7] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
-                    Sys.sleep(1)
-                    system(paste('fappend ',fileRed,'.fits[8] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
-                    Sys.sleep(1)
-                    system(paste('fappend ',fileRed,'.fits[9] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    #Sys.sleep(1)
+                    #system(paste('fappend ',fileRed,'.fits[7] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    #Sys.sleep(1)
+                    #system(paste('fappend ',fileRed,'.fits[8] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
+                    #Sys.sleep(1)
+                    #system(paste('fappend ',fileRed,'.fits[9] ',fileRed,'_CosRej.fits pkeywds+',sep=''))
                     
                     if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
                     addString<-'_CosRej'
@@ -622,9 +622,11 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 spliceList<-paste(c(paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep=''), paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')),sep='',collapse=' ')
 
-                idx<-'data/idxFiles/gama_blue.idx'
+                idx<-'data/idxFiles/gama_red.idx'
                 cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic NO -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
-
+                
+                cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic NO -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced_TEST.fits', sep='')
+                
                 system(cmd)
                 
                 if (host=="munro"){
