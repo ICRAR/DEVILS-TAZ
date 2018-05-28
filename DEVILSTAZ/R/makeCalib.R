@@ -79,14 +79,16 @@ makeCalib<-function(toReduce=toReduce, doCalibQC=FALSE, logName=logName, verbose
                 count<-length(list.files(path=biasDir, pattern='*red.fits'))
             }
             
-            tmp<-list.files(path=biasDir, pattern='*red.fits')
+            tmp<-list.files(path=biasDir, pattern=paste(reducDay,reducMonth,'*',sep=''))
+            tmp<-tmp[which(substr(tmp, nchar(tmp)-7,nchar(tmp)-5)=='red')]
             tmp<-tmp[which(substr(tmp, 6,6)=='1')]
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
             write(paste('              - Making Master Bias:',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep=''), file=logName, append=T)
             system(paste('aaorun combine_image ',tmp, '  -COMBINEDFILE ',biasDir,'/',biasDate,'_blue_BIAScombined.fits', sep='"'))
 
-            tmp<-list.files(path=biasDir, pattern='*red.fits')
+            tmp<-list.files(path=biasDir, pattern=paste(reducDay,reducMonth,'*',sep=''))
+            tmp<-tmp[which(substr(tmp, nchar(tmp)-7,nchar(tmp)-5)=='red')]
             tmp<-tmp[which(substr(tmp, 6,6)=='2')]
             tmp<-paste(biasDir,'/',tmp, sep='', collapse=' ')
             
