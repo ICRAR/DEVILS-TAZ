@@ -7,7 +7,7 @@
 #' @examples 
 #' 
 #' @export
-RCosmic<-function(image, hdr, error, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
+RCosmic<-function(image, hdr, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
   
 
   sigma = fwhm_gauss/2.354
@@ -29,7 +29,7 @@ RCosmic<-function(image, hdr, error, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5,
 
     
     subIm<-EBImage::resize(image, w=dim(image)[1]*2, h=dim(image)[2]*2)
-    subError<-EBImage::resize(error, w=dim(image)[1]*2, h=dim(image)[2]*2)
+    
 
 
     convIm<- as.matrix(imager::convolve(as.cimg(subIm), as.cimg(LA_kernel)))
@@ -73,8 +73,8 @@ RCosmic<-function(image, hdr, error, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5,
         tmp<-select[j,]
         lowX<-tmp[1]-2
         highX<-tmp[1]+2
-        lowY<-tmp[2]
-        highY<-tmp[2]
+        lowY<-tmp[2]-2
+        highY<-tmp[2]+2
         if(lowX<=0){lowX<-1}
         if(highX>dim(Lap2)[1]){highX<-dim(Lap2)[1]}
         if(lowY<=0){lowY<-1}
