@@ -102,11 +102,12 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 imBlue<-read.fits(file=paste(fileBlue,'.fits', sep=''), hdu=1)
                 RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imBlue$hdr[[1]]))
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
-                CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
+                CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=4.5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
                 CosMaskBlue<-array(1.0,dim=dim(imBlue$dat[[1]]))
                 CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
                 write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
+                write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
                 Sys.sleep(1)
                 system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits ',sep=''))
@@ -127,11 +128,12 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
                 RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
-                CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
+                CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=4.5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
                 CosMaskRed<-array(1.0,dim=dim(imRed$dat[[1]]))
                 CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
                 write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
+                write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
                 Sys.sleep(1)
                 system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
@@ -337,7 +339,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
    
                     count<-0
                     while(count<1){
-                      count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'red.fits', sep='')))
+                      count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],addString,'red.fits', sep='')))
                     }
                     
                     
@@ -539,8 +541,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     
                     count<-0
                     while(count<1){
-                      count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red.fits', sep='')))
+                      count<-length(list.files(path=toReduce[i], pattern=paste(strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],addString,'red.fits', sep='')))
                     }
+                    
+                  
                     
                     
                     system(paste('mv ',toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],addString,'red.fits data/reduced/',dateReduc,'/ccd2/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'red_config',j,'.fits', sep=''))
