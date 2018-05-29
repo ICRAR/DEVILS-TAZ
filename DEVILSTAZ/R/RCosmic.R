@@ -7,7 +7,7 @@
 #' @examples 
 #' 
 #' @export
-RCosmic<-function(image, hdr, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
+RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
   
 
   sigma = fwhm_gauss/2.354
