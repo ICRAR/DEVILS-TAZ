@@ -25,7 +25,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
     #if (host=="munro"){  
      # registerDoParallel(cores=1)
     #}
-    
+    outfile=""
     registerDoParallel(makeCluster(reducCores))
     
     write('', file=logName, append=T)
