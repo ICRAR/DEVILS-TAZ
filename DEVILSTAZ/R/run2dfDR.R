@@ -26,7 +26,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
      # registerDoParallel(cores=1)
     #}
     
-    registerDoParallel(reducCores)
+    registerDoParallel(makeCluster(reducCores)
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
@@ -81,6 +81,10 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         }
         
         system('rm -rf runZone*')
+        
+        
+        
+        
         
 
 
@@ -283,11 +287,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                         CosMaskBlue<-array(1.0,dim=dim(imBlue$dat[[1]]))
                         CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                         imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
-                        #bzero<-as.numeric(get.fitskey(key="BZERO",imBlue$hdr[[1]]))
-                        #imBlue$hdr[[1]]<-put.fitskey('BZERO', 0, imBlue$hdr[[1]])
-                        
                         write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
-                        #write.fitskey('BZERO', bzero, paste(fileBlue,'_CosRej.fits', sep=''), comment = "offset data range to that of unsigned short", hdu = 1)
    
                         
                         Sys.sleep(1)
