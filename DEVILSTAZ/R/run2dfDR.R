@@ -25,8 +25,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
     #if (host=="munro"){  
      # registerDoParallel(cores=1)
     #}
-    outfile=""
-    registerDoParallel(makeCluster(reducCores))
+
+    registerDoParallel(reducCores)
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
@@ -81,6 +81,69 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         }
         
         system('rm -rf runZone*')
+        
+        
+        addString<-''
+        if (doCosmic==T) {
+          
+
+          ListfilesBlue<-metaData$fileName[which(metaData$type=='TARGET'& metaData$ccd=='blue')]
+          ListfilesRed<-metaData$fileName[which(metaData$type=='TARGET'& metaData$ccd=='red')]
+          
+          
+          if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD Files....', '\n')}
+          
+          for (k in 1:length(ListfilesBlue)){  
+            
+            if (verbose>1){cat(paste('         - Running Cosmic rejection for file -',ListfilesBlue[k],' ', k,' of ', length(ListfilesBlue),'...',sep=''), '\n')}
+          
+                fileBlue<-paste(toReduce[i], '/',strsplit(as.character(ListfilesBlue[k]),'.fits')[[1]][1],'', sep='')
+                
+                imBlue<-read.fits(file=paste(fileBlue,'.fits', sep=''), hdu=1)
+                RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imBlue$hdr[[1]]))
+                RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
+                CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
+                CosMaskBlue<-array(1.0,dim=dim(imBlue$dat[[1]]))
+                CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
+                imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
+                write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
+                
+                Sys.sleep(1)
+                system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits ',sep=''))
+                Sys.sleep(1)
+          }
+          
+          
+          if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
+          
+          if (verbose>0){cat('     - Running Cosmic rejection for Red CCD Files....', '\n')}
+          
+          if (verbose>1){cat(paste('         - Running Cosmic rejection for file -',ListfilesRed[k],' ', k,' of ', length(ListfilesRed),'...',sep=''), '\n')}
+          
+          fileRed<-paste(toReduce[i], '/',strsplit(as.character(ListfilesRed[k]),'.fits')[[1]][1],'', sep='')
+          
+          imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
+          RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
+          RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
+          CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
+          CosMaskRed<-array(1.0,dim=dim(imRed$dat[[1]]))
+          CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
+          imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
+          write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
+          
+          Sys.sleep(1)
+          system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
+          Sys.sleep(1)
+        }
+        
+        
+        if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
+          
+
+          addString<-'_CosRej'
+        }
+        
+        
         
 
                 
@@ -268,32 +331,6 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     if (verbose>1){cat('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1), '\n')}
                     write(paste('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1),sep=''), file=logName, append=T)
 
-                    
-                 
-                    addString<-''
-                    if (doCosmic==T) {
-                      if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
-                        fileBlue<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],'', sep='')
-                        
-                        imBlue<-read.fits(file=paste(fileBlue,'.fits', sep=''), hdu=1)
-                        RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imBlue$hdr[[1]]))
-                        RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
-                        CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
-                        CosMaskBlue<-array(1.0,dim=dim(imBlue$dat[[1]]))
-                        CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
-                        imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
-                        write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
-   
-                        
-                        Sys.sleep(1)
-                        system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits ',sep=''))
-                        Sys.sleep(1)
-  
-
-                      if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
-                        addString<-'_CosRej'
-                    }
-                    
                     aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
    
                     count<-0
@@ -494,34 +531,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                     write(paste('             - Using line: aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=doDark,darkFile=',calib$darkFileRed,', doBias=T, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), file=logName, append=T)
                     
-                    
-                    
-                    addString<-''
-                    if (doCosmic==T) {
-                      if (verbose>0){cat('     - Running Cosmic rejection for Red CCD....', '\n')}
-                      fileRed<-paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],'', sep='')
-                      
-                      imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
-                      RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
-                      RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
-                      CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
-                      CosMaskRed<-array(1.0,dim=dim(imRed$dat[[1]]))
-                      CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
-                      imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
-                      #bzero<-as.numeric(get.fitskey(key="BZERO",imRed$hdr[[1]]))
-                      #imRed$hdr[[1]]<-put.fitskey('BZERO', 0, imRed$hdr[[1]])
-                      
-                      write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
-                      #write.fitskey('BZERO', bzero, paste(fileRed,'_CosRej.fits', sep=''), comment = "offset data range to that of unsigned short", hdu = 1)
-                      
-                      Sys.sleep(1)
-                      system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
-                      Sys.sleep(1)
-                      
-                      
-                      if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
-                      addString<-'_CosRej'
-                    }
+
                     
                     aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileRed, doBias=T, biasFile=calib$biasFileRed, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
                     
