@@ -98,7 +98,7 @@ RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=
     
   }
  
-  if (verbose>1){cat('         - Finished RCosmic iterations....', '\n')}
+  if (verbose>1){cat('         - Finished RCosmic iterations, solution converged....', '\n')}
     
   return(BaseIm)
   
