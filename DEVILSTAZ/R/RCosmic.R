@@ -7,7 +7,7 @@
 #' @examples 
 #' 
 #' @export
-RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=FALSE){
+RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=2.0, gain=1.0, verbose=0){
   
 
   sigma = fwhm_gauss/2.354
@@ -20,7 +20,11 @@ RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=
   LA_kernel<-array(c(0,-1,0,-1,4,-1,0,-1,0), dim=c(3,3))/4
   
   
+  if (verbose>1){cat('         - Starting RCosmic iterations....', '\n')}
+  
   for (i in 1:iter){
+    
+    if (verbose>1){cat(paste('               - ',i,' of ',iter,'....',sep=''), '\n')}
     tmpIm<-image
     tmpIm[which(is.na(tmpIm)==T, arr.ind=TRUE)]<-0
     noise<-medianFilter(tmpIm, 2)
@@ -94,6 +98,7 @@ RCosmic<-function(image, rdnoise=1.8, sigma_det=5, rlim=1.2, iter=5, fwhm_gauss=
     
   }
  
+  if (verbose>1){cat('         - Finished RCosmic iterations....', '\n')}
     
   return(BaseIm)
   
