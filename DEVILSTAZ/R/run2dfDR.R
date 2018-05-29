@@ -118,26 +118,28 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
           
           if (verbose>0){cat('     - Running Cosmic rejection for Red CCD Files....', '\n')}
           
-          if (verbose>1){cat(paste('         - Running Cosmic rejection for file -',ListfilesRed[k],' ', k,' of ', length(ListfilesRed),'...',sep=''), '\n')}
+          for (k in 1:length(ListfilesRed)){ 
           
-          fileRed<-paste(toReduce[i], '/',strsplit(as.character(ListfilesRed[k]),'.fits')[[1]][1],'', sep='')
-          
-          imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
-          RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
-          RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
-          CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
-          CosMaskRed<-array(1.0,dim=dim(imRed$dat[[1]]))
-          CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
-          imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
-          write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
-          
-          Sys.sleep(1)
-          system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
-          Sys.sleep(1)
-        }
+                if (verbose>1){cat(paste('         - Running Cosmic rejection for file -',ListfilesRed[k],' ', k,' of ', length(ListfilesRed),'...',sep=''), '\n')}
+                
+                fileRed<-paste(toReduce[i], '/',strsplit(as.character(ListfilesRed[k]),'.fits')[[1]][1],'', sep='')
+                
+                imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
+                RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
+                RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
+                CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
+                CosMaskRed<-array(1.0,dim=dim(imRed$dat[[1]]))
+                CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
+                imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
+                write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
+                
+                Sys.sleep(1)
+                system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
+                Sys.sleep(1)
+          }
         
         
-        if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
+           if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
           
 
           addString<-'_CosRej'
