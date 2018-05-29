@@ -26,7 +26,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
      # registerDoParallel(cores=1)
     #}
     
-    registerDoParallel(makeCluster(reducCores))
+    registerDoParallel(reducCores)
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
