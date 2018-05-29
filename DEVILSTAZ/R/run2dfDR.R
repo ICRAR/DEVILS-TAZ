@@ -26,7 +26,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
      # registerDoParallel(cores=1)
     #}
     
-    registerDoParallel(cores=reducCores)
+    registerDoParallel(makeCluster(reducCores)
     
     write('', file=logName, append=T)
     if (verbose>0){cat(' **** Running run2dfDR.....', '\n')}
@@ -85,7 +85,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
 
                 
-       newReduce = foreach(j=1:length(configList)) %dopar%  {
+       newReduce = foreach(j=1:length(configList),.packages = c("EBImage")) %dopar%  {
          
         
          
