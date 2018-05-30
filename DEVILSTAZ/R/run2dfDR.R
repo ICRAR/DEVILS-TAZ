@@ -109,7 +109,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 #mode(imBlue$dat[[1]])<-'integer'
                 imBlue$dat[[1]]<-array(as.integer(imBlue$dat[[1]]), dim = dim(imBlue$dat[[1]]))
                 write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
-                write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
+                #write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
                 
                 
@@ -139,7 +139,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 #mode(imRed$dat[[1]])<-'integer'
                 imRed$dat[[1]]<-array(as.integer(imRed$dat[[1]]), dim = dim(imRed$dat[[1]]))
                 write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
-                write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
+                #write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
                 Sys.sleep(2)
                 system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
