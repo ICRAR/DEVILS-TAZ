@@ -104,15 +104,18 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
                 CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
                 CosMaskBlue<-matrix(as.integer(1),nrow = dim(imBlue$dat[[1]])[1], ncol = dim(imBlue$dat[[1]])[2])
-                CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
+                CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
                 #mode(imBlue$dat[[1]])<-'integer'
+                imBlue$dat[[1]]<-array(as.integer(imBlue$dat[[1]]), dim = dim(imBlue$dat[[1]]))
                 write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
                 write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
-                Sys.sleep(1)
+                
+                
+                Sys.sleep(2)
                 system(paste('fappend ',fileBlue,'.fits[1] ',fileBlue,'_CosRej.fits ',sep=''))
-                Sys.sleep(1)
+                
           }
           
           
@@ -131,15 +134,16 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
                 CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=4.5, rlim=0.7, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
                 CosMaskRed<-array(as.integer(1),dim=dim(imRed$dat[[1]]))
-                CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
+                CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
                 #mode(imRed$dat[[1]])<-'integer'
+                imRed$dat[[1]]<-array(as.integer(imRed$dat[[1]]), dim = dim(imRed$dat[[1]]))
                 write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
                 write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
-                Sys.sleep(1)
+                Sys.sleep(2)
                 system(paste('fappend ',fileRed,'.fits[1] ',fileRed,'_CosRej.fits ',sep=''))
-                Sys.sleep(1)
+                
           }
         
         
