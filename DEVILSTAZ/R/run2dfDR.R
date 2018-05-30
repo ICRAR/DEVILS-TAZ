@@ -106,7 +106,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 CosMaskBlue<-matrix(as.integer(1),nrow = dim(imBlue$dat[[1]])[1], ncol = dim(imBlue$dat[[1]])[2])
                 CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NA
                 imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
-                mode(imBlue$dat[[1]])<-'integer'
+                #mode(imBlue$dat[[1]])<-'integer'
                 write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
                 write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
@@ -133,7 +133,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 CosMaskRed<-array(as.integer(1),dim=dim(imRed$dat[[1]]))
                 CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NA
                 imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
-                mode(imRed$dat[[1]])<-'integer'
+                #mode(imRed$dat[[1]])<-'integer'
                 write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
                 write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
