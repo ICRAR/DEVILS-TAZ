@@ -101,8 +101,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
             
                 fileBlue<-paste(toReduce[i], '/',strsplit(as.character(ListfilesBlue[k]),'.fits')[[1]][1],'', sep='')
 
-                idx<-'data/idxFiles/ozdes_blue.idx'
-                cmd<-paste('aaorun reduce_object ', paste(fileBlue,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileBlue[1], ' -do_dark 0 -usedarkim 0 ', sep='')
+                idx<-'data/idxFiles/gama_blue.idx'
+                cmd<-paste('aaorun make_im ', paste(fileBlue,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileBlue[1], ' -do_dark 0 -usedarkim 0 ', sep='')
 
                 system(cmd)
                 
@@ -139,8 +139,8 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
          
                 
-                idx<-'data/idxFiles/ozdes_red.idx'
-                cmd<-paste('aaorun reduce_object ', paste(fileRed,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileRed[1], ' -do_dark 0 -usedarkim 0 ', sep='')
+                idx<-'data/idxFiles/gama_red.idx'
+                cmd<-paste('aaorun make_im ', paste(fileRed,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileRed[1], ' -do_dark 0 -usedarkim 0 ', sep='')
                 
                 system(cmd)
                 
