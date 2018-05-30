@@ -97,9 +97,17 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
             
             if (verbose>1){cat(paste('         - Running Cosmic rejection for file -',ListfilesBlue[k],' ', k,' of ', length(ListfilesBlue),'...',sep=''), '\n')}
           
+            
+            
                 fileBlue<-paste(toReduce[i], '/',strsplit(as.character(ListfilesBlue[k]),'.fits')[[1]][1],'', sep='')
+
+                idx<-'data/idxFiles/ozdes_blue.idx'
+                cmd<-paste('aaorun reduce_object ', paste(fileBlue,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileBlue[1], ' -do_dark 0 -usedarkim 0 ', sep='')
+
+                system(cmd)
                 
-                imBlue<-read.fits(file=paste(fileBlue,'.fits', sep=''), hdu=1)
+                
+                imBlue<-read.fits(file=paste(fileBlue,'im.fits', sep=''), hdu=1)
                 RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imBlue$hdr[[1]]))
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imBlue$hdr[[1]]))
                 CosSub<-RCosmic(imBlue$dat[[1]], rdnoise=RO_NOISE, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
@@ -107,7 +115,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imBlue$dat[[1]]<-(imBlue$dat[[1]]*CosMaskBlue)
                 #mode(imBlue$dat[[1]])<-'integer'
-                imBlue$dat[[1]]<-array(as.integer(imBlue$dat[[1]]), dim = dim(imBlue$dat[[1]]))
+                #imBlue$dat[[1]]<-array(as.integer(imBlue$dat[[1]]), dim = dim(imBlue$dat[[1]]))
                 write.fits(imBlue, file=paste(fileBlue,'_CosRej.fits', sep=''))
                 #write.fitskey('BZERO', 0.0, paste(fileBlue,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
@@ -129,7 +137,15 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 fileRed<-paste(toReduce[i], '/',strsplit(as.character(ListfilesRed[k]),'.fits')[[1]][1],'', sep='')
                 
-                imRed<-read.fits(file=paste(fileRed,'.fits', sep=''), hdu=1)
+         
+                
+                idx<-'data/idxFiles/ozdes_red.idx'
+                cmd<-paste('aaorun reduce_object ', paste(fileRed,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileRed[1], ' -do_dark 0 -usedarkim 0 ', sep='')
+                
+                system(cmd)
+                
+                
+                imRed<-read.fits(file=paste(fileRed,'im.fits', sep=''), hdu=1)
                 RO_GAIN<-as.numeric(get.fitskey(key="RO_GAIN",imRed$hdr[[1]]))
                 RO_NOISE<-as.numeric(get.fitskey(key="RO_NOISE",imRed$hdr[[1]]))
                 CosSub<-RCosmic(imRed$dat[[1]], rdnoise=RO_NOISE, sigma_det=4.5, rlim=0.7, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=verbose)
@@ -137,7 +153,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$dat[[1]])==F, arr.ind = TRUE)]<-NaN
                 imRed$dat[[1]]<-(imRed$dat[[1]]*CosMaskRed)
                 #mode(imRed$dat[[1]])<-'integer'
-                imRed$dat[[1]]<-array(as.integer(imRed$dat[[1]]), dim = dim(imRed$dat[[1]]))
+                #imRed$dat[[1]]<-array(as.integer(imRed$dat[[1]]), dim = dim(imRed$dat[[1]]))
                 write.fits(imRed, file=paste(fileRed,'_CosRej.fits', sep=''))
                 #write.fitskey('BZERO', 0.0, paste(fileRed,'_CosRej.fits', sep=''), comment="offset data range to that of unsigned short", hdu=1)
                 
@@ -341,7 +357,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     if (verbose>1){cat('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1), '\n')}
                     write(paste('               - Reducing blue ccd target file: ',k, ' of ',length(targets_ccd1),sep=''), file=logName, append=T)
 
-                    aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileBlue, doBias=T, biasFile=calib$biasFileBlue, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
+                    aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd1[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileBlue, doBias=F, biasFile=calib$biasFileBlue, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
    
                     count<-0
                     while(count<1){
@@ -382,7 +398,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
 
                 combineList<-paste('data/reduced/',dateReduc,'/ccd1/',list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
-                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic NO -combinedfile data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep='')
+                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic no -combinedfile data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep='')
                 system(cmd)
 
                 count<-0
@@ -536,14 +552,14 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                     write(paste('                 - Reducing red ccd target file: ',k, ' of ',length(targets_ccd2),sep=''), file=logName, append=T)
 
                     if (verbose>1){
-                        cat('             - Using line:', paste('aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=doDark,darkFile=',calib$darkFileRed,', doBias=T, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), '\n')
+                        cat('             - Using line:', paste('aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=doDark,darkFile=',calib$darkFileRed,', doBias=F, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), '\n')
                     }
 
-                    write(paste('             - Using line: aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=doDark,darkFile=',calib$darkFileRed,', doBias=T, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), file=logName, append=T)
+                    write(paste('             - Using line: aaorunObj(file=',toReduce[i], '/',targets_ccd2[k],', idx=idx, doDark=doDark,darkFile=',calib$darkFileRed,', doBias=F, biasFile=',calib$biasFileRed,', flatFile=',flatFile,', tlmFile=',tlmFile,', arcFile=',arcFile,')', sep=''), file=logName, append=T)
                     
 
                     
-                    aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileRed, doBias=T, biasFile=calib$biasFileRed, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
+                    aaorunObj(file=paste(toReduce[i], '/',strsplit(as.character(targets_ccd2[k]),'.fits')[[1]][1],addString,'.fits', sep=''), idx=idx, doDark=doDark,darkFile=calib$darkFileRed, doBias=F, biasFile=calib$biasFileRed, flatFile=flatFile, tlmFile=tlmFile, arcFile=arcFile, runZone=j)
                     
                     count<-0
                     while(count<1){
@@ -581,7 +597,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 
                 combineList<-paste('data/reduced/',dateReduc,'/ccd2/',list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
-                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic NO -combinedfile data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')
+                cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic no -combinedfile data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')
                 system(cmd)
 
                 if (host=="munro"){
@@ -615,7 +631,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 spliceList<-paste(c(paste('data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep=''), paste('data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')),sep='',collapse=' ')
 
                 idx<-'data/idxFiles/gama_red.idx'
-                cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic NO -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
+                cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic no -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
                 
                 
                 system(cmd)
