@@ -19,7 +19,8 @@
 #' @param zeroPoint TRUE/FALSE, Do zeroPoint flux scaling
 #' @param doExtract TRUE/FALSE, Perform 1D spectral extraction using extractNewSpec.R 
 #' @param toExtractFiles If doReduce=F and doExtract=T, provide a string vector of the reduced files to 
-#' extract. These must have the full path (i.e. data/reduced/run1_2017_12/2017_12_18/2017_12_18_config_1_reduced.fits) 
+#' extract. These must have the full path (i.e. data/reduced/run1_2017_12/2017_12_18/2017_12_18_config_1_reduced.fits). 
+#' This can be set to 'all' to extract from all reduced configurations in the 'data/reduced/' directory  
 #' @param doStack TRUE/FALSE, Perform stacking of spectra with IDs using stackSpec.R 
 #' @param toStackIDs If doExtract=F and doStack=T, provide a string vector of IDs you wish to stack. Can be a list of IDs 
 #' or set to 'all' which will stack all unique IDs in the 'data/reduced/allSpec/' directory.
@@ -239,8 +240,24 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('*** doReduce=F so no reduction undertaken.', '\n')}
     write('*** doReduce=F so no reduction undertaken.', file=logName, append=T)
     
-    if (doExtract==T){newReduce<-toExtractFiles}
-    
+    if (doExtract==T & toExtractFiles!='all'){newReduce<-toExtractFiles}
+    if (doExtract==T & toExtractFiles=='all'){
+      
+      
+      listRuns<-paste('data/reduced/', list.files(path='data/reduced', pattern='run*'), sep='')
+      
+      listDates<-c()
+      for (i in 1:length(listRuns)){
+        newReduce<-c(listDates, paste(listRuns[i],'/',list.files(path=listRuns[i], pattern='*'),sep=''))
+      }
+      
+      newReduce<-c()
+      for (i in 1:length(listDates)){
+        newReduce<-c(newReduce, paste(listDates[i],'/',list.files(path=listDates[i], pattern='*_reduced.fits'),sep=''))
+      }
+      
+ 
+      }
   }
   
   if (doExtract==T){
