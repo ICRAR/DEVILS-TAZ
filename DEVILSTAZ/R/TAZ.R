@@ -243,12 +243,14 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (doExtract==T & toExtractFiles!='all'){newReduce<-toExtractFiles}
     if (doExtract==T & toExtractFiles=='all'){
       
+      if (verbose>0){cat('toExtractFiles=="all" - will extract 1D spectra from all configurations....', '\n')}
+      write('toExtractFiles=="all" - will extract 1D spectra from all configurations....', file=logName, append=T)
       
       listRuns<-paste('data/reduced/', list.files(path='data/reduced', pattern='run*'), sep='')
       
       listDates<-c()
       for (i in 1:length(listRuns)){
-        newReduce<-c(listDates, paste(listRuns[i],'/',list.files(path=listRuns[i], pattern='*'),sep=''))
+        listDates<-c(listDates, paste(listRuns[i],'/',list.files(path=listRuns[i], pattern='*'),sep=''))
       }
       
       newReduce<-c()
