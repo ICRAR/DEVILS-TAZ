@@ -43,7 +43,7 @@ AutozSingleSpec = function(specRaw, tempFile = 'data/calibrators/AutoZTemp/filte
   specNum<-1
   
   #set up new lambda scale to rebin spectrum and templates to
-  logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample, highZ==highZ)
+  logLambdaData <- SetUpLogLambda(verbose = verbose, oversample = oversample, highZ=highZ)
   newLogLambda <- logLambdaData$logLambda
   
   
