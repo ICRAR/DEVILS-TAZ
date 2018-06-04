@@ -46,7 +46,7 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, c
         
         
         
-        autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F,highZ=highZ, templateNumbers = c(2:14,16:28,33:80))
+        autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F,highZ=highZ, templateNumbers = c(2:14,16:28,33:59))
         
         spec$z<-autoz_out$results[1]
         spec$prob<-autoz_out$prob
