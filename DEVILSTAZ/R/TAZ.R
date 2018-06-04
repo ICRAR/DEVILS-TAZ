@@ -385,7 +385,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     write('Running AutoZ for new spectra....', file=logName, append=T)
     
   
-    newStacks<-paste('data/reduced/stackedSpec/',newIds,'.Rdata',sep='')
+    if (toAutoZStacks!='all'){newStacks<-paste('data/reduced/stackedSpec/',newIds,'.Rdata',sep='')}
     if (toAutoZStacks=='all'){newStacks<-'all'}
     
     
