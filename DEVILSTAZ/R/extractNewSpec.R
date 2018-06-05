@@ -12,7 +12,7 @@
 #' @examples 
 #'extractNewSpec(file='objected2df_red.fits', logName='tmpLog.txt', verbose=1, makePlot=F, zeroPoint=F)
 #' @export
-extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F, zeroPoint=T, NowDate=NowDate, doCosmic=doCosmic){
+extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F, zeroPoint=T, NowDate=NowDate){
 
     
     if (zeroPoint==T){
@@ -71,16 +71,7 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     CONFIG<-im$hdr[which(im$hdr=="CFG_FILE")+1]
     EXP<-im$hdr[which(im$hdr=="EXPOSED")+1]
     
-    if (doCosmic==T) {
-        RO_GAIN<-as.numeric(im$hdr[which(im$hdr=="RO_GAIN")+1])
-        if (verbose>0){cat('     - Running Cosmic rejection....', '\n')}
-        write('     - Running Cosmic rejection....', file=logName, append=T)
-        
-        CosSub<-RCosmic(im$imDat, im$hdr, sn$imDat, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
-        im$imDat<-CosSub
-        if (verbose>0){cat('     - Finished Cosmic rejection.', '\n')}
-    }
- 
+   
     
     
     if (zeroPoint==T){fluxSc<-zeroPoints$FLUXSC}else{fluxSc<-1}
@@ -96,16 +87,6 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     CDELT1Blue <- as.numeric(imBlue$hdr[which(imBlue$hdr=="CDELT1")+1])
     waveBlue <- CRVAL1Blue+((c(1:dim(imBlue$imDat)[1])-CRPIX1Blue)*CDELT1Blue)
   
-    if (doCosmic==T) {
-        if (verbose>0){cat('     - Running Cosmic rejection for Blue CCD....', '\n')}
-        RO_GAIN<-as.numeric(imBlue$hdr[which(imBlue$hdr=="RO_GAIN")+1])
-        RO_GAIN<-1.9
-        CosSub<-RCosmic(imBlue$imDat, imBlue$hdr, snBlue$imDat, rdnoise=1.8, sigma_det=5, rlim=1.0, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
-        CosMaskBlue<-array(1,dim=dim(imBlue$imDat))
-        CosMaskBlue[which(is.na(CosSub)==T & is.na(imBlue$imDat)==F, arr.ind = TRUE)]<-NA
-        imBlue$imDat<-CosSub
-        if (verbose>0){cat('     - Finished Cosmic rejection for Blue CCD.', '\n')}
-    }
 
     if (zeroPoint==T){fluxScBlue<-zeroPoints$FLUXSC_blue}else{fluxScBlue<-1}
 
@@ -120,18 +101,7 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
     CDELT1Red <- as.numeric(imRed$hdr[which(imRed$hdr=="CDELT1")+1])
     waveRed <- CRVAL1Red+((c(1:dim(imRed$imDat)[1])-CRPIX1Red)*CDELT1Red)
   
-    if (doCosmic==T) {
-        if (verbose>0){cat('     - Running Cosmic rejection for Red CCD....', '\n')}
-        RO_GAIN<-as.numeric(imRed$hdr[which(imRed$hdr=="RO_GAIN")+1])
-        RO_GAIN<-1.9
-        CosSub<-RCosmic(imRed$imDat, imRed$hdr, snRed$imDat, rdnoise=1.8, sigma_det=5, rlim=0.8, iter=6, fwhm_gauss=2.0, gain=RO_GAIN, verbose=FALSE)
-        CosMaskRed<-array(1,dim=dim(imRed$imDat))
-        CosMaskRed[which(is.na(CosSub)==T & is.na(imRed$imDat)==F, arr.ind = TRUE)]<-NA
-        imRed$imDat<-CosSub
-        if (verbose>0){cat('     - Finished Cosmic rejection for Red CCD.', '\n')}
-     }
-    
-    write('     - Finished Cosmic rejection.', file=logName, append=T)
+ 
     
     if (zeroPoint==T){fluxScRed<-zeroPoints$FLUXSC_red}else{fluxScRed<-1}
 
@@ -204,17 +174,7 @@ extractNewSpec<-function(file=file, logName=logName, verbose=verbose, makePlot=F
             fluxRed<-(imRed$imDat[,j]/sensRedF)
             snRedS <- snRed$imDat[,j]
             skyRedS <- skyRed$imDat
-            
-            if (doCosmic==T) {
-                MaskWaveBlue<-waveBlue[which(is.na(CosMaskBlue[,j])==T)]
-                MaskWaveRed<-waveRed[which(is.na(CosMaskRed[,j])==T)]
-                for (k in 1:length(MaskWaveBlue)){
-                  fluxSpec[which(abs(wave-MaskWaveBlue[k])==min(abs(wave-MaskWaveBlue[k])))]<-NA
-                }
-                for (k in 1:length(MaskWaveRed)){
-                  fluxSpec[which(abs(wave-MaskWaveRed[k])==min(abs(wave-MaskWaveRed[k])))]<-NA
-                }
-            }
+          
       
 
             if (length(which(is.finite(fluxSpec)==T))>0){ 
