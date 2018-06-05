@@ -14,7 +14,8 @@
 #' @examples 
 #' 
 #' @export
-UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=verbose, makePlots=F){
+UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=verbose, makePlots=F,probGood=0.90 ){
+
 
     load(cat)
     
@@ -58,8 +59,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     }
 
     
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob>0.96)]<-1
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T)]<-8
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob>probGood)]<-1
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=probGood & is.finite(DMCat$DEVILS_prob)==T)]<-8
 
     #### Stop observing if TEXP>10h
     DMCat$PRIORITY[which(as.numeric(DMCat$DEVILS_EXP)>=10*60*60)] <- -1
@@ -82,12 +83,12 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     #DMCat$DEVILS_z[which(DMCat$VIS_SPECFLAG>1)]<-VisGood[,2]
     
     if (verbose>1){
-      cat(length(which(DMCat$DEVILS_prob>0.96 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits', '\n')
-      cat(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T & (DMCat$VISCLASS<8 | is.finite(DMCat$VISCLASS)==FALSE))), '    - Sources with unsuccessful redshfits being prioritised', '\n')
+      cat(length(which(DMCat$DEVILS_prob>probGood | DMCat$VISCLASS>8)), '    - Sources with successful redshfits', '\n')
+      cat(length(which(DMCat$DEVILS_prob<=probGood & is.finite(DMCat$DEVILS_prob)==T & (DMCat$VISCLASS<8 | is.finite(DMCat$VISCLASS)==FALSE))), '    - Sources with unsuccessful redshfits being prioritised', '\n')
       cat('    - Saving new MASTERcat as:', paste('data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''), '\n')
     }
-    write(paste(length(which(DMCat$DEVILS_prob>0.96 | DMCat$VISCLASS>8)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
-    write(paste(length(which(DMCat$DEVILS_prob<=0.96 & is.finite(DMCat$DEVILS_prob)==T & DMCat$VISCLASS<8)), '    - Sources with unsuccessful redshfits being prioritised',sep=''), file=logName, append=T)
+    write(paste(length(which(DMCat$DEVILS_prob>probGood | DMCat$VISCLASS>8)), '    - Sources with successful redshfits',sep=''), file=logName, append=T)
+    write(paste(length(which(DMCat$DEVILS_prob<=probGood & is.finite(DMCat$DEVILS_prob)==T & DMCat$VISCLASS<8)), '    - Sources with unsuccessful redshfits being prioritised',sep=''), file=logName, append=T)
     write(paste('    - Saving new MASTERcat as: data/catalogues/MASTERcats/DMCat',Sys.Date(),'.rda', sep=''),file=logName, append=T)
     
     
@@ -112,8 +113,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
     if (makePlots==T){
       selGal<-which(DMCat$STARCLASS==0)
       selPrev<-which(DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selGood<-which(DMCat$DEVILS_prob>0.96)
-      selBad<-which(DMCat$DEVILS_prob<=0.96 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))
+      selGood<-which(DMCat$DEVILS_prob>probGood)
+      selBad<-which(DMCat$DEVILS_prob<=probGood & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))
       selTotGood<-which((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$PRIORITY==1 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T))) 
       
       system(paste('mkdir data/ProgressPlots/',nowDate, sep=''))
@@ -161,8 +162,8 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       for (i in 1:length(allHist$mids)){
         
-        selGood2<-which(DMCat$DEVILS_prob>0.96 & DMCat$YMAG>allHist$breaks[i] & DMCat$YMAG<=allHist$breaks[i]+0.5)
-        selBad2<-which(DMCat$DEVILS_prob<=0.96 & is.finite(as.numeric(DMCat$DEVILS_EXP)==T) & DMCat$YMAG>allHist$breaks[i] & DMCat$YMAG<=allHist$breaks[i]+0.5)
+        selGood2<-which(DMCat$DEVILS_prob>probGood & DMCat$YMAG>allHist$breaks[i] & DMCat$YMAG<=allHist$breaks[i]+0.5)
+        selBad2<-which(DMCat$DEVILS_prob<=probGood & is.finite(as.numeric(DMCat$DEVILS_EXP)==T) & DMCat$YMAG>allHist$breaks[i] & DMCat$YMAG<=allHist$breaks[i]+0.5)
         
         histEXPgood[i]<-sum(as.numeric(DMCat$DEVILS_EXP[selGood2]))/60
         histEXPbad[i]<-sum(as.numeric(DMCat$DEVILS_EXP[selBad2]))/60.
@@ -182,7 +183,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_z_Hist.pdf',sep=''),width=8,height=8)
       
       zAll<-DMCat$ZSPEC_Prev
-      zAll[which(DMCat$DEVILS_prob>0.96)]<-DMCat$DEVILS_z[which(DMCat$DEVILS_prob>0.96)]
+      zAll[which(DMCat$DEVILS_prob>probGood)]<-DMCat$DEVILS_z[which(DMCat$DEVILS_prob>probGood)]
         
       totGoodHist<-maghist(zAll[selTotGood], col=rgb(0,0.6,0,1), xlab='Redshift', ylab='#', main='Redshift histogram', xlim=c(0,1.5), log='y')
       maghist(zAll[selPrev], col=rgb(0,0,1,1), add=T, log='y',breaks=totGoodHist$breaks)
@@ -204,7 +205,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       medEXPAll<-allHist$counts
       meanEXPAll<- allHist$counts
       for (j in 1:length(allHist$counts)){
-        selGood2<-which(DMCat$DEVILS_prob>0.96 & DMCat$YMAG>allHist$breaks[j] & DMCat$YMAG<=allHist$breaks[j]+0.5)
+        selGood2<-which(DMCat$DEVILS_prob>probGood & DMCat$YMAG>allHist$breaks[j] & DMCat$YMAG<=allHist$breaks[j]+0.5)
         selAll<-which(is.finite(as.numeric(DMCat$DEVILS_EXP)==T) & DMCat$YMAG>allHist$breaks[j] & DMCat$YMAG<=allHist$breaks[j]+0.5)
         medEXPGood[j]<-median(as.numeric(DMCat$DEVILS_EXP[selGood2]), na.rm=T)/60/60
         medEXPAll[j]<-median(as.numeric(DMCat$DEVILS_EXP[selAll]), na.rm=T)/60/60  
@@ -239,15 +240,15 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       selD02<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0)
       selD02Prev<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD02Good<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
+      selD02Good<-which((DMCat$FIELD=='D02A' | DMCat$FIELD=='D02B') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>probGood)))
       
       selD03<-which(DMCat$FIELD=='D03' & DMCat$PRIORITY>0)
       selD03Prev<-which((DMCat$FIELD=='D03') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD03Good<-which((DMCat$FIELD=='D03') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
+      selD03Good<-which((DMCat$FIELD=='D03') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>probGood)))
       
       selD10<-which(DMCat$FIELD=='D10' & DMCat$PRIORITY>0)
       selD10Prev<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0)
-      selD10Good<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>0.96)))
+      selD10Good<-which((DMCat$FIELD=='D10') & DMCat$PRIORITY>0 & ((DMCat$ZSPEC_Prev>0 & DMCat$ZSPEC_Prev<8 & DMCat$STARCLASS==0) | (DMCat$DEVILS_prob>probGood)))
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_D02_comp.pdf',sep=''),width=24,height=8)
     
@@ -398,7 +399,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       nightCount<-MASTERDates
       for (j in 1:length(previousMASTERS)){
         load(paste('data/catalogues/MASTERcats/',previousMASTERS[j], sep=''))
-        runCount[j]<-length(which(DMCat$DEVILS_prob >=0.96 & is.finite(DMCat$DEVILS_prob)==T))
+        runCount[j]<-length(which(DMCat$DEVILS_prob >=probGood & is.finite(DMCat$DEVILS_prob)==T))
         if (j>1){nightCount[j]<-runCount[j]-runCount[j-1]} else{nightCount[j]<-runCount[j]} 
       }
       
