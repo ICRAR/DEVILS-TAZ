@@ -5,7 +5,7 @@
 \title{Run AutoZ over a supplied list of spectra}
 \usage{
 runAutoZ(specs = specs, logName = logName, verbose = verbose,
-  makePlots = T, cores = cores)
+  makePlots = T, cores = cores, highZ = T)
 }
 \arguments{
 \item{specs}{vector list of file paths to run AutoZ over. Must either be full directory path, or can

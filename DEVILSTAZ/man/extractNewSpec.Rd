@@ -5,7 +5,7 @@
 \title{Extract 1D spectra from a reduced FITS file}
 \usage{
 extractNewSpec(file = file, logName = logName, verbose = verbose,
-  makePlot = F, zeroPoint = T, NowDate = NowDate, doCosmic = doCosmic)
+  makePlot = F, zeroPoint = T, NowDate = NowDate)
 }
 \arguments{
 \item{file}{reduced 2dF+AAOmega frame to extract spectra from}

@@ -4,8 +4,8 @@
 \alias{RCosmic}
 \title{Cosmic Ray Rejection Functions, rewritten from PyCosmic (Copyright 2012 Bernd Husemann)}
 \usage{
-RCosmic(image, hdr, error, sigma_det = 5, rlim = 1.2, iter = 5,
-  fwhm_gauss = 2, gain = 1, verbose = FALSE)
+RCosmic(image, rdnoise = 1.8, sigma_det = 5, rlim = 1.2, iter = 5,
+  fwhm_gauss = 2, gain = 1, verbose = 0)
 }
 \arguments{
 \item{image}{image to find cosmics}

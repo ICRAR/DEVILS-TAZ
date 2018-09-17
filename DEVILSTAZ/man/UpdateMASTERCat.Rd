@@ -5,7 +5,7 @@
 \title{Update DMcats with new redshifts and make DOCats}
 \usage{
 UpdateMASTERCat(cat = cat, specDir = specDir, logName = logName,
-  verbose = verbose, makePlots = F)
+  verbose = verbose, makePlots = F, probGood = 0.9)
 }
 \arguments{
 \item{cat}{Path to current DMCat}

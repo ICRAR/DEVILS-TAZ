@@ -11,13 +11,12 @@ checkCal(biasDir = biasDir, darksDir = darksDir, verbose = 1)
 
 \item{darksDir}{directory containing dark frames}
 
-\item{verbose}{0 or 1, let me know whats going on. 0=no, 1=yes}
+\item{verbose}{0, 1,2 , let me know whats going on. 0=no, 1=a bit, 2=a lot}
 }
 \description{
-Function convolves a given spectrum with a filter band pass and returns either
-convolved spectrum or a total sum within the filter. Note that for the example to
-work you must have unpacked the TAZ data files using:
+Produces diagnostic plots of all biases/darks in a given directory. Will
+plot and image of the calibration from and a number of diagnositcs.
 }
 \examples{
-checkCal(biasDir='data/biases/run1_2017_12/', darksDir='data/biases/run1_2017_12/', verbose=1)
+checkCal(biasDir='data/biases/run2_2018_01/', darksDir='data/darks/run2_2018_01/', verbose=2)
 }

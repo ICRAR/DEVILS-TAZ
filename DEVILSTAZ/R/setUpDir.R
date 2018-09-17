@@ -160,6 +160,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             cat(DEVILSGreen(paste('    - Making data/rawdata/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/reduced/',runs[i],sep='')), '\n')
             cat(DEVILSGreen(paste('    - Making data/observing/',runs[i],sep='')), '\n')
+            cat(DEVILSGreen(paste('    - Making data/observing/AllObsFig',sep='')), '\n')
             cat(paste(' ', '\n'))
         }
         
@@ -169,15 +170,16 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
         system(paste('mkdir data/rawdata/',runs[i],sep=''))
         system(paste('mkdir data/reduced/',runs[i],sep=''))
         system(paste('mkdir data/observing/',runs[i],sep=''))
+        system(paste('mkdir data/observing/AllObsFig',sep=''))
 
         if (verbose>0){
             cat(DEVILSGreen('    - Calculating dates.....'), '\n')
         }
         
 
-        days<-seq(as.numeric(substr(dateStart[i],9,10)),as.numeric(substr(dateEnd[i],9,10)),1)
-        month<-as.numeric(substr(dateStart[i],6,7))
-        year<-as.numeric(substr(dateStart[i],1,4))
+        #days<-seq(as.numeric(substr(dateStart[i],9,10)),as.numeric(substr(dateEnd[i],9,10)),1)
+        #month<-as.numeric(substr(dateStart[i],6,7))
+        #year<-as.numeric(substr(dateStart[i],1,4))
 
         dayStart<-as.numeric(substr(dateStart[i],9,10))
         dayEnd<-as.numeric(substr(dateEnd[i],9,10))
@@ -256,7 +258,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
 
             obsPlan<-data.frame(LocalTime=darkHoursUT10, UT=UT, BestField=bestName, Alt=bestAlt)
             obsPlanFile<-paste('data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-ObsPlan-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.txt',sep='')
-            write.csv(obsPlan, file=obsPlanFile, row.names=F, quote=F)
+            
             
             write(" ",file=obsPlanFile ,append=TRUE)
             write(paste('# DEVILS Observing plan for night - ',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j], sep=''),file=obsPlanFile,append=TRUE)
@@ -275,7 +277,8 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             write(paste('# Sun Rise Time (UT) - ',riseH,':',riseM,':',riseS, sep=''),file=obsPlanFile,append=TRUE)
 
             write('# **NOTE** This only takes into account the Altitude of the field, please check the observability plots for moon location',file=obsPlanFile,append=TRUE)
-
+            system(paste('cp ',obsPlanFile,' data/observing/AllObsFig/', sep=''))
+            
             if (verbose>0){
                 cat(DEVILSGreen('                    - Making observability plots....'), '\n')
             }
@@ -288,6 +291,7 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             plotdayupmulti(dayupUT00, ytype='Alt')
             plotdayupmulti(dayupUT00, ytype='AM')
             dev.off()
+            
 
             pdf(paste('data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT08-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf',sep=''), width=18, height=12)
             par(mfrow = c(1, 2))
@@ -316,9 +320,18 @@ setUpDir<-function(workingDir='.', runs=c('run1_2017_12','run2_2018_01'),dateSta
             plotdayupmulti(dayupUT11, ytype='AM')
             dev.off()
             
+            system(paste('cp data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT00-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf data/observing/AllObsFig',sep=''))
+            system(paste('cp data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT08-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf data/observing/AllObsFig',sep=''))
+            system(paste('cp data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT10-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf data/observing/AllObsFig',sep=''))
+            system(paste('cp data/observing/',runs[i],'/',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'/DEVILS-Obs-UT11-',datesSeq$year[j], '_',datesSeq$mon[j],'_', datesSeq$mday[j],'.pdf data/observing/AllObsFig',sep=''))
+            
         }
 
     }
+    
+ 
+    
+    
 
     if (verbose==0){
         cat(DEVILSGreen('** setUpDir finished **'), '\n')

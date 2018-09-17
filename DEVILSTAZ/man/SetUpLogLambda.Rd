@@ -5,7 +5,7 @@
 \title{Internal AutoZ function for setting up log wavelength scale}
 \usage{
 SetUpLogLambda(oversample = 5, lowValue = 3.3, highValue = 4,
-  verbose = TRUE)
+  verbose = TRUE, highZ = T)
 }
 \arguments{
 \item{oversample}{how much to oversample the spectrum given the wavelength gap 'sdssGap'}

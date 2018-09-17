@@ -5,7 +5,8 @@
 \title{Run 2dFDR over a target directory}
 \usage{
 run2dfDR(toReduce = toReduce, doCalibQC = doCalibQC, logName = logName,
-  verbose = verbose, reducCores = reducCores)
+  verbose = verbose, reducCores = reducCores, doDark = T,
+  doCosmic = doCosmic)
 }
 \arguments{
 \item{toReduce}{directory path to reduce in the DEVILS data structure. Must be of the form, 
@@ -18,6 +19,8 @@ data/rawdata/run#_YYYY_MM/YYYY_MM_DD (i.e. data/rawdata/run1_2017_12/2017_12_18)
 \item{verbose}{tell me whats going on: 0=nothing, 1=somethings, 2=everything}
 
 \item{reducCores}{number of cores to use}
+
+\item{doCosmic}{TRUE/FALSE do additonal cosmic ray rejection}
 }
 \description{
 This is the highlevel main TAZ function for running 2dFDR (via aaorun) data reduction over 

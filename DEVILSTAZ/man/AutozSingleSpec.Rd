@@ -8,7 +8,7 @@ AutozSingleSpec(specRaw,
   tempFile = "data/calibrators/AutoZTemp/filtered-templates.fits",
   oversample = 5, num = 5, templateNumbers = c(2:14, 16:22, 40:47),
   stLambda = 3726, endLambda = 8850, minval = -10000, maxval = 1e+06,
-  z_prior = c(-1, 1000), doHelio = T, verbose = TRUE)
+  z_prior = c(-1, 1000), doHelio = T, highZ = T, verbose = TRUE)
 }
 \arguments{
 \item{specRaw}{R struture contianing information required information.

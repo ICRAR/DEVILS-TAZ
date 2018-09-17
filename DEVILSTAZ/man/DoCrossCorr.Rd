@@ -4,7 +4,7 @@
 \alias{DoCrossCorr}
 \title{Compute cross corelations un AutoZ}
 \usage{
-DoCrossCorr(spec, gap, tempData, helioVel, plan, z_prior)
+DoCrossCorr(spec, gap, tempData, helioVel, plan, z_prior, highZ = FALSE)
 }
 \arguments{
 \item{spec}{input spectrum containing spec$lambda and spec$flux}
