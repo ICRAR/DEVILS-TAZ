@@ -389,7 +389,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (toAutoZStacks=='all'){newStacks<-'all'}
     
     
-    runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores, highZ=highZ)
+    runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores, highZ=highZ,makePlots=F)
     
     
   }
