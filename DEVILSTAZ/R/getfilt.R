@@ -83,6 +83,27 @@ getfilt=function(filter){
 
      if(filter=='des_Y'){
       out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_Y_DES.tab', sep=''))     
+     }
+
+     if(filter=='VST_u'){
+       out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_u_VST.tab', sep=''), header=T)
+       out<-cbind(seq(1,length(out[,1]),1), out[,1], out[,2])
+  }
+ if(filter=='VST_g'){
+     out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_g_VST.tab', sep=''), header=T)
+     out<-cbind(seq(1,length(out[,1]),1), out[,1], out[,2])
+ }
+   if(filter=='VST_r'){
+       out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_r_VST.tab', sep=''), header=T)
+       out<-cbind(seq(1,length(out[,1]),1), out[,1], out[,2])
+   }
+   if(filter=='VST_i'){
+       out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_i_VST.tab', sep=''), header=T)
+       out<-cbind(seq(1,length(out[,1]),1), out[,1], out[,2])
+   }
+   if(filter=='VST_z'){
+       out<-read.table(paste(DEVILSPATH,'/DEVILSTAZ/data/calibrators/filters/filt_z_VST.tab', sep=''), header=T)
+       out<-cbind(seq(1,length(out[,1]),1), out[,1], out[,2])
    }
 
 
