@@ -7,6 +7,7 @@
 #' @param cat Path to current DMCat 
 #' @param specDir Path to directory containing R list spectra with value spec$z. 
 #' Usually will be data/reduced/stackedSpec 
+#' @param OzDESGRC Either NA (do not update) or path to OzDES GRC cat to update to  
 #' @param logName log filename to write progress to
 #' @param verbose tell me whats going on: 0=nothing, 1=somethings, 2=everything
 #' @param makePlots make current survey progress plots
@@ -14,7 +15,7 @@
 #' @examples 
 #' 
 #' @export
-UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=verbose, makePlots=F,probGood=0.90 ){
+UpdateMASTERCat<-function(cat=cat, specDir=specDir, OzDESGRC=OzDESGRC, logName=logName, verbose=verbose, makePlots=F,probGood=0.90 ){
 
 
     load(cat)
@@ -57,10 +58,36 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
             
 
     }
-
+      
+      
+      
+    if (is.na(OzDESGRC)==F) {
+        OzDESCat<-fread(OzDESGRC)  
+        use<-c('ZCOS','hCOSMOS','VUDS','DES_AAOmega','GAMA','SDSS','VIPERS','SNLS_AAOmega','VVDS_DEEP','NOAO_0522','NOAO_0334','Baker','PanSTARRS_AAOmega','2dFGRS','VVDS_CDFS','VUDS_ECDFS')
+        OzDESCat<-OzDESCat[which(OzDESCat$z>-9 & OzDESCat$source %in% use==T),]
+        match<-coordmatch(cbind(DMCat$RA, DMCat$DEC), cbind(OzDESCat$RA, OzDESCat$DEC))
+        good=match$bestmatch$refID %in% seq(1,dim(DMCat)[1],1)
+        goodmatch=match$bestmatch[good,]
+        
+        DMCat$ZSPEC_Prev[goodmatch[,1]]<-OzDESCat$z[goodmatch[,2]]
+        
+        IDTmp<-as.character(unlist(DMCat$ZSPECID_Prev))
+        IDTmp[goodmatch[,1]]<-as.character(OzDESCat$ID[goodmatch[,2]])
+        DMCat$ZSPECID_Prev<-IDTmp
+        
+        IDTmp<-as.character(unlist(DMCat$ZSPECORIG_Prev))
+        IDTmp[goodmatch[,1]]<-OzDESCat$source[goodmatch[,2]]
+        DMCat$ZSPECORIG_Prev<-IDTmp
+          
+        IDTmp<-as.numeric(unlist(DMCat$ZSPECQ_Prev))
+        IDTmp[goodmatch[,1]]<-as.numeric(OzDESCat$flag[goodmatch[,2]])
+        DMCat$ZSPECQ_Prev<-IDTmp
+        
+        DMCat$PRIORITY[goodmatch[which(DMCat$PRIORITY[goodmatch[,1]]>1),1]]<-1
+    }
     
     DMCat$PRIORITY[which(DMCat$DEVILS_prob>probGood)]<-1
-    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=probGood & is.finite(DMCat$DEVILS_prob)==T)]<-8
+    DMCat$PRIORITY[which(DMCat$DEVILS_prob<=probGood & is.finite(DMCat$DEVILS_prob)==T & DMCat$PRIORITY>1)]<-8
 
     #### Stop observing if TEXP>10h
     DMCat$PRIORITY[which(as.numeric(DMCat$DEVILS_EXP)>=10*60*60)] <- -1
@@ -197,7 +224,7 @@ UpdateMASTERCat<-function(cat=cat, specDir=specDir, logName=logName, verbose=ver
       
       pdf(paste('data/ProgressPlots/',nowDate,'/',nowDate,'_predicted_remaining_time.pdf',sep=''),width=8,height=8)
       
-      pdf(paste(nowDate,'_predicted_remaining_time.pdf',sep=''),width=8,height=8)
+      #pdf(paste(nowDate,'_predicted_remaining_time.pdf',sep=''),width=8,height=8)
       
       remnum<-allHist$counts-totGoodHist$counts
       medEXPGood<-allHist$counts

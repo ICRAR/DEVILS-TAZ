@@ -66,8 +66,8 @@ addOzDES<-function(OzDESCat=OzDESCat, DODir=DODir, num=20, logName=logName, verb
   
   #NewPRIORITY_CLASS[sel]<-9
   
-  if (verbose>1){cat('        -Adding OzDES sources:', '\n')}
-  write(paste('        -Adding OzDES sources:',sep=''), file=logName, append=T)
+  if (verbose>1){cat('        -Adding OzDES new transient sources:', '\n')}
+  write(paste('        -Adding OzDES new transient sources:',sep=''), file=logName, append=T)
   
   for (i in 1:length(NewRA)){
     

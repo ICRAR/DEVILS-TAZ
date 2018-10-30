@@ -43,7 +43,7 @@ runAutoZ<-function(specs=specs, logName=logName, verbose=verbose, makePlots=T, c
         spec2$longitude =149.0661
         spec2$latitude = -31.27704
         spec2$altitude = 1164
-        
+        spec2$error<-sqrt(spec2$error)
 
         
         autoz_out<-AutozSingleSpec(spec2,tempFile = 'data/calibrators/AutoZTemp/filtered-templates.fits',doHelio=F, verbose=F,highZ=highZ, templateNumbers = c(2:14,16:22,40:47))

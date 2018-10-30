@@ -30,6 +30,7 @@
 #' Must either be full directory path, or can set to 'all' to run over all spectra in the 'data/reduced/stackedSpec/' directory.  
 #' @param doUpdateMaster TRUE/FALSE, Update and generate a new DMCat (with timestamp) using the redshift measurement in the 
 #' data/reduced/stackedSpec/ directory. Then make DOCats for the next observing date.
+#' @param OzDESGRC Either NA (do not update) or path to new OzDES GRC cat to add to DMCat
 #' @param doTiler TRUE/FALSE, Run tiling software to generate new fibre configuration files using runTiler.R
 #' @param DODir If doUpdateMaster=F and doTiler=T, provide directory path to DOCats directory you with to uses for configurations
 #' @param N_D02A Number of configurations to generate in D02A for runTiler.R
@@ -78,9 +79,9 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F, highZ=T){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, OzDESGRC=NA, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F, highZ=T){
   
-  
+  stopState<-NA
   
   system('cleanup')
   
@@ -166,9 +167,34 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
   write(paste('# Version:',version, sep=''), file=logName, append=T)
   write(paste('# User:',user, sep=''), file=logName, append=T)
   write(paste('# Working Directory:',workingDir, sep=''), file=logName, append=T)
-  write(paste('#Runnig TAZ with line: TAZ<-function(user=',user,', workingDir=',workingDir,',  dobizCheck=',dobizCheck,', bizStopError=',bizStopError,', doCalibQC=',doCalibQC,', doReduce=',doReduce,', toReduceDirs=',toReduceDirs,', zeroPoint=',zeroPoint,', doExtract=',doExtract,', toExtractFiles=',toExtractFiles,', doStack=',doStack,', toStackIDs=',toStackIDs,', doAutoZ=',doAutoZ,', toAutoZStacks=',toAutoZStacks,', doUpdateMaster=',doUpdateMaster,', doTiler=',doTiler,', DODir=',DODir,',N_D02A=',N_D02A,',N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02B_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,',configdir=',configdir,',  cores=',cores,', verbose=',verbose,')',sep=''), file=logName, append=T)
+  write(paste('#Running TAZ with line: TAZ<-function(user=',user,', workingDir=',workingDir,',  dobizCheck=',dobizCheck,', bizStopError=',bizStopError,', doCalibQC=',doCalibQC,', doReduce=',doReduce,', toReduceDirs=',toReduceDirs,', zeroPoint=',zeroPoint,', doExtract=',doExtract,', toExtractFiles=',toExtractFiles,', doStack=',doStack,', toStackIDs=',toStackIDs,', doAutoZ=',doAutoZ,', toAutoZStacks=',toAutoZStacks,', doUpdateMaster=',doUpdateMaster,', doTiler=',doTiler,', DODir=',DODir,',N_D02A=',N_D02A,',N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02B_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,',configdir=',configdir,',  cores=',cores,', verbose=',verbose,')',sep=''), file=logName, append=T)
     
   write(' ', file=logName, append=T)
+  
+  stopState<-'Started'
+  
+  if (is.na(email[1])==F){
+    if (is.na(emailPassword)==F){
+      
+      for (jj in 1:length(email)){
+        subject<-'Update From TAZ - TAZ Started Running'
+        bodyText<-paste('TAZ starting running at ',date(), '. \n \n Running TAZ with line: TAZ<-function(user=',user,', workingDir=',workingDir,',  dobizCheck=',dobizCheck,', bizStopError=',bizStopError,', doCalibQC=',doCalibQC,', doReduce=',doReduce,', toReduceDirs=',toReduceDirs,', zeroPoint=',zeroPoint,', doExtract=',doExtract,', toExtractFiles=',toExtractFiles,', doStack=',doStack,', toStackIDs=',toStackIDs,', doAutoZ=',doAutoZ,', toAutoZStacks=',toAutoZStacks,', doUpdateMaster=',doUpdateMaster,', doTiler=',doTiler,', DODir=',DODir,',N_D02A=',N_D02A,',N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02B_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,',configdir=',configdir,',  cores=',cores,', verbose=',verbose,') \n\n Trace:',paste(stopState, collapse='.....'),'\n \n LogName=',logName,sep='')
+        
+        TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+      }
+    
+      
+    }else{
+      
+      cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
+      write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
+      email<-NA
+      
+    }
+  }
+  
+  
+  CheckSync(dir='data/rawdata', pauseTime=1, verbose=2, logName=logName) # checking that raw data has finshed synching
   
   
   if (dobizCheck==T){
@@ -198,6 +224,8 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       
       newReduce<-run2dfDR(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verbose=verbose, reducCores=reducCores, doDark=doDark, doCosmic=doCosmic)
       
+      stopState<-c(stopState, 'Reduced')
+      
       ## newReduce not passing from run2dfDR() correctly - find manually....
       newReduce<-c()
       for (j in 1:length(toReduce)){
@@ -217,13 +245,46 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
         
         fluxCal(file=newReduce[i], stdStars=stdStars,logName=logName, verbose=verbose)    
       }
+      
+      if (is.na(email[1])==F){
+        if (is.na(emailPassword)==F){
+          
+          for (jj in 1:length(email)){
+            subject<-'Update From TAZ - Data Reduction Completed'
+            bodyText<-paste('run2dfDR() finished at ',date(), '\n \n ',length(newReduce), ' configuration(s) were reduced: \n', paste(newReduce, collapse='\n'), '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+            
+            TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+          }
+        }
+      }
+      
+      
+      
     }else{
       
       cat('*** WARNING NO NEW NIGHT TO REDUCE ***',  '\n')
       cat('Exiting TAZ, please set doReduce=F and provide a vector to toExtractFiles', '\n')
       write(paste('**** WARNING NO NEW NIGHT TO REDUCE ***',sep=''), file=logName, append=T)
-      write(paste('Exiting TAZ, please set doReduce=F and provide a vector to toExtractFiles',sep=''), file=logName, append=T)
-      return(NULL)
+
+      doReduce<-F
+      doExtract<-F
+      doStack<-F
+      doAutoZ<-F
+      
+      #write(paste('Exiting TAZ, please set doReduce=F and provide a vector to toExtractFiles',sep=''), file=logName, append=T)
+      #return(NULL)
+      
+      if (is.na(email[1])==F){
+        if (is.na(emailPassword)==F){
+          
+          for (jj in 1:length(email)){
+            subject<-'Update From TAZ - No New Files To Reduce'
+            bodyText<-paste('TAZ tried to run at ',date(), '\n \n There were no new data to reduce.', '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+            
+            TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+          }
+        }
+      }
       
     }
     
@@ -281,14 +342,18 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       write(paste('  -Extracting 1D spectra from: ', newReduce[i],sep=''), file=logName, append=T)
       tmpnewSpec<-extractNewSpec(file=newReduce[i], logName=logName, verbose=verbose, makePlot=F, zeroPoint=zeroPoint,NowDate=NowDate)
       
-     
+      
     }
+    
+    stopState<-c(stopState, 'Extracted')
     
     ExtractedDates<-c()
     for (i in 1:length(newReduce)){
       ExtractedDates<-c(ExtractedDates, strsplit(newReduce[i], '/')[[1]][4])
     }
     ExtractedDates<-unique(ExtractedDates)
+    
+   
     
 
 
@@ -323,7 +388,23 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newIds<-newIds[which(is.na(newIds)==F)]
     newIds<-unique(newIds)
     #######
+    
+    if (is.na(email[1])==F){
+      if (is.na(emailPassword)==F){
+        
+        for (jj in 1:length(email)){
+          subject<-'Update From TAZ - 1D spectra Extracted'
+          bodyText<-paste('TAZ finished extractNewSpec() at ',date(), '\n \n Nights extracted:',ExtractedDates, '\n \n # New IDs:', length(newIds), '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+          
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
+      }
+    }
+    
+    
   }
+  
+
     
     
   if (doExtract==F){
@@ -349,21 +430,18 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     newStacks<-stackSpec(ids=newIds,logName=logName, verbose=verbose, makePlot=F, cores=cores)
     write.csv(newStacks, file=paste('data/reduced/newSpec/', substr(NowDate, 1,10),'_newStacks.csv', sep=''), row.names=F, quote=F)
     
+    stopState<-c(stopState, 'Stacked')
     
-    if (is.na(email)==F){
+    if (is.na(email[1])==F){
       if (is.na(emailPassword)==F){
         
+        for (jj in 1:length(email)){
         
-        subject<-'Update From TAZ - stackSpec Completed'
-        bodyText<-paste('stackSpec() finished at ',date(), sep='')
+          subject<-'Update From TAZ - stackSpec Completed'
+          bodyText<-paste('stackSpec() finished at ',date(), '\n\n # New Stacks:',length(newStacks), '\n\n Trace: ',paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
         
-        TAZemail(user=user, recipient=email, password=emailPassword, subject=subject, bodyText=bodyText)
-        
-      }else{
-        
-        cat('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',  '\n')
-        write(paste('*** WARNING You must provied emial password if "email" is set - no email updates sending  ***',sep=''), file=logName, append=T)
-        email<-NA
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
         
       }
     }
@@ -390,6 +468,21 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     
     runAutoZ(specs=newStacks, logName=logName, verbose=verbose, cores=cores, highZ=highZ,makePlots=F)
+    
+    stopState<-c(stopState, 'AutoZ')
+    
+    if (is.na(email[1])==F){
+      if (is.na(emailPassword)==F){
+ 
+        for (jj in 1:length(email)){
+          subject<-'Update From TAZ - AutoZ Finished Running'
+          bodyText<-paste('runAutoZ() finished running at ', date(), '\n\n Trace: ',paste(stopState, collapse='.....'), '\n\n LogName: ',logName,  sep='')
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
+        
+      }
+    }
+    
     
     
   }
@@ -423,7 +516,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('    - Using previous MASTER catalogue as:',lastMASTER, '\n')}
     write(paste('    - Using previous MASTER catalogue as:',lastMASTER,sep=''), file=logName, append=T)
     
-    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', logName=logName, verbose=verbose, makePlots=T, probGood=0.9)
+    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', OzDESGRC=OzDESGRC, logName=logName, verbose=verbose, makePlots=T, probGood=0.9)
     
     
     if (verbose>0){cat('Finding next observing night....', '\n')}
@@ -473,10 +566,28 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     run<-as.numeric(substr(runFor, 4,4))
     
+    stopState<-c(stopState, 'Updated')
+    
     if (verbose>0){cat('Making DO cats....', '\n')}
     write('Making DO cats....', file=logName, append=T)
+  
     
     DODir<-makeDOCats(MASTERCat=newMaster, UserName=user, dateFor=dateFor, year=dateFor_a$year, semester=semester, run=run, logName=logName, verbose=verbose)
+    
+    stopState<-c(stopState, 'DOCats')
+    
+    if (is.na(email[1])==F){
+      if (is.na(emailPassword)==F){
+        
+        for (jj in 1:length(email)){
+        
+          subject<-'Update From TAZ - Catalogues Updated'
+          bodyText<-paste('All Catlogues updated at ', date(), '\n\n New Master Cat:',newMaster, '\n Writing to DODir:',DODir, '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
+        
+      }
+    }
     
   
  
@@ -497,6 +608,22 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     addOzDES(OzDESCat=OzDESCat, DODir=DODir, num=30,logName=logName, verbose=verbose)
     
+    stopState<-c(stopState, 'OzDES')
+    
+    if (is.na(email[1])==F){
+      if (is.na(emailPassword)==F){
+        
+        for (jj in 1:length(email)){
+          
+          subject<-'Update From TAZ - OzDES Objects Added'
+          bodyText<-paste('OzDES objects added at ', date(), '\n\n OzDES Cat used:',OzDESCat, '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
+        
+      }
+    }
+    
+    
   }
   
   
@@ -516,20 +643,37 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     
     ConfigNames<-runTiler(workingDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir, makeNormal=makeNormalTiles, makeBackUp=makeBackUpTiles, BrightCut=BrightCut)
     
+    stopState<-c(stopState, 'Tiler')
+    
+    if (is.na(email[1])==F){
+      if (is.na(emailPassword)==F){
+        
+        for (jj in 1:length(email)){
+        
+          subject<-'Update From TAZ - Tiling Finished'
+          bodyText<-paste('runTiler()  generated ',length(ConfigNames), ' at ', date(), '\n\n Trace: ', paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+          TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+        }
+        
+      }
+    }
+    
       if (docutoutConfig==T){
       
         host<-system('hostname',intern = TRUE)
-        if (host=="is-m-00354"){location<-'lukeLap'}
+        if (host=="EMS-37993.local"){location<-'lukeLap'}
         if (host=="munro"){location<-'munro'}
-        if (host!="munro" & host!="is-m-00354"){
+        if (host!="munro" & host!="EMS-37993.local"){
           if (verbose>0){cat('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', '\n')}
           write('*** WARNING - cannot run cutoutConfig.R while not on munro or lukes laptop. Skipping....', file=logName, append=T)
         }
-        if (host=="munro" | host=="is-m-00354"){
+        if (host=="munro" | host=="EMS-37993.local"){
           for (i in 1:length(ConfigNames)){
               cutoutConfig(configFile=ConfigNames[i], size=15, outDir=paste(strsplit(ConfigNames[i],'.lis')[[1]][1],'_cutouts',sep=''), cores=cores, location=location)
           }
         }
+        
+        stopState<-c(stopState, 'CutoutConfig')
         
       }
     
@@ -564,6 +708,8 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
       
       
       checkConfig(configFiles = ConfigNames, DMCatN = lastMASTER, logName=logName, verbose=verbose)
+      
+      stopState<-c(stopState, 'checkConfig')
     }
   
   
@@ -578,6 +724,23 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     cat('\n')
     
   } 
+  
+  stopState<-c(stopState, 'Finished')
+  
+  if (is.na(email[1])==F){
+    if (is.na(emailPassword)==F){
+      
+      for (jj in 1:length(email)){
+      
+        subject<-'Update From TAZ - TAZ Finished'
+        bodyText<-paste('TAZ finished running at ', date(), '\n\n Trace: ',paste(stopState, collapse='.....'), '\n\n LogName: ',logName, sep='')
+        TAZemail(user=user, recipient=email[jj], password=emailPassword, subject=subject, bodyText=bodyText)
+      }
+      
+    }
+  }
+  
+  return('Finished')
   
 }
 

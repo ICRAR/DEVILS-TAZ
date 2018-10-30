@@ -14,9 +14,9 @@
 SetUpLogLambda = function(oversample=5, lowValue=3.3, highValue=4.0, verbose = TRUE,highZ=T){
   
   if (highZ==T){
-    lowValue<-2.8
+    lowValue<-3.0
     highValue<-4.0
-    }
+  }
   
   sdssGap <- 0.0001
   gap <- NULL

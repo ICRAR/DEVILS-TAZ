@@ -76,7 +76,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
         if (host=="munro"){
           system('rm -rf /home/ldavies/imp_scratch/*')
         }
-        if (host=="lukeLap"){
+        if (host=="EMS-37993.local"){
           system('rm -rf /Users/luke/imp_scratch/*')
         }
         
@@ -104,7 +104,9 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 idx<-'data/idxFiles/gama_blue.idx'
                 cmd<-paste('aaorun make_im ', paste(fileBlue,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileBlue[1], ' -do_dark 0 -usedarkim 0 ', sep='')
 
-                system(cmd)
+                system(cmd,wait=TRUE)
+                
+              
                 
                 
                 imBlue<-read.fits(file=paste(fileBlue,'im.fits', sep=''), hdu=1)
@@ -146,7 +148,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 idx<-'data/idxFiles/gama_red.idx'
                 cmd<-paste('aaorun make_im ', paste(fileRed,'.fits', sep=''), ' -idxfile ',idx, ' -lacosmic no -useflatim 0 -do_bias 1  -usebiasim 1 -bias_filename ',calib$biasFileRed[1], ' -do_dark 0 -usedarkim 0 ', sep='')
                 
-                system(cmd)
+                system(cmd, wait=T)
                 
                 
                 imRed<-read.fits(file=paste(fileRed,'im.fits', sep=''), hdu=1)
@@ -246,7 +248,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -271,7 +273,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -308,7 +310,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -345,7 +347,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -386,7 +388,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                       Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                       system(paste('rm -rf /tmp/AAO',PID,sep=''))
                     }
-                    if (host=="lukeLap"){
+                    if (host=="EMS-37993.local"){
                       system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                       system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                       Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -406,7 +408,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 combineList<-paste('data/reduced/',dateReduc,'/ccd1/',list.files(path=paste('data/reduced/',dateReduc,'/ccd1/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
                 cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic no -combinedfile data/reduced/',dateReduc,'/ccd1/',dateReduc2,'_config_',j,'_reduced_blue.fits', sep='')
-                system(cmd)
+                system(cmd,wait=TRUE)
 
                 count<-0
                 while(count<1){
@@ -419,7 +421,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -467,7 +469,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -502,7 +504,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -539,7 +541,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -587,7 +589,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                       Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                       system(paste('rm -rf /tmp/AAO',PID,sep=''))
                     }
-                    if (host=="lukeLap"){
+                    if (host=="EMS-37993.local"){
                       system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                       system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                       Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -605,7 +607,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 combineList<-paste('data/reduced/',dateReduc,'/ccd2/',list.files(path=paste('data/reduced/',dateReduc,'/ccd2/',sep=''), pattern=paste('*red_config',j,'.fits',sep='')), sep='', collapse=' ')
 
                 cmd<-paste('aaorun combine_spectra "', combineList, '" -idxfile ',idx, ' -lacosmic no -combinedfile data/reduced/',dateReduc,'/ccd2/',dateReduc2,'_config_',j,'_reduced_red.fits', sep='')
-                system(cmd)
+                system(cmd,wait=TRUE)
 
                 if (host=="munro"){
                   system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
@@ -613,7 +615,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))
@@ -641,7 +643,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                 cmd<-paste('aaorun splice "', spliceList, '" -idxfile ',idx, ' -lacosmic no -output_file data/reduced/',dateReduc,'/',dateReduc2,'_config_',j,'_reduced.fits', sep='')
                 
                 
-                system(cmd)
+                system(cmd,wait=TRUE)
                 
                 if (host=="munro"){
                   system(paste('rm -rf /home/ldavies/imp_scratch/runZone', j, sep=''))
@@ -649,7 +651,7 @@ run2dfDR<-function(toReduce=toReduce, doCalibQC=doCalibQC, logName=logName, verb
                   Sys.setenv(IMP_SCRATCH=paste('/home/ldavies/imp_scratch/runZone',j,sep=''))
                   system(paste('rm -rf /tmp/AAO',PID,sep=''))
                 }
-                if (host=="lukeLap"){
+                if (host=="EMS-37993.local"){
                   system(paste('rm -rf /Users/luke/imp_scratch/runZone', j, sep=''))
                   system(paste('mkdir /Users/luke/imp_scratch/runZone', j, sep=''))
                   Sys.setenv(IMP_SCRATCH=paste('/Users/luke/imp_scratch/runZone',j,sep=''))

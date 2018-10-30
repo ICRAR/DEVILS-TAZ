@@ -14,8 +14,8 @@
 #' @export
 DoCrossCorr = function(spec, gap, tempData, helioVel, plan, z_prior, highZ=FALSE){
   
-  corrSize <- 18000
-  if (highZ==T){corrSize <- 28000}
+  corrSize <- 17000
+  if (highZ==T){corrSize <- 24999}
   
   # prepare output data
   dataout <- vector('list',length(tempData$templateNumbers))

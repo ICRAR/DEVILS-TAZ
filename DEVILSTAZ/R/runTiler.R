@@ -120,6 +120,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     
     #configdirFiles=paste(configdir,'/data_files',sep='')
     updateExtFibs(configdir=configdir)
+    system(paste('cp ', configdir,'/data_files/* ', configdir,'/', sep=''))
     
     
     #a = foreach(i=1:length(tileplus_M)) %dopar%  {
@@ -137,7 +138,7 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     
     if (N_D02A>0){
       for (i in 1:N_D02A){
-        Tiler(tileplus=1, position='D02A', plate=plate_D02A[i], runfolder=TRUE, TileCat=DOcat, runoffset=i, restrict=rep('all',1), updatefib=!exists('Fibres'), basedir=workingDir, configdir=configdir, append_letter='D')
+        Tiler(tileplus=1, position='D02A', plate=plate_D02A[i], runfolder=TRUE, TileCat=DOcat, runoffset=i, restrict=rep('all',1), updatefib=!exists('Fibres'),  basedir=workingDir, configdir=configdir, append_letter='D')
         
         configFile<-list.files(path=paste(workingDir,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],sep=''), pattern='*.lis')
         configFile<-paste(workingDir,'/D02A/TargetFork',i,'-',i,'P',plate_D02A[i],'/',configFile, sep='')
