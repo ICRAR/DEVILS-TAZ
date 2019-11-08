@@ -7,15 +7,17 @@
 TAZ(user = "ldavies", workingDir = "/Users/luke/work/DEVILS/TAZ/",
   dobizCheck = T, bizStopError = F, doCalibQC = F, doReduce = T,
   toReduceDirs = "NA", doDark = T, zeroPoint = T, doExtract = T,
-  toExtractFiles = "NA", doStack = T, toStackIDs = "NA", doAutoZ = T,
-  toAutoZStacks = "NA", doUpdateMaster = T, doTiler = T, DODir = "NA",
-  N_D02A = 1, N_D02B = 1, N_D03 = 1, N_D10 = 1, D02A_startPlate = 0,
+  toExtractFiles = "NA", doStack = T, toStackIDs = "NA",
+  doAutoZ = T, toAutoZStacks = "NA", doUpdateMaster = T,
+  OzDESGRC = NA, doTiler = T, DODir = "NA", N_D02A = 1,
+  N_D02B = 1, N_D03 = 1, N_D10 = 1, D02A_startPlate = 0,
   D02B_startPlate = 0, D03_startPlate = 0, D10_startPlate = 0,
   configdir = "/Applications/configure-8.4-MacOsX_ElCapitan_x86_64",
   addOzDES = FALSE, OzDESCat = "NA", docheckConfig = T,
   docutoutConfig = F, cores = 10, reducCores = 10, verbose = 2,
-  makeNormalTiles = TRUE, makeBackUpTiles = FALSE, BrightCut = 20,
-  email = NA, emailPassword = NA, doCosmic = F, highZ = T)
+  makeNormalTiles = TRUE, makeBackUpTiles = FALSE, BrightCut = 22,
+  email = NA, emailPassword = NA, doCosmic = F, highZ = T,
+  useVIS = F)
 }
 \arguments{
 \item{user}{The current use identification. This is added to all logs.}
@@ -57,6 +59,8 @@ Must either be full directory path, or can set to 'all' to run over all spectra 
 
 \item{doUpdateMaster}{TRUE/FALSE, Update and generate a new DMCat (with timestamp) using the redshift measurement in the 
 data/reduced/stackedSpec/ directory. Then make DOCats for the next observing date.}
+
+\item{OzDESGRC}{Either NA (do not update) or path to new OzDES GRC cat to add to DMCat}
 
 \item{doTiler}{TRUE/FALSE, Run tiling software to generate new fibre configuration files using runTiler.R}
 

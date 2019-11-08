@@ -5,8 +5,8 @@
 \title{Overplot the position of common spectral features on the currently plotted spectrum}
 \usage{
 plotLines(z = 0, xunit = "ang", labPos = 100, labOff = -50,
-  EmCol = "blue", AbsCol = "darkgreen", lty = 2, lwd = 1, cex = 0.3,
-  ...)
+  EmCol = "blue", AbsCol = "darkgreen", lty = 2, lwd = 1,
+  cex = 0.3, ...)
 }
 \arguments{
 \item{z}{redshift at which to overplot lines}

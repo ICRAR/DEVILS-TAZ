@@ -4,9 +4,9 @@
 \alias{run2dfDR}
 \title{Run 2dFDR over a target directory}
 \usage{
-run2dfDR(toReduce = toReduce, doCalibQC = doCalibQC, logName = logName,
-  verbose = verbose, reducCores = reducCores, doDark = T,
-  doCosmic = doCosmic)
+run2dfDR(toReduce = toReduce, doCalibQC = doCalibQC,
+  logName = logName, verbose = verbose, reducCores = reducCores,
+  doDark = T, doCosmic = doCosmic)
 }
 \arguments{
 \item{toReduce}{directory path to reduce in the DEVILS data structure. Must be of the form, 

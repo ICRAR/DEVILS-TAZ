@@ -4,14 +4,17 @@
 \alias{UpdateMASTERCat}
 \title{Update DMcats with new redshifts and make DOCats}
 \usage{
-UpdateMASTERCat(cat = cat, specDir = specDir, logName = logName,
-  verbose = verbose, makePlots = F, probGood = 0.9)
+UpdateMASTERCat(cat = cat, specDir = specDir, OzDESGRC = OzDESGRC,
+  logName = logName, verbose = verbose, makePlots = F,
+  probGood = 0.9, useVIS = F)
 }
 \arguments{
 \item{cat}{Path to current DMCat}
 
 \item{specDir}{Path to directory containing R list spectra with value spec$z. 
 Usually will be data/reduced/stackedSpec}
+
+\item{OzDESGRC}{Either NA (do not update) or path to OzDES GRC cat to update to}
 
 \item{logName}{log filename to write progress to}
 

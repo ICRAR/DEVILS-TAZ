@@ -5,21 +5,22 @@ outDir<-'cutouts'
 guides<-read.table('DATAguide.tab', header=T)
 size<-15
 
+system(paste('mkdir ',outDir,sep=''))
 
 
 if (location=='lukeLap'){
-    PathD10<-'/Users/luke/work/DEVILS/Imaging/D10/UltraVISTA/'
+    PathD10<-'/Users/luke/work/DEVILS/Imaging_Old/D10/UltraVISTA/'
     stubYD10<-'Y'
     stubJD10<-'J'
     stubKD10<-'Ks'
-    PathD02<-'/Users/luke/work/DEVILS/Imaging/D02/'
+    PathD02<-'/Users/luke/work/DEVILS/Imaging_Old/D02/'
     stubYD02<-'Y'
-    stubJD02<-'Y'
-    stubKD02<-'Y'
-    PathD03<-'/Users/luke/work/DEVILS/Imaging/D03/'
+    stubJD02<-'J'
+    stubKD02<-'Ks'
+    PathD03<-'/Users/luke/work/DEVILS/Imaging_Old/D03/'
     stubYD03<-'Y'
-    stubJD03<-'Y'
-    stubKD03<-'Y'
+    stubJD03<-'J'
+    stubKD03<-'Ks'
 }
 
 

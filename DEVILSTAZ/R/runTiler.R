@@ -23,6 +23,7 @@
 #' @param makeNormal Make general configurations 
 #' @param makeBackUp Also make configuration files for bright sources. 
 #' @param BrightCut Magnitude to cut at for bright sources. Only takes affect it makeBackUp==TRUE.
+#' @param FaintCut Magnitude to cut at for faint sources. 
 #' @return List of paths to new configuration files
 #' @examples 
 #' runTiler(configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',workingDir='.', DOcat='data/observing/run1_2017_12/2017_12_19/DOCats/DObjCat_2017_12_19.tab, $
@@ -31,7 +32,7 @@
 #'  D10_startPlate=1, logName='tempLog.txt', verbose=1, cores=4)
 #'  # will make one configuration in D02A and D02B, two in D03, and 3 in D10.
 #' @export
-runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, logName=logName, verbose=verbose, cores=cores, makeNormal=TRUE, makeBackUp=FALSE,BrightCut=20){
+runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0, logName=logName, verbose=verbose, cores=cores, makeNormal=TRUE, makeBackUp=FALSE,BrightCut=20, FaintCut=30){
 
     #registerDoParallel(cores=cores)
 
@@ -89,6 +90,9 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     plate_M<-c(plate_D02A, plate_D02B, plate_D03, plate_D10)
     
     DOcat=read.table(DOcat,header=T)
+    DOcat=DOcat[which(DOcat[,'MAG']<=FaintCut),]
+    
+    
     DATAguide<<-read.table(DATAguide,header=T) 
     DATAstspec<<-read.table(DATAstspec,header=T)
     DATAsky<<-read.table(DATAsky,header=T)
@@ -132,6 +136,8 @@ runTiler<-function(configdir=configdir, workingDir=workingDir, DOcat=DOcat, DATA
     #if (N_D03>0){Tiler(tileplus=N_D03, position='D03', plate=plate_D03, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D03), updatefib=!exists('Fibres'), basedir=workingDir, configdir=configdir, append_letter='D')}
     #if (N_D10>0){Tiler(tileplus=N_D10, position='D10', plate=plate_D10, runfolder=TRUE, TileCat=DOcat, runoffset=1, restrict=rep('all',N_D10), updatefib=!exists('Fibres'), basedir=workingDir, configdir=configdir, append_letter='D')}
 
+
+    
     ConfigNames<-c()
     
     if (makeNormal==TRUE){

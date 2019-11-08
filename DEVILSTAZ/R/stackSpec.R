@@ -14,7 +14,7 @@
 #' stackSpec(ids='all',  logName='tempLog.txt', verbose=1,makePlots=T)
 #' @export
 stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores=cores){
-
+  
   
   orderSub<-4
   iterSub<-8
@@ -34,7 +34,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     ids<-unique(ids)
   }
   
-
+  
   
   
   newStacks<-as.character(paste('data/reduced/stackedSpec/',ids,'.Rdata',sep=''))
@@ -42,7 +42,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
   
   
   a = foreach(i=1:length(ids)) %dopar%  {
-  #for (i in 1:length(ids)){
+    #for (i in 1:length(ids)){
     
     if (verbose>1){cat('    - Stacking spectrum: ', ids[i], '\n')}
     write(paste('    - Stacking spectrum: ', ids[i],sep=''), file=logName, append=T)
@@ -56,11 +56,16 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     
     
     
+    UTMJDLast<-0
+    
     for (j in 1:length(listSpec)){
       
       load(paste('data/reduced/allSpec/',listSpec[j],sep=''))
       
+      if (spec$UTMJD>UTMJDLast){UTMJDLast<-spec$UTMJD}
+      
       if (j==1){
+        
         
         if (verbose>1){cat('           - Loading spectrum... ', j,  '\n')}
         write(paste('           - Loading spectrum...', j, sep=''), file=logName, append=T)
@@ -70,6 +75,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
         DEC<-spec$DEC
         MAG<-spec$MAG
         UTMJD<-spec$UTMJD
+        
         
         wave<-spec$wave
         waveBlue<-spec$waveBlue   
@@ -341,7 +347,7 @@ stackSpec<-function(ids=ids, logName=logName, verbose=verbose, makePlot=T, cores
     write(paste('   - Writing stack as: data/reduced/stackedSpec/',ID,'.Rdata', sep=''), file=logName, append=T)
     
     
-    spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''), fluxSc=fluxSc,fluxScBlue=fluxScBlue,fluxScRed=fluxScRed)
+    spec<-list(wave=wave,flux=flux,sn=sn,sky=sky, ID=ID, RA=RA, DEC=DEC, MAG=MAG, xunit='ang', yunit='ang', z=NA, EXP=EXP, NStack=NStack,waveBlue=waveBlue, fluxBlue=fluxBlue, snBlue=snBlue, skyBlue=skyBlue, waveRed=waveRed, fluxRed=fluxRed, snRed=snRed, skyRed=skyRed, fluxSub=fluxSub, fluxSubBlue=fluxSubBlue, fluxSubRed=fluxSubRed,  UTMJDLast=UTMJDLast)
     
     save(spec, file=paste('data/reduced/stackedSpec/',ID,'.Rdata',sep=''))
     

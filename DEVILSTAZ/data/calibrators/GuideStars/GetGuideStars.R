@@ -2,7 +2,7 @@
 Mag1<-14.0
 Mag2<-14.7
 
-Mag1<-13.2
+Mag1<-13.0
 Mag2<-14.4
 
 
@@ -10,8 +10,8 @@ Mag2<-14.4
 D10Stars<-read.table('USNO-B1_COSMOS.txt', header=T, sep='|')
 D10Stars<-D10Stars[which(D10Stars[,'R1mag']>Mag1 & D10Stars[,'R1mag']<=Mag2 & D10Stars[,'pmRA']<15),]
 
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D10_TotalPhotometry.rda')
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D10_ColPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D10_TotalPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D10_ColPhotometry.rda')
 
 
 D10CatCol<-ColPhotoCat
@@ -52,8 +52,8 @@ GuideTabRMAG<-D10Stars[GuidesD10,'R1mag']
 D02Stars<-read.table('USNO-B1_XMMLSS.txt', header=T, sep='|')
 D02Stars<-D02Stars[which(D02Stars[,'R1mag']>Mag1 & D02Stars[,'R1mag']<=Mag2 & D02Stars[,'pmRA']<15),]
 
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D02_TotalPhotometry.rda')
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D02_ColPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D02_TotalPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D02_ColPhotometry.rda')
 
 D02CatCol<-ColPhotoCat
 D02CatTotal<-TotalPhotoCat
@@ -92,8 +92,8 @@ GuideTabRMAG<-c(GuideTabRMAG, D02Stars[GuidesD02,'R1mag'])
 D03Stars<-read.table('USNO-B1_ECDFS.txt', header=T, sep='|')
 D03Stars<-D03Stars[which(D03Stars[,'R1mag']>Mag1 & D03Stars[,'R1mag']<=Mag2 & D03Stars[,'pmRA']<15),]
 
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D03_TotalPhotometry.rda')
-load('/Users/luke/work/DEVILS/Imaging/MakeInputCats/D03_ColPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D03_TotalPhotometry.rda')
+load('/Users/luke/work/DEVILS/Imaging_Old/MakeInputCats/D03_ColPhotometry.rda')
 
 D03CatCol<-ColPhotoCat
 D03CatTotal<-TotalPhotoCat
@@ -148,7 +148,7 @@ print(dim(GuideTab))
 #print(dim(GuideTab))
 
 Bad<-as.vector(read.table('GuidesVISBad.txt'))
-
+#Bad<-cbind(c(NA), c(NA))
 
 GuideTab<-GuideTab[which(GuideTab$ROWID %in% Bad[,1]==FALSE),]
 
@@ -157,5 +157,5 @@ print(dim(GuideTab))
 write.table(GuideTab, file='DATAguide.tab', row.names=F)
 
 
-#system('rm -rf cutouts/*.png')
-#source('cutoutGuides.R')
+system('rm -rf cutouts/*.png')
+source('cutoutGuides.R')

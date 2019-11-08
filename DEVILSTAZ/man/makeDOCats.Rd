@@ -4,9 +4,9 @@
 \alias{makeDOCats}
 \title{Makes New DEVILS Observing Catalogues (DOCats)}
 \usage{
-makeDOCats(MASTERCat = MASTERCat, UserName = UserName, dateFor = dateFor,
-  year = 2017, semester = "B", run = 1, logName = logName,
-  verbose = verbose)
+makeDOCats(MASTERCat = MASTERCat, UserName = UserName,
+  dateFor = dateFor, year = 2017, semester = "B", run = 1,
+  logName = logName, verbose = verbose)
 }
 \arguments{
 \item{MASTERCat}{current DEVILS MASTER catalogue to use}

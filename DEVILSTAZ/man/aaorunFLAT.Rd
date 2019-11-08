@@ -5,8 +5,8 @@
 \title{Reduce an AAT 2df+AAOmega flat file using 2dfDR function aaorun}
 \usage{
 aaorunFLAT(file = file, idx = idx, doDark = T, darkFile = darkFile,
-  doBias = T, biasFile = biasFile, arcFile = arcFile, waveStart = "NA",
-  waveEnd = "NA", runZone = 1)
+  doBias = T, biasFile = biasFile, arcFile = arcFile,
+  waveStart = "NA", waveEnd = "NA", runZone = 1)
 }
 \arguments{
 \item{file}{Path to the input file to be reduced}

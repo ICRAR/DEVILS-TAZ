@@ -52,6 +52,7 @@
 #' @param makeNormalTiles Make general configurations using all catalogues 
 #' @param makeBackUpTiles Also make bad weather configuration files for just bright sources. 
 #' @param BrightCut Magnitude to cut at for bright sources. Only takes affect it makeBackUpTiles==TRUE.
+#' @param FaintCut Magnitude to cut at for fiant sources. Tiling will ignore all sources below this cut
 #' @param email If you want TAZ to send you email updates enter your email here.
 #' @param emailPassword If you want TAZ to send you email updates you must enter the TAZ email password here.
 #' @param doCosmic TRUE/FALSE do aditional cosmic ray rejection in extract.spec()
@@ -79,7 +80,7 @@
 #' 
 #' @export
 #' 
-TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, OzDESGRC=NA, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=20, email=NA, emailPassword=NA, doCosmic=F, highZ=T){
+TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizCheck=T, bizStopError=F, doCalibQC=F, doReduce=T, toReduceDirs='NA',doDark=T, zeroPoint=T, doExtract=T, toExtractFiles='NA', doStack=T, toStackIDs='NA', doAutoZ=T, toAutoZStacks='NA', doUpdateMaster=T, OzDESGRC=NA, doTiler=T, DODir='NA',N_D02A=1,N_D02B=1, N_D03=1, N_D10=1, D02A_startPlate=0, D02B_startPlate=0, D03_startPlate=0, D10_startPlate=0,configdir='/Applications/configure-8.4-MacOsX_ElCapitan_x86_64',  addOzDES=FALSE, OzDESCat='NA',docheckConfig=T, docutoutConfig=F, cores=10, reducCores=10, verbose=2, makeNormalTiles=TRUE, makeBackUpTiles=FALSE, BrightCut=22, FaintCut=30, email=NA, emailPassword=NA, doCosmic=F, highZ=T, useVIS=F, bumpPos=NA){
   
   stopState<-NA
   
@@ -516,7 +517,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     if (verbose>0){cat('    - Using previous MASTER catalogue as:',lastMASTER, '\n')}
     write(paste('    - Using previous MASTER catalogue as:',lastMASTER,sep=''), file=logName, append=T)
     
-    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', OzDESGRC=OzDESGRC, logName=logName, verbose=verbose, makePlots=T, probGood=0.9)
+    newMaster<-UpdateMASTERCat(cat=lastMASTER, specDir='data/reduced/stackedSpec/', OzDESGRC=OzDESGRC, logName=logName, verbose=verbose, makePlots=T, probGood=0.90, useVIS=useVIS, bumpPos=bumpPos)
     
     
     if (verbose>0){cat('Finding next observing night....', '\n')}
@@ -641,7 +642,7 @@ TAZ<-function(user='ldavies', workingDir='/Users/luke/work/DEVILS/TAZ/',  dobizC
     write(paste('    - Tiler run with command: runTiler(workigDir=',DODir,'Tiling, DOcat=',DOcat,',DATAguide=',DATAguide,', DATAstspec=',DATAstspec,', DATAsky=',DATAsky,', N_D02A=',N_D02A,', N_D02B=',N_D02B,', N_D03=',N_D03,', N_D10=',N_D10,', D02A_startPlate=',D02A_startPlate,', D02B_startPlate=',D02A_startPlate,', D03_startPlate=',D03_startPlate,', D10_startPlate=',D10_startPlate,')',sep=''),file=logName, append=T)
   
     
-    ConfigNames<-runTiler(workingDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir, makeNormal=makeNormalTiles, makeBackUp=makeBackUpTiles, BrightCut=BrightCut)
+    ConfigNames<-runTiler(workingDir=paste(DODir, 'Tiling', sep=''), DOcat=DOcat, DATAguide=DATAguide, DATAstspec=DATAstspec, DATAsky=DATAsky, N_D02A=N_D02A, N_D02B=N_D02B, N_D03=N_D03, N_D10=N_D10, D02A_startPlate=D02A_startPlate, D02B_startPlate=D02A_startPlate, D03_startPlate=D03_startPlate, D10_startPlate=D10_startPlate, logName=logName, verbose=verbose, cores=cores, configdir=configdir, makeNormal=makeNormalTiles, makeBackUp=makeBackUpTiles, BrightCut=BrightCut, FaintCut=FaintCut)
     
     stopState<-c(stopState, 'Tiler')
     

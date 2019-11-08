@@ -4,8 +4,8 @@
 \alias{checkConfig}
 \title{Check Configuration Files are consistent with DMCat}
 \usage{
-checkConfig(configFiles = configFiles, DMCatN = DMCatN, logName = logName,
-  verbose = verbose)
+checkConfig(configFiles = configFiles, DMCatN = DMCatN,
+  logName = logName, verbose = verbose)
 }
 \arguments{
 \item{configFiles}{Vector of paths to config files to be checked.}

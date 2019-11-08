@@ -5,7 +5,8 @@
 \title{Calculate helocentric correction.}
 \usage{
 Heliocentric(ra, dec, epoch = 2000, jd = FALSE, tai = FALSE,
-  longitude = 360 - 105.820417, latitude = 32.780361, altitude = 2788)
+  longitude = 360 - 105.820417, latitude = 32.780361,
+  altitude = 2788)
 }
 \arguments{
 \item{ra}{Right ascension in degrees}
